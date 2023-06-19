@@ -34,6 +34,7 @@ public abstract class Unit : MonoBehaviour
     bool isDie = false;
 
     public abstract void Attack();
+
     public virtual void TakeDamage(int AttackerEndurance , int AttackerLevel , int hits = 1) 
     {
         float rand = Random.Range(0.95f, 1.06f);
