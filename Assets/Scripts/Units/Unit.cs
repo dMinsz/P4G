@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Unit
+public abstract class Unit : MonoBehaviour
 {
+    //게임 캐릭터 및 적(섀도우) 클래스
+    //페르소나 는 다른 Class 를 사용한다.
+
     //status
+    public int Level;
     public int Hp;
     public int Mp;
     protected int Strength; // Indicates the effectiveness of a Persona's Physical Skills.
@@ -22,7 +26,7 @@ public abstract class Unit
         ATK = Atk value of equipped weapon OR Pwr value of used skill
         MOD = Modifier based on the difference between character level and enemy level
         HITS= Number of hits (for physical skills)
-        RND = Randomness factor (according to DragoonKain33, may be roughly between 0.95 and 1.05)
+        RND = Randomness factor (between 0.95 and 1.05)
      */
 
     protected Resistances Res;
@@ -30,11 +34,14 @@ public abstract class Unit
     bool isDie = false;
 
     public abstract void Attack();
-    public virtual void TakeDamage(int damage) 
+    public virtual void TakeDamage(int AttackerEndurance , int AttackerLevel , int hits = 1) 
     {
+        float rand = Random.Range(0.95f, 1.06f);
+        int DMG = (int)Mathf.Ceil(5 * Mathf.Sqrt(Strength / AttackerEndurance) * (AttackerLevel - Level) * hits * rand);
+
         if (!isDie) 
         {
-            Hp -= damage;
+            Hp -= DMG;
 
             if (Hp < 0)
             {
