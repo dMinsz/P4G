@@ -59,8 +59,7 @@ public class GameManager : MonoBehaviour
         GameObject resourceObj = new GameObject();
         resourceObj.name = "ResourceManager";
         resourceObj.transform.SetParent(transform);
-        resourceManager = resourceObj.AddComponent<ResourceManager
-            >();
+        resourceManager = resourceObj.AddComponent<ResourceManager>();
 
         GameObject poolObj = new GameObject();
         poolObj.name = "PoolManager";

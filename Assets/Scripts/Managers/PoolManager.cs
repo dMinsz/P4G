@@ -25,7 +25,7 @@ public class PoolManager : MonoBehaviour
         poolContainer = new Dictionary<string, Transform>();
         poolRoot = new GameObject("PoolRoot").transform;
 
-        canvasRoot = GameManager.Resource.Instantiate<Canvas>("PreFabs/UI/Canvas");
+        canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
     }
 
 
