@@ -27,6 +27,7 @@ public class PlayerAttacker : MonoBehaviour
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             animator.SetTrigger("Attack");
+            AttackTiming();
         }
         
     }
