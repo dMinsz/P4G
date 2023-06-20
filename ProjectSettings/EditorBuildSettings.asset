@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/VideoPlayScene.unity
     guid: 97b6db8c133cff742bdc171e4fedc52b
   - enabled: 1
-    path: Assets/Scenes/RobyScene.unity
+    path: Assets/Scenes/LobbyScene.unity
     guid: 0996ce281a236034eb4a540093ba4aac
   - enabled: 1
     path: Assets/Scenes/TestBed/VelvetRoom.unity
