@@ -8,6 +8,7 @@ public abstract class Unit : MonoBehaviour
     //페르소나 는 다른 Class 를 사용한다.
 
     //status
+    public string unitName;
     public int Level;
     public int Hp;
     public int Mp;

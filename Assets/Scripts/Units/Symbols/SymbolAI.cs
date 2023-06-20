@@ -16,20 +16,21 @@ public partial class SymbolAI : MonoBehaviour
     public NavMeshAgent agent;
     public Transform[] patrollPoints;
     public float idleMaxTime;
-    public float traceRange;
+    public float attackRange;
     //View
-    [SerializeField] float range;
+    [Header("View")]
+    [SerializeField] float viewRange;
     [SerializeField, Range(0, 360)] float angle;
     [SerializeField] LayerMask targetMask;
     [SerializeField] LayerMask obstacleMask;
-    [NonSerialized] public bool foundPlayer;
+
 
     [Header("Events")]
     public UnityEvent OnIdled;
 
 
     Animator animator;
-    Transform target;
+    [HideInInspector]public Transform target;
 
     private float cosResult;
     public void Awake()
@@ -40,10 +41,13 @@ public partial class SymbolAI : MonoBehaviour
         animator = transform.Find("Model").GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
+        //target = new Transform();
+
         stateMachine = new StateMachine<State, SymbolAI>(this);
         stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
         stateMachine.AddState(State.Patroll, new PatrollState(this, stateMachine));
-
+        stateMachine.AddState(State.Tracking, new TrackingState(this, stateMachine));
+        stateMachine.AddState(State.Attack, new AttackState(this, stateMachine));
     }
 
     private void Start()
@@ -55,9 +59,9 @@ public partial class SymbolAI : MonoBehaviour
     {
         stateMachine.Update();
     }
-    public void FindPlayer()
+    public Transform FindPlayer()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, range, targetMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, viewRange, targetMask);
         foreach (Collider collider in colliders)
         {
             // 2. 앞에 있는지
@@ -73,9 +77,28 @@ public partial class SymbolAI : MonoBehaviour
                 continue;
             }
             target = collider.gameObject.transform;
-            return;
+            return target;
         }
         target = null;
+        return target;
+    }
+
+    public bool CanAttack() 
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, targetMask);
+        foreach (Collider collider in colliders)
+        {
+            // 2. 앞에 있는지
+            Vector3 dirTarget = (collider.transform.position - transform.position).normalized;
+            if (Vector3.Dot(transform.forward, dirTarget) < cosResult)
+            {
+                continue;
+            }
+            target = collider.gameObject.transform;
+            return true;
+        }
+        target = null;
+        return false;
     }
 
     private Vector3 AngleToDir(float angle)
@@ -92,12 +115,15 @@ public partial class SymbolAI : MonoBehaviour
         }
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, viewRange);
 
         Vector3 rightDir = AngleToDir(transform.eulerAngles.y + angle * 0.5f);
         Vector3 leftDir = AngleToDir(transform.eulerAngles.y - angle * 0.5f);
-        Debug.DrawRay(transform.position, rightDir * range, Color.red);
-        Debug.DrawRay(transform.position, leftDir * range, Color.red);
+        Debug.DrawRay(transform.position, rightDir * viewRange, Color.red);
+        Debug.DrawRay(transform.position, leftDir * viewRange, Color.red);
     }
 
 }

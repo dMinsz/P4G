@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public partial class SymbolAI : MonoBehaviour
 {
     private class IdleState : BaseState
     {
+        private NavMeshAgent navAgent;
         private Transform target;
-        private float range;
         private UnityEvent OnIdle;
         private float idleTime;
         private float idleMaxTime;
@@ -19,8 +20,8 @@ public partial class SymbolAI : MonoBehaviour
 
         public override void Setup()
         {
+            navAgent = owner.agent;
             target = owner.target;
-            range = owner.traceRange;
             OnIdle = owner.OnIdled;
             idleMaxTime = owner.idleMaxTime;
         }
@@ -30,6 +31,9 @@ public partial class SymbolAI : MonoBehaviour
             Debug.Log("SymbolAI : Enter Idle");
             idleTime = 0f;
             animator.SetBool("Idle", true);
+            
+            navAgent.isStopped = true;
+
             OnIdle?.Invoke();
         }
 
@@ -37,7 +41,7 @@ public partial class SymbolAI : MonoBehaviour
         {
             idleTime += Time.deltaTime;
 
-            owner.FindPlayer();
+            target = owner.FindPlayer();
         }
 
         public override void Transition()
@@ -45,7 +49,7 @@ public partial class SymbolAI : MonoBehaviour
 
             if (target != null)
             {
-                //stateMachine.ChangeState(State.Tracking);
+                stateMachine.ChangeState(State.Tracking);
             }
             else if (idleTime > idleMaxTime)
             {
@@ -59,6 +63,7 @@ public partial class SymbolAI : MonoBehaviour
         {
             Debug.Log("SymbolAI : Exit Idle");
             animator.SetBool("Idle", false);
+            navAgent.isStopped = false;
         }
     }
 }

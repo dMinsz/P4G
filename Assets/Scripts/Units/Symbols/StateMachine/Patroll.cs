@@ -10,7 +10,7 @@ public partial class SymbolAI : MonoBehaviour
         private NavMeshAgent navAgent;
         private Transform target;
 
-        private Animator animator;
+        private Animator anim;
         private Transform[] patrollPoints;
         private int destPoint = 0;
         public PatrollState(SymbolAI owner, StateMachine<State, SymbolAI> stateMachine) : base(owner, stateMachine)
@@ -21,28 +21,34 @@ public partial class SymbolAI : MonoBehaviour
             navAgent = owner.agent;
             target = owner.target;
             patrollPoints = owner.patrollPoints;
-            animator = owner.animator;
+            anim = owner.animator;
 
         }
 
         public override void Enter()
         {
-            if (target == null)
-            {
-                Debug.Log("SymbolAI : Enter Patrol");
-                animator.SetBool("Move", true);
-                GotoNextPoint();
-            }
-            else 
-            {
-                Debug.Log("SymbolAI : Find Target change State");
-            }
+            Debug.Log("SymbolAI : Enter Patrol");
+            anim.SetBool("Move", true);
+            GotoNextPoint();
+
+            //navAgent.isStopped = false;
+            //if (target == null)
+            //{
+            //    Debug.Log("SymbolAI : Enter Patrol");
+            //    anim.SetBool("Move", true);
+            //    GotoNextPoint();
+            //}
+            //else 
+            //{
+            //    Debug.Log("SymbolAI : Patroll Enter : Find Target, change State");
+            //    stateMachine.ChangeState(State.Tracking);
+            //}
            
         }
 
         public override void Update()
         {
-            owner.FindPlayer();
+             target = owner.FindPlayer();
 
             if (target != null)
                 return;
@@ -52,7 +58,6 @@ public partial class SymbolAI : MonoBehaviour
         }
         public override void Transition()
         {
-           
             if (target != null)
                 stateMachine.ChangeState(State.Tracking);
         }
@@ -60,7 +65,7 @@ public partial class SymbolAI : MonoBehaviour
         public override void Exit()
         {
             Debug.Log("SymbolAI : Exit Patrol");
-            animator.SetBool("Move",false);
+            anim.SetBool("Move",false);
 
         }
 
