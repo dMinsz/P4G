@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 public class PlayerAttacker : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private Animator animator;
     private float cosResult;
+   
  
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class PlayerAttacker : MonoBehaviour
 
             IHitable hittable = collider.GetComponent<IHitable>();
             hittable?.TakeHit();
+
         }
     }
 

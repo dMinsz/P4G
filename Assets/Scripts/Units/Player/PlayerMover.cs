@@ -46,6 +46,13 @@ public class PlayerMover : MonoBehaviour
     {
         while (true)
         {
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            {
+                yield return null;
+                continue;
+            }
+
             if (moveDir.sqrMagnitude <= 0)
             {
                 curSpeed = Mathf.Lerp(curSpeed, 0, 0.1f);
@@ -64,7 +71,7 @@ public class PlayerMover : MonoBehaviour
 
             Quaternion lookRotation = Quaternion.LookRotation(forwardVec * moveDir.z + rightVec * moveDir.x);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.05f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.01f);
             yield return null;
         }
     }
