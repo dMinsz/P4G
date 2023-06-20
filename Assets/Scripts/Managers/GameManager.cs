@@ -24,9 +24,15 @@ public class GameManager : MonoBehaviour
     private static ResourceManager resourceManager;
     public static ResourceManager Resource { get { return resourceManager; } }
 
+    //UI Manager
     private static UIManager uiManager;
     public static UIManager UI { get { return uiManager; } }
 
+
+    //Data Manager // for video and Battle Scene
+
+    private static DataManager dataManager;
+    public static DataManager Data { get { return dataManager; } }
 
     private GameManager() { }
 
@@ -75,6 +81,11 @@ public class GameManager : MonoBehaviour
         sObj.name = "SceneManagerEX";
         sObj.transform.SetParent(transform);
         sceneManager = sObj.AddComponent<SceneManagerEX>();
+
+        GameObject dObj = new GameObject();
+        dObj.name = "DataManager";
+        dObj.transform.parent = transform;
+        dataManager = dObj.AddComponent<DataManager>();
 
     }
 }

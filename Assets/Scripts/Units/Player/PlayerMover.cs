@@ -51,6 +51,7 @@ public class PlayerMover : MonoBehaviour
             {
                 yield return null;
                 continue;
+
             }
 
             if (moveDir.sqrMagnitude <= 0)
