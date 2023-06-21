@@ -30,7 +30,9 @@ public abstract class Unit : MonoBehaviour
         RND = Randomness factor (between 0.95 and 1.05)
      */
 
-    protected Resistances Res;
+    public Resistances resist;
+    public List<Skill> skills = new List<Skill>();
+
 
     bool isDie = false;
 
@@ -52,6 +54,12 @@ public abstract class Unit : MonoBehaviour
             }
         }
     }
+
+    public virtual void TakeSkillDamage() 
+    {
+
+    }
+
 
     public virtual void Die() 
     {

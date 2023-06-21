@@ -4,50 +4,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[Flags]
+
+
 public enum Resistance 
 {
     None = 0,
-    Physic = 1,//¹°¸®
-    Fire = 2,// È­
-    Ice = 4,// ºù
-    Electronic = 8,//Àü°Ý
-    Wind = 16,//Ç³
-    Light = 32, // ±¤
-    Dark = 64, // ¾Ï
+    Weak = 1, // ¾àÇÏ´Ù
+    Strength =2, // °­ÇÔ
+    Absorb = 3,// Èí¼ö È¤Àº ¹Ý»ç
+    Null = 4, //¾ÈÅëÇÔ
 }
 
-public abstract class Resistances 
+
+public class Resistances 
 {
-    Resistance REG;
+    public Resistance[] _Res;
 
-    public Resistance GetResistance() 
+
+    public enum Type
     {
-        return REG;
+        None = 0,
+        Physic = 1,//¹°¸®
+        Fire = 2,// È­
+        Ice = 3,// ºù
+        Electronic = 4,//Àü°Ý
+        Wind = 5,//Ç³
+        Light = 6, // ±¤
+        Dark = 7, // ¾Ï
     }
 
-    public void SetResistance(Resistance reg) 
+    public Resistances() 
     {
-        REG = reg; 
-    }
-
-    public void SetResistance(byte byteReg) 
-    {
-        REG = (Resistance)byteReg;
-    }
-
-    public void AddResistance(Resistance reg) 
-    {
-        REG = REG | reg;
-    }
-
-    public void RemoveResistance(Resistance reg) 
-    {
-        REG &= ~reg;
-    }
-
-    public bool HasResistance(Resistance reg) 
-    {
-       return REG.HasFlag(reg);
+        _Res = new Resistance[8];
     }
 }
