@@ -11,7 +11,7 @@ public partial class SymbolAI : MonoBehaviour
         private Transform target;
 
         private Animator anim;
-        private Transform[] patrollPoints;
+        private List<Vector3> patrollPoints;
         private int destPoint = 0;
         public PatrollState(SymbolAI owner, StateMachine<State, SymbolAI> stateMachine) : base(owner, stateMachine)
         {
@@ -72,15 +72,15 @@ public partial class SymbolAI : MonoBehaviour
         void GotoNextPoint()
         {
             // Returns if no points have been set up
-            if (patrollPoints.Length == 0)
+            if (patrollPoints.Count == 0)
                 return;
 
             // Set the agent to go to the currently selected destination.
-            navAgent.destination = patrollPoints[destPoint].position;
+            navAgent.destination = patrollPoints[destPoint];
 
             // Choose the next point in the array as the destination,
             // cycling to the start if necessary.
-            destPoint = (destPoint + 1) % patrollPoints.Length;
+            destPoint = (destPoint + 1) % patrollPoints.Count;
         }
 
 

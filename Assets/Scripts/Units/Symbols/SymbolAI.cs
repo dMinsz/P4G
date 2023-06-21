@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -14,7 +15,9 @@ public partial class SymbolAI : MonoBehaviour
     public State state;
     StateMachine<State, SymbolAI> stateMachine;
     public NavMeshAgent agent;
-    public Transform[] patrollPoints;
+    public int PatrollCount = 3;
+    public List<Vector3> patrollPoints;
+    public float patrollPointRange;
     public float idleMaxTime;
     public float attackRange;
     //View
@@ -48,6 +51,9 @@ public partial class SymbolAI : MonoBehaviour
         stateMachine.AddState(State.Patroll, new PatrollState(this, stateMachine));
         stateMachine.AddState(State.Tracking, new TrackingState(this, stateMachine));
         stateMachine.AddState(State.Attack, new AttackState(this, stateMachine));
+
+
+        MakePatrollPos(PatrollCount);
     }
 
     private void Start()
@@ -107,6 +113,35 @@ public partial class SymbolAI : MonoBehaviour
         return new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian));
     }
 
+
+    private void MakePatrollPos(int PatrollCount) 
+    {
+        for (int i = 0; i < PatrollCount; i++)
+        {
+            patrollPoints.Add(RandomSphereInPoint(patrollPointRange));
+
+            if (IsDebug)
+            {
+                GameObject obj = new GameObject("Patroll");
+                obj.transform.position = patrollPoints[i];
+                
+            }
+            
+        }
+    }
+
+    private Vector3 RandomSphereInPoint(float radius) 
+    {
+        Vector3 getPoint = UnityEngine.Random.onUnitSphere;
+        getPoint.y = 0.0f;
+
+        float r = UnityEngine.Random.Range(0, radius);
+
+        return (getPoint * r) + transform.position;
+
+    }
+
+
     private void OnDrawGizmos()
     {
         if (!IsDebug) 
@@ -119,6 +154,9 @@ public partial class SymbolAI : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, viewRange);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, patrollPointRange);
 
         Vector3 rightDir = AngleToDir(transform.eulerAngles.y + angle * 0.5f);
         Vector3 leftDir = AngleToDir(transform.eulerAngles.y - angle * 0.5f);

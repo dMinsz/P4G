@@ -5,7 +5,7 @@ using UnityEngine;
 public class Symbols : MonoBehaviour, IHitable
 {
 
-    public List<Unit> hasEnemys;
+    public List<UnitData> hasEnemys;
 
     //[SerializeField] public Transform enemySpawnPoint;
     //[SerializeField] public List<Transform> patrolPoints;
