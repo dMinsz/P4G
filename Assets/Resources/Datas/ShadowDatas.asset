@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a790392efe0e33243bce23c1f263cada, type: 3}
+  m_Name: ShadowDatas
+  m_EditorClassIdentifier: 
+  shadows:
+  - unitName: LyingHablerie
+    Level: 5
+    Hp: 73
+    Mp: 51
+    Strength: 5
+    Magic: 5
+    Endurance: 3
+    Agility: 3
+    Luck: 3
+    Prefab: {fileID: 5952763855675320682, guid: f0beb72f5708b8643b4aa08859d03765, type: 3}
+    resist:
+      Physic: 0
+      Fire: 2
+      Ice: 1
+      Electronic: 1
+      Wind: 0
+      Light: 0
+      Dark: 0
+    skills:
+    - {fileID: 11400000, guid: bc128a773ed8b834b86fb61142049730, type: 2}
