@@ -64,10 +64,9 @@ MonoBehaviour:
   IsDebug: 1
   state: 0
   agent: {fileID: 0}
-  patrollPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PatrollCount: 3
+  patrollPoints: []
+  patrollPointRange: 10
   idleMaxTime: 1
   attackRange: 1.2
   viewRange: 6

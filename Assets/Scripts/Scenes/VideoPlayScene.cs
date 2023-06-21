@@ -10,9 +10,9 @@ public class VideoPlayScene : BaseScene
     private string nextScene;
     protected override void Init()
     {
-        video.ChnageVideoClip(GameManager.Data.playVideoNum);
+        video.ChnageVideoClip(GameManager.Data.Video.playVideoNum);
 
-        nextScene = GameManager.Data.nextScene;
+        nextScene = GameManager.Data.Video.nextScene;
         vplayer.Play();
 
 

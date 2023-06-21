@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a790392efe0e33243bce23c1f263cada, type: 3}
-  m_Name: ShadowDatas
+  m_Script: {fileID: 11500000, guid: 37985e40a0112e04fb8acd53f6435137, type: 3}
+  m_Name: LyingHablerie
   m_EditorClassIdentifier: 
-  shadows:
-  - unitName: LyingHablerie
+  shadow:
+    unitName: LyingHablerie
     Level: 5
     Hp: 73
     Mp: 51

@@ -18,7 +18,7 @@ public class TitleScene : BaseScene
 
     public void OnStartButton()
     {
-        GameManager.Data.SetVideo(0, "LobyScene");
+        GameManager.Data.Video.SetVideo(0, "LobyScene");
 
         GameManager.Scene.LoadScene("VideoPlayScene");
     }

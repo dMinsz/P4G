@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-
+[Serializable]
 public enum Resistance 
 {
     None = 0,
@@ -16,25 +16,29 @@ public enum Resistance
 }
 
 
+[Serializable]
+public enum ResType
+{
+    None = 0,
+    Physic = 1,//¹°¸®
+    Fire = 2,// È­
+    Ice = 3,// ºù
+    Electronic = 4,//Àü°Ý
+    Wind = 5,//Ç³
+    Light = 6, // ±¤
+    Dark = 7, // ¾Ï
+}
+
+
+[Serializable]
 public class Resistances 
 {
-    public Resistance[] _Res;
 
-
-    public enum Type
-    {
-        None = 0,
-        Physic = 1,//¹°¸®
-        Fire = 2,// È­
-        Ice = 3,// ºù
-        Electronic = 4,//Àü°Ý
-        Wind = 5,//Ç³
-        Light = 6, // ±¤
-        Dark = 7, // ¾Ï
-    }
-
-    public Resistances() 
-    {
-        _Res = new Resistance[8];
-    }
+    [SerializeField] public Resistance Physic = Resistance.None;
+    [SerializeField] public Resistance Fire = Resistance.None;
+    [SerializeField] public Resistance Ice = Resistance.None;
+    [SerializeField] public Resistance Electronic = Resistance.None;
+    [SerializeField] public Resistance Wind = Resistance.None;
+    [SerializeField] public Resistance Light = Resistance.None;
+    [SerializeField] public Resistance Dark = Resistance.None;
 }

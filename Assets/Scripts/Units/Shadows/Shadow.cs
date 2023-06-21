@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Unit
+public class Shadow : Unit
 {
 
     Animator animator;
@@ -11,11 +11,14 @@ public class Player : Unit
     {
         animator = transform.Find("Model").GetComponent<Animator>();
     }
+
     public override void Attack()
     {
+        
     }
 
     public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)
     {
+        
     }
 }

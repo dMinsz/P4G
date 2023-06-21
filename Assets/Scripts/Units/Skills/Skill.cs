@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Skill : MonoBehaviour
+
+[Serializable]
+public class Skill
 {
     public enum costType 
     {
@@ -21,17 +24,17 @@ public abstract class Skill : MonoBehaviour
         Self,
     }
 
+    [SerializeField] public string skillName;
 
-    public string skillName;
-    
-    public costType cType = costType.None;
-    public int cost;
+    [SerializeField] public costType cType = costType.None;
+    [SerializeField] public int cost; // HP 는 % 계산 , MP는 숫자계산
 
-    Resistances.Type SkillType;
-    Sprite skillImage;
+    [SerializeField] ResType SkillType;
+    [SerializeField] Sprite skillImage;
 
-    TargetType target;
+    [SerializeField] TargetType target;
 
-    public abstract void UseSkill();
-
+    [SerializeField] int power = 1;
+    [SerializeField] int critical = 1;
+    [SerializeField] int hits = 1;
 }

@@ -9,11 +9,14 @@ public class RobyScene : BaseScene
     {
         base.Awake();
         Debug.Log("Roby Scene Init");
+
+        
     }
 
     protected override IEnumerator LoadingRoutine()
     {
         // fake loading
+
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 0.2f;
         yield return new WaitForSecondsRealtime(0.2f);

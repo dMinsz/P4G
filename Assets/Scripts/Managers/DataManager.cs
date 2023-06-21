@@ -6,42 +6,19 @@ using UnityEngine.Video;
 public class DataManager : MonoBehaviour
 {
     //video Data
-    public int playVideoNum = 0;
-    public string nextScene;
+    public VideoSystem Video;
 
-    public void SetVideo(int videoNumber, string runAfterScene) 
+    //Shadow Datas
+    public ShadowDataSystem Shadow;
+
+    private void Awake()
     {
-        playVideoNum = videoNumber;
-        nextScene = runAfterScene;
+        Video = new VideoSystem();
+        Shadow = new ShadowDataSystem();
     }
 
-    public void ChnageVideoClip() 
-    {
-        var player = GameObject.Find("VideoPlayer").GetComponent<VideoPlayer>();
-        
-        if (player == null) 
-        {
-            Debug.Log("Not Found Video player");
-            return;
-        }
 
-        player.playOnAwake = false;
-        
-        if (playVideoNum == 0) 
-        {
-            VideoClip clip = GameManager.Resource.Load<VideoClip>("Videos/0.mp4");
-            if (clip == null )
-                Debug.Log("Not Found Video Clip");
 
-            player.clip = clip;
-        }
-        else if (playVideoNum == 1)
-        {
-            VideoClip clip = GameManager.Resource.Load<VideoClip>("Videos/1.mp4");
-            if (clip == null)
-                Debug.Log("Not Found Video Clip");
 
-            player.clip = clip;
-        }
-    }
+
 }
