@@ -12,8 +12,9 @@ public class PoolManager : MonoBehaviour
 
     Dictionary<string, ObjectPool<GameObject>> poolDic; //사용할 풀
     Dictionary<string, Transform> poolContainer;// 풀 별로 모을 컨테이너
+    
     Transform poolRoot; // 모든 풀들을 가지고있을 곳
-
+    Transform DontDestroyPoolRoot; // 씬 전환시 없어지지않는 풀
     //UI 풀
     Canvas canvasRoot;
 
@@ -21,16 +22,25 @@ public class PoolManager : MonoBehaviour
 
     private void Awake()
     {
+        Init();
+    }
+
+    //Init new Pool Setting
+    public void Init()
+    {
         poolDic = new Dictionary<string, ObjectPool<GameObject>>();
         poolContainer = new Dictionary<string, Transform>();
         poolRoot = new GameObject("PoolRoot").transform;
+
+        DontDestroyPoolRoot = new GameObject("DontDestroyPoolRoot").transform;
+        DontDestroyPoolRoot.transform.parent = transform;
 
         canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
     }
 
 
 
-    public T Get<T>(T original, Vector3 position, Quaternion rotation, Transform parent) where T : Object
+    public T Get<T>(bool IsDontDestroy,T original, Vector3 position, Quaternion rotation, Transform parent) where T : Object
     {
         if (original is GameObject) // gameObject 일때
         {
@@ -38,7 +48,7 @@ public class PoolManager : MonoBehaviour
             string key = prefab.name; // 키를 오브젝트의 이름으로
 
             if (!poolDic.ContainsKey(key)) // 이미 키로 설정되어 있지않으면(해당하는 이름의 풀이없으면)
-                CreatePool(key, prefab); // 풀로만든다.
+                CreatePool(key, prefab, IsDontDestroy); // 풀로만든다.
 
             GameObject obj = poolDic[key].Get(); // 키로 이미 있으면 가져와서 쓰고 없으면 위에 만든 풀에서 가져와서쓴다
 
@@ -54,7 +64,7 @@ public class PoolManager : MonoBehaviour
             string key = component.gameObject.name;// 키를 해당 컴포넌트가 가지고있는 오브젝트의 이름으로
 
             if (!poolDic.ContainsKey(key))// 이미 키로 설정되어 있지않으면(해당하는 이름의 풀이없으면)
-                CreatePool(key, component.gameObject); //풀로만든다
+                CreatePool(key, component.gameObject, IsDontDestroy); //풀로만든다
 
             GameObject obj = poolDic[key].Get();// 키로 이미 있으면 가져와서 쓰고 없으면 위에 만든 풀에서 가져와서쓴다
 
@@ -74,19 +84,19 @@ public class PoolManager : MonoBehaviour
     // 아래의 Get 함수들은 각각 하나의 값들씩 안넣을때 오버로딩
     // 안넣은 값은 기본값으로 넣어준다.
 
-    public T Get<T>(T original, Vector3 position, Quaternion rotation) where T : Object
+    public T Get<T>(bool IsDontDestroy, T original, Vector3 position, Quaternion rotation) where T : Object
     {
-        return Get<T>(original, position, rotation, null);
+        return Get<T>(IsDontDestroy, original, position, rotation, null);
     }
 
-    public T Get<T>(T original, Transform parent) where T : Object
+    public T Get<T>(bool IsDontDestroy,T original, Transform parent) where T : Object
     {
-        return Get<T>(original, Vector3.zero, Quaternion.identity, parent);
+        return Get<T>(IsDontDestroy, original, Vector3.zero, Quaternion.identity, parent);
     }
 
-    public T Get<T>(T original) where T : Object
+    public T Get<T>(bool IsDontDestroy, T original) where T : Object
     {
-        return Get<T>(original, Vector3.zero, Quaternion.identity, null);
+        return Get<T>(IsDontDestroy, original, Vector3.zero, Quaternion.identity, null);
     }
 
     //풀 에서 해제 / 릴리즈
@@ -152,11 +162,20 @@ public class PoolManager : MonoBehaviour
     }
 
     //풀이 없을때 만드는 함수
-    private void CreatePool(string key, GameObject prefab)
+    private void CreatePool(string key, GameObject prefab , bool IsDontDestroy)
     {
         GameObject root = new GameObject();
         root.gameObject.name = $"{key}Container";
-        root.transform.parent = poolRoot;
+
+        if (IsDontDestroy == true)
+        {
+            root.transform.parent = DontDestroyPoolRoot;
+        }
+        else 
+        {
+            root.transform.parent = poolRoot;
+        }
+
         poolContainer.Add(key, root.transform);
 
         //유니티 지원 ObjectPool 을 만들때 

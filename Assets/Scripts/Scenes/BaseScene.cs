@@ -23,5 +23,10 @@ public abstract class BaseScene : MonoBehaviour
     {
     }
 
+    private void OnDestroy()
+    {
+        Clear();
+    }
+
     public abstract void Clear();
 }

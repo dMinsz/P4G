@@ -17,10 +17,10 @@ public class ResourceManager : MonoBehaviour
         return resource;
     }
 
-    public T Instantiate<T>(T original, Vector3 position, Quaternion rotation, Transform parent, bool pooling = false) where T : Object
+    public T Instantiate<T>(T original, Vector3 position, Quaternion rotation, Transform parent ,bool pooling = false, bool IsDontDestroy = false) where T : Object
     {
         if (pooling)
-            return GameManager.Pool.Get(original, position, rotation, parent);
+            return GameManager.Pool.Get(IsDontDestroy, original, position, rotation, parent);
         else
             return Object.Instantiate(original, position, rotation, parent);
     }

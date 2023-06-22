@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
         dObj.name = "DataManager";
         dObj.transform.parent = transform;
         dataManager = dObj.AddComponent<DataManager>();
+        dataManager.SetUp();
 
     }
 }

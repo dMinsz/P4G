@@ -6,16 +6,22 @@ public class SymbolGenerator : MonoBehaviour
 {
     public Transform[] GenratePos;
     public GameObject Symbol;
+    //public List<ShadowData> shadowDatas;
     private void Awake()
     {
-       
+
+     
     }
 
     private void Start()
     {
         for (int i = 0; i < GenratePos.Length; i++)
         {
-            GameManager.Pool.Get(Symbol, GenratePos[i].position , Quaternion.identity);
+            var newSymbol= GameManager.Pool.Get(true,Symbol, GenratePos[i].position , Quaternion.identity);
+
+
+            newSymbol.GetComponent<Symbols>().hasEnemys.Add(GameManager.Data.Dungeon.GetRandomShadow());
+            
         }
     }
 }

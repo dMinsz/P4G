@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f569fdb01b33f9f4f88d510f2a757ae4, type: 3}
+  m_Name: Yu
+  m_EditorClassIdentifier: 
+  player:
+    unitName: Yu
+    Level: 1
+    Hp: 80
+    Mp: 50
+    Strength: 10
+    Magic: 5
+    Endurance: 10
+    Agility: 10
+    Luck: 12
+    Prefab: {fileID: 5599131597469634992, guid: f9a56de79b2d8f14181591523dcd2e01, type: 3}
+    resist:
+      Physic: 0
+      Fire: 0
+      Ice: 0
+      Electronic: 0
+      Wind: 1
+      Light: 0
+      Dark: 0
+    skills: []

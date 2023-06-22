@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -9,16 +10,20 @@ public class DataManager : MonoBehaviour
     public VideoSystem Video;
 
     //Shadow Datas
-    public ShadowDataSystem Shadow;
+    public DungeonDataSystem Dungeon;
 
-    private void Awake()
+    public void SetUp()
     {
-        Video = new VideoSystem();
-        Shadow = new ShadowDataSystem();
+        var vidobj = new GameObject();
+        vidobj.transform.parent = transform;
+        Video=vidobj.AddComponent<VideoSystem>();
+
+
+        var dObj = new GameObject();
+        dObj.transform.parent = transform;
+        Dungeon = dObj.AddComponent<DungeonDataSystem>();
+        
+        Dungeon.Initialize();
     }
-
-
-
-
 
 }

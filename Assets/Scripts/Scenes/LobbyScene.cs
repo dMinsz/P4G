@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobyScene : BaseScene
+public class LobbyScene : BaseScene
 {
 
     protected override void Awake()
@@ -10,7 +10,7 @@ public class RobyScene : BaseScene
         base.Awake();
         Debug.Log("Roby Scene Init");
 
-        
+        GameManager.Data.Dungeon.SetUp("Lobby");
     }
 
     protected override IEnumerator LoadingRoutine()
@@ -29,7 +29,6 @@ public class RobyScene : BaseScene
         progress = 1.0f;
     }
     public override void Clear()
-    {
-        
+    {    
     }
 }
