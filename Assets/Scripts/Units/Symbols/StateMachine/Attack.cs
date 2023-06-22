@@ -11,6 +11,7 @@ public partial class SymbolAI : MonoBehaviour
         private NavMeshAgent navAgent;
         private Animator anim;
         private bool CanAttack;
+        private Transform target;
         public AttackState(SymbolAI owner, StateMachine<State, SymbolAI> stateMachine) : base(owner, stateMachine)
         {
         }
@@ -48,6 +49,9 @@ public partial class SymbolAI : MonoBehaviour
                 {
                     anim.SetTrigger("AttackSuccess");
                 }
+
+                target.GetComponent<Player>().TakeHit(this.transform.GetComponent<Symbols>());
+
 
             }
         }

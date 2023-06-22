@@ -26,4 +26,21 @@ public class UnitData
     [SerializeField] public List<SkillData> skills = new List<SkillData>();
 
     //[SerializeField] public List<SkillDatas> skills = new List<SkillDatas>();
+
+
+    public UnitData(UnitData u) 
+    {
+        this.unitName = u.unitName;
+        this.Level = u.Level;  
+        this.Hp = u.Hp;
+        this.Strength = u.Strength;
+        this.Magic = u.Magic;
+        this.Endurance = u.Endurance;
+        this.Agility = u.Agility;
+        this.Luck = u.Luck;
+        this.Prefab = u.Prefab;
+        this.resist = u.resist;
+        this.skills = u.skills;
+
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-    UnitData data;
+    public UnitData data;
 
     bool isDie = false;
 

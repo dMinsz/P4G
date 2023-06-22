@@ -72,7 +72,17 @@ public class PlayerMover : MonoBehaviour
 
             Quaternion lookRotation = Quaternion.LookRotation(forwardVec * moveDir.z + rightVec * moveDir.x);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.01f);
+            if (moveDir.z < 0)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.001f);
+
+            }
+            else 
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.01f);
+            }
+
+
             yield return null;
         }
     }

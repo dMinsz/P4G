@@ -51,7 +51,7 @@ public class PlayerAttacker : MonoBehaviour
                 continue;                                                              
 
             IHitable hittable = collider.GetComponent<IHitable>();
-            hittable?.TakeHit();
+            hittable?.TakeHit(this.GetComponent<Player>());
 
         }
     }
