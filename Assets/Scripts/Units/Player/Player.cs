@@ -1,9 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : Unit 
 {
+    public int MaxHp;
+    public int curHp;
+
+    public int MaxSp;
+    public int curSp;
+
+
+    public UnityEvent<int> OnHpChanged;
+    public UnityEvent<int> OnSpChanged;
+
+    public int HP { get { return curHp; } protected set { curHp = value; OnHpChanged?.Invoke(curHp); } }
+    public int SP { get { return curSp; } protected set { curSp = value; OnSpChanged?.Invoke(curSp); } }
+
 
     public Animator animator;
     public List<Player> Partys = new List<Player>();
@@ -23,6 +37,7 @@ public class Player : Unit
     }
     public void AddParty(string name) 
     {
+        //todo Change
         var data = GameManager.Resource.Load<Player>("Datas/"+name);
         Partys.Add(data);
     }

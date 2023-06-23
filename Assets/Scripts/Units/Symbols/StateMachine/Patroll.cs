@@ -8,7 +8,7 @@ public partial class SymbolAI : MonoBehaviour
     private class PatrollState : BaseState
     {
         private NavMeshAgent navAgent;
-        private Transform target;
+        private Unit target;
 
         private Animator anim;
         private List<Vector3> patrollPoints;

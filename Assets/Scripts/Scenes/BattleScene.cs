@@ -13,7 +13,7 @@ public class BattleScene : BaseScene
 
         btg = GameObject.Find("@BattleSystem").GetComponent<BattleObjectGenerator>();
 
-        GameManager.Pool.Init();
+        GameManager.Pool.Reset();
 
     }
 

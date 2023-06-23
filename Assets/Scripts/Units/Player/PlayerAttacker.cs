@@ -83,22 +83,11 @@ public class PlayerAttacker : MonoBehaviour, IHitable
 
         Debug.Log("Symbol Take Hit , Go to Battle");
 
-        GameManager.Data.Dungeon.tempSymbolShadows = ((Symbols)attacker).hasEnemys;
-
-        GameManager.Data.Dungeon.InBattlePlayers.Clear();
-        GameManager.Data.Dungeon.InBattlePlayers.Add(this.gameObject.GetComponent<Player>());
-
-        if (this.gameObject.GetComponent<Player>().Partys.Count > 1)
-        {
-            foreach (var ally in this.gameObject.GetComponent<Player>().Partys)
-            {
-                GameManager.Data.Dungeon.InBattlePlayers.Add(ally);
-            }
-        }
+        GameManager.Data.Dungeon.tempSymbolShadows = attacker.GetComponent<Symbols>().hasEnemys;
 
         GameManager.Data.Dungeon.StartTurn = DungeonDataSystem.Turn.Enemy;
 
-        //GameManager.Pool.Release(this);
+        GameManager.Pool.Release((Unit)this.GetComponent<Player>());
         GameManager.Scene.LoadScene("BattleScene");
     }
 }

@@ -11,6 +11,7 @@ public class LobbyScene : BaseScene
         Debug.Log("Roby Scene Init");
 
         GameManager.Data.Dungeon.SetUp("Lobby");
+        GameManager.Pool.Reset();
     }
 
     protected override IEnumerator LoadingRoutine()

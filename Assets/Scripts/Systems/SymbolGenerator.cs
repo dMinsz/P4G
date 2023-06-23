@@ -19,6 +19,7 @@ public class SymbolGenerator : MonoBehaviour
         {
             var newSymbol= GameManager.Pool.Get(true,Symbol, GenratePos[i].position , Quaternion.identity);
 
+            GameManager.Data.Dungeon.aliveInDungeonSymbols.Add(newSymbol.GetComponent<Symbols>());
 
             newSymbol.GetComponent<Symbols>().hasEnemys.Add(GameManager.Data.Dungeon.GetRandomShadow());
             

@@ -9,7 +9,7 @@ public partial class SymbolAI : MonoBehaviour
     {
 
         private NavMeshAgent navAgent;
-        private Transform target;
+        private Unit target;
         private Animator anim;
         private Vector3 tempPos;
         private float tempSpeed;
@@ -34,7 +34,7 @@ public partial class SymbolAI : MonoBehaviour
             if (target != null)
             {
                 tempPos = navAgent.destination;
-                navAgent.destination = target.position;
+                navAgent.destination = target.transform.position;
             }
             else
             {
@@ -49,7 +49,7 @@ public partial class SymbolAI : MonoBehaviour
             if (target != null)
             {
                 tempPos = navAgent.destination;
-                navAgent.destination = target.position;
+                navAgent.destination = target.transform.position;
             }
             else 
             {

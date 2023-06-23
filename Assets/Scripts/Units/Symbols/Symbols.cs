@@ -14,21 +14,12 @@ public class Symbols : MonoBehaviour, IHitable
         Debug.Log("Symbol Take Hit , Go to Battle");
 
         GameManager.Data.Dungeon.tempSymbolShadows = hasEnemys;
-        GameManager.Data.Dungeon.InBattlePlayers.Clear();
-
-        GameManager.Data.Dungeon.InBattlePlayers.Add((Unit)attacker);
-        
-        if (((Player)attacker).Partys.Count >= 1 ) 
-        {
-            foreach (var ally in ((Player)attacker).Partys)
-            {
-                GameManager.Data.Dungeon.InBattlePlayers.Add(ally);
-            }
-        }
+       
 
         GameManager.Data.Dungeon.StartTurn = DungeonDataSystem.Turn.Player;
 
-        //GameManager.Pool.Release(attacker);
+        GameManager.Pool.Release((Unit)attacker);
+
         GameManager.Scene.LoadScene("BattleScene");
     }
 }

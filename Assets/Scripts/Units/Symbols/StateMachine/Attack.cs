@@ -11,7 +11,7 @@ public partial class SymbolAI : MonoBehaviour
         private NavMeshAgent navAgent;
         private Animator anim;
         private bool CanAttack;
-        private Transform target;
+        private Unit target;
         public AttackState(SymbolAI owner, StateMachine<State, SymbolAI> stateMachine) : base(owner, stateMachine)
         {
         }
@@ -19,6 +19,7 @@ public partial class SymbolAI : MonoBehaviour
         {
             navAgent = owner.agent;
             anim = owner.animator;
+            target = owner.target;
         }
 
         public override void Enter()
@@ -41,7 +42,8 @@ public partial class SymbolAI : MonoBehaviour
             }
             else
             {
-                //
+                target = owner.target;
+
                 Debug.Log("SymbolAI : Attack Success");
                 navAgent.isStopped = true;
                 //anim.SetBool("Move", false);
@@ -50,7 +52,7 @@ public partial class SymbolAI : MonoBehaviour
                     anim.SetTrigger("AttackSuccess");
                 }
 
-                target.GetComponent <PlayerAttacker>().TakeHit(this.transform.GetComponent<Symbols>());
+                target.gameObject.GetComponent<PlayerAttacker>().TakeHit(this.gameObject);
 
 
             }

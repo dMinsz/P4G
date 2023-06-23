@@ -9,7 +9,7 @@ public partial class SymbolAI : MonoBehaviour
     private class IdleState : BaseState
     {
         private NavMeshAgent navAgent;
-        private Transform target;
+        private Unit target;
         private UnityEvent OnIdle;
         private float idleTime;
         private float idleMaxTime;

@@ -670,7 +670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GenratePos:
   - {fileID: 1371054817}
-  playerData: {fileID: 0}
+  playerDatas: []
   cam: {fileID: 1871443249}
 --- !u!1 &357908955 stripped
 GameObject:
@@ -954,7 +954,7 @@ GameObject:
   - component: {fileID: 524064871}
   - component: {fileID: 524064870}
   m_Layer: 0
-  m_Name: '@RobyScene'
+  m_Name: '@Scene'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1727,7 +1727,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371054816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.43, y: 0, z: -16.81}
+  m_LocalPosition: {x: 0.71, y: 0, z: -8.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

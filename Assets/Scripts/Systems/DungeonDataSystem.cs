@@ -19,9 +19,7 @@ public class DungeonDataSystem : MonoBehaviour
 
     public List<ShadowData> shadowDatas = new List<ShadowData>();//현재 던전에서 나올수있는 섀도우 데이터
 
-    // 던전 내에 모든 심볼들이 가지고있는 섀도우데이터
-    //public List<ShadowData> aliveInDungeonShadows = new List<ShadowData>();
-
+    // 던전 내에 모든 심볼들
     public List<Symbols> aliveInDungeonSymbols = new List<Symbols>();
 
 

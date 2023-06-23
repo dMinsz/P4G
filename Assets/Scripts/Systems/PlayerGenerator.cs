@@ -2,11 +2,12 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerGenerator : MonoBehaviour
 {
     public Transform[] GenratePos;
-    public PlayerData playerData;
+    public List<PlayerData> playerDatas;
     public CinemachineVirtualCamera cam;
 
     private void Awake()
@@ -16,20 +17,44 @@ public class PlayerGenerator : MonoBehaviour
     private void Start()
     {
 
-        playerData = GameManager.Resource.Load<PlayerData>("Datas/Players/Yu");
+        playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/Yu"));
 
-        for (int i = 0; i < GenratePos.Length; i++)
+
+        var temp = GameManager.Pool.Get(true, playerDatas[0].player.Prefab, GenratePos[0].position, Quaternion.identity);
+
+      
+        cam.Follow = temp.transform.Find("CamPos");
+        
+        var player = temp.GetComponent<Player>();
+        player.data = playerDatas[0].player;
+
+        player.MaxHp = playerDatas[0].player.Hp;
+        player.MaxSp = playerDatas[0].player.Sp;
+        player.curHp = playerDatas[0].player.Hp;
+        player.curSp = playerDatas[0].player.Sp;
+
+        GameManager.Data.Dungeon.InBattlePlayers.Add(player);
+
+        for (int i = 0; i < player.Partys.Count; i++)
         {
-            var temp = GameManager.Pool.Get(false,playerData.player.Prefab, GenratePos[i].position, Quaternion.identity);
+            var newAllyName = player.Partys[i].data.unitName;
 
-            if (i == 0)
-            {
-                cam.Follow = temp.transform.Find("CamPos");
-            }
+            playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/"+ newAllyName));
 
-            var player = temp.GetComponent<Player>();
-            player.data = playerData.player;
+            var newAlly = GameManager.Pool.Get(true, playerDatas[++i].player.Prefab, GenratePos[++i].position, Quaternion.identity);
+            var Ally = newAlly.GetComponent<Player>();
+
+            Ally.data = playerDatas[++i].player;
+
+            Ally.MaxHp = playerDatas[++i].player.Hp;
+            Ally.MaxSp = playerDatas[++i].player.Sp;
+            Ally.curHp = playerDatas[++i].player.Hp;
+            Ally.curSp = playerDatas[++i].player.Sp;
+
+            GameManager.Data.Dungeon.InBattlePlayers.Add(Ally);
+
         }
+
 
     }
 

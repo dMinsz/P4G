@@ -12,6 +12,7 @@ public class UnitData
     [SerializeField] public int Level;
     [SerializeField] public int Hp;
     [SerializeField] public int Mp;
+    [SerializeField] public int Sp;
     [SerializeField] public int Strength; // Indicates the effectiveness of a Persona's Physical Skills.
     [SerializeField] public int Magic; // Indicates the effectiveness of a Persona's Magic Skills and Magic Defense.
     [SerializeField] public int Endurance; // Indicates the effectiveness of a Persona's Physical Defense.
@@ -21,6 +22,7 @@ public class UnitData
 
     [SerializeField] public GameObject Prefab;
     [SerializeField] public GameObject BattlePrefab;
+    [SerializeField] public Sprite battleImage;
 
     [SerializeField] public Resistances resist;
     [SerializeField] public List<SkillData> skills = new List<SkillData>();
@@ -41,6 +43,10 @@ public class UnitData
         this.Prefab = u.Prefab;
         this.resist = u.resist;
         this.skills = u.skills;
+
+        this.Sp = u.Sp;
+        this.BattlePrefab = u.BattlePrefab;
+        this.battleImage = u.battleImage;
 
     }
 }

@@ -28,14 +28,24 @@ public class PoolManager : MonoBehaviour
     //Init new Pool Setting
     public void Init()
     {
+        Reset();
+        ResetOnDestroy();
+    }
+
+    public void Reset()
+    {
         poolDic = new Dictionary<string, ObjectPool<GameObject>>();
         poolContainer = new Dictionary<string, Transform>();
         poolRoot = new GameObject("PoolRoot").transform;
 
+        canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+    }
+
+    public void ResetOnDestroy() 
+    {
         DontDestroyPoolRoot = new GameObject("DontDestroyPoolRoot").transform;
         DontDestroyPoolRoot.transform.parent = transform;
 
-        canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
     }
 
 
@@ -231,6 +241,40 @@ public class PoolManager : MonoBehaviour
 
             GameObject obj = poolDic[key].Get();
             obj.transform.position = position;
+            return obj.GetComponent<T>();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public T GetUI<T>(T original, Transform parent) where T : Object
+    {
+        if (original is GameObject)
+        {
+            GameObject prefab = original as GameObject;
+            string key = prefab.name;
+
+            if (!poolDic.ContainsKey(key))
+                CreateUIPool(key, prefab);
+
+            GameObject obj = poolDic[key].Get();
+            //obj.transform.position = position;
+            obj.transform.SetParent(parent, false);
+            return obj as T;
+        }
+        else if (original is Component)
+        {
+            Component component = original as Component;
+            string key = component.gameObject.name;
+
+            if (!poolDic.ContainsKey(key))
+                CreateUIPool(key, component.gameObject);
+
+            GameObject obj = poolDic[key].Get();
+            //obj.transform.position = position;
+            obj.transform.SetParent(parent, false);
             return obj.GetComponent<T>();
         }
         else

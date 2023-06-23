@@ -33,7 +33,7 @@ public partial class SymbolAI : MonoBehaviour
 
 
     Animator animator;
-    [HideInInspector]public Transform target;
+    [HideInInspector]public Unit target;
 
     private float cosResult;
     public void Awake()
@@ -43,8 +43,6 @@ public partial class SymbolAI : MonoBehaviour
 
         animator = transform.Find("Model").GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-
-        //target = new Transform();
 
         stateMachine = new StateMachine<State, SymbolAI>(this);
         stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
@@ -65,7 +63,7 @@ public partial class SymbolAI : MonoBehaviour
     {
         stateMachine.Update();
     }
-    public Transform FindPlayer()
+    public Unit FindPlayer()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, viewRange, targetMask);
         foreach (Collider collider in colliders)
@@ -82,7 +80,7 @@ public partial class SymbolAI : MonoBehaviour
             {
                 continue;
             }
-            target = collider.gameObject.transform;
+            target = collider.gameObject.GetComponent<Player>();
             return target;
         }
         target = null;
@@ -100,7 +98,7 @@ public partial class SymbolAI : MonoBehaviour
             {
                 continue;
             }
-            target = collider.gameObject.transform;
+            target = collider.gameObject.GetComponent<Player>();
             return true;
         }
         target = null;
