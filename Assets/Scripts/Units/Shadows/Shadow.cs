@@ -5,11 +5,16 @@ using UnityEngine;
 public class Shadow : Unit
 {
 
-    Animator animator;
+    public Animator animator;
 
     private void Awake()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        animator.Rebind();
     }
 
     public override void Attack()

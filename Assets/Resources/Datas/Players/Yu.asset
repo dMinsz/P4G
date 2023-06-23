@@ -23,6 +23,7 @@ MonoBehaviour:
     Agility: 10
     Luck: 12
     Prefab: {fileID: 5599131597469634992, guid: f9a56de79b2d8f14181591523dcd2e01, type: 3}
+    BattlePrefab: {fileID: 5599131597469634992, guid: 62643c997fa1a114992debc9d9595a51, type: 3}
     resist:
       Physic: 0
       Fire: 0

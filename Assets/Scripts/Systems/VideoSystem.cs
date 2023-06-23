@@ -5,7 +5,7 @@ using UnityEngine.Video;
 
 public class VideoSystem : MonoBehaviour
 {
-    public int playVideoNum = 0;
+    public int playVideoNum = 1;
     public string nextScene;
 
     public void SetVideo(int videoNumber, string runAfterScene)

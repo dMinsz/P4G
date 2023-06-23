@@ -26,7 +26,7 @@ public class DungeonDataSystem : MonoBehaviour
 
 
     public List<ShadowData> tempSymbolShadows = new List<ShadowData>();//배틀씬으로 넘겨줄 섀도우데이터
-    public List<Player> InBattlePlayers = new List<Player>(); // 배틀씬으로 넘겨줄 플레이어
+    public List<Unit> InBattlePlayers = new List<Unit>(); // 배틀씬으로 넘겨줄 플레이어
 
 
     public bool IsPlayerTurn = true;

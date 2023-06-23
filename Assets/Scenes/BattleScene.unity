@@ -413,7 +413,6 @@ MonoBehaviour:
   - {fileID: 357492812}
   - {fileID: 1480674705}
   InBattleShadowDatas: []
-  InBattlePlayerDatas: []
   InBattlePlayers: []
   battleSystem: {fileID: 0}
 --- !u!4 &1001418597

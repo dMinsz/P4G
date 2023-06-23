@@ -9,7 +9,7 @@ public class DataManager : MonoBehaviour
     //video Data
     public VideoSystem Video;
 
-    //Shadow Datas
+    //Dungeon Datas
     public DungeonDataSystem Dungeon;
 
     public void SetUp()

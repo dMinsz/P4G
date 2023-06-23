@@ -20,7 +20,7 @@ public class UnitData
 
 
     [SerializeField] public GameObject Prefab;
-
+    [SerializeField] public GameObject BattlePrefab;
 
     [SerializeField] public Resistances resist;
     [SerializeField] public List<SkillData> skills = new List<SkillData>();

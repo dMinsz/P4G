@@ -2,26 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Unit , IHitable
+public class Player : Unit 
 {
 
     public Animator animator;
     public List<Player> Partys = new List<Player>();
 
-    private void Awake()
-    {
-        animator = transform.Find("Model").GetComponent<Animator>();
-        //Partys.Add(this);
-    }
 
     private void OnEnable()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
+        animator.SetFloat("MoveSpeed", 0f);
+        //animator.StartPlayback();
+        animator.Play("Idle");
     }
 
     private void OnDisable()
     {
-        animator.SetFloat("MoveSpeed", 0f);
+       
     }
     public void AddParty(string name) 
     {
@@ -47,31 +45,5 @@ public class Player : Unit , IHitable
     {
     }
 
-    public void TakeHit(Object attacker)
-    {
-        // 배틀씬으로 이동한다.
-
-        Debug.Log("Symbol Take Hit , Go to Battle");
-
-
-
-
-        GameManager.Data.Dungeon.tempSymbolShadows = ((Symbols)attacker).hasEnemys;
-        
-        GameManager.Data.Dungeon.InBattlePlayers.Clear();
-        GameManager.Data.Dungeon.InBattlePlayers.Add(this);
-
-        if (Partys.Count > 1)
-        {
-            foreach (var ally in Partys)
-            {
-                GameManager.Data.Dungeon.InBattlePlayers.Add(ally);
-            }
-        }
-
-        GameManager.Data.Dungeon.StartTurn = DungeonDataSystem.Turn.Enemy;
-
-        GameManager.Pool.Release(this);
-        GameManager.Scene.LoadScene("BattleScene");
-    }
+  
 }

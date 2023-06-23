@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-public class PlayerAttacker : MonoBehaviour
+public class PlayerAttacker : MonoBehaviour, IHitable
 {
     [SerializeField] bool debug;
 
@@ -75,5 +75,30 @@ public class PlayerAttacker : MonoBehaviour
     {
         float radian = angle * Mathf.Deg2Rad;
         return new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian));
+    }
+
+    public void TakeHit(Object attacker)
+    {
+        // 배틀씬으로 이동한다.
+
+        Debug.Log("Symbol Take Hit , Go to Battle");
+
+        GameManager.Data.Dungeon.tempSymbolShadows = ((Symbols)attacker).hasEnemys;
+
+        GameManager.Data.Dungeon.InBattlePlayers.Clear();
+        GameManager.Data.Dungeon.InBattlePlayers.Add(this.gameObject.GetComponent<Player>());
+
+        if (this.gameObject.GetComponent<Player>().Partys.Count > 1)
+        {
+            foreach (var ally in this.gameObject.GetComponent<Player>().Partys)
+            {
+                GameManager.Data.Dungeon.InBattlePlayers.Add(ally);
+            }
+        }
+
+        GameManager.Data.Dungeon.StartTurn = DungeonDataSystem.Turn.Enemy;
+
+        //GameManager.Pool.Release(this);
+        GameManager.Scene.LoadScene("BattleScene");
     }
 }

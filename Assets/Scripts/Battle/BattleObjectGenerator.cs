@@ -12,18 +12,13 @@ public class BattleObjectGenerator : MonoBehaviour
     public Transform[] PlayerPoints;
 
     [HideInInspector] public List<ShadowData> InBattleShadowDatas;
-    //[HideInInspector] public List<PlayerData> InBattlePlayerDatas;
-    [HideInInspector] public List<Player> InBattlePlayers;
+    [HideInInspector] public List<Unit> InBattlePlayers;
 
 
 
     [HideInInspector]  public BattleSystem battleSystem;
 
-    //public void SetUp() 
-    //{
-    //    InBattleShadowDatas = GameManager.Data.Dungeon.tempSymbolShadows;
-    //    InBattlePlayerDatas = GameManager.Data.Dungeon.InBattlePlayers;
-    //}
+
     private void Start()
     {
       
@@ -46,8 +41,11 @@ public class BattleObjectGenerator : MonoBehaviour
         {
             GameObject obj = InBattleShadowDatas[0].shadow.Prefab;
             var newShadow = GameManager.Pool.Get(true,obj, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity);
-
+            //var newShadow = GameManager.Resource.Instantiate(InBattleShadowDatas[0].shadow.Prefab, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity);
+            newShadow.GetComponent<Shadow>().data = InBattleShadowDatas[0].shadow;
+            //newShadow.GetComponent<Shadow>().animator.Rebind();
             battleSystem.InBattleShadows.Add(newShadow.GetComponent<Shadow>());
+
             MakePlayers();
         }
         else 
@@ -67,8 +65,9 @@ public class BattleObjectGenerator : MonoBehaviour
         {
             GameObject obj = InBattleShadowDatas[i].shadow.Prefab;
 
-            //
             var newShadow = GameManager.Pool.Get(false,obj, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity);
+
+            newShadow.GetComponent<Shadow>().data = InBattleShadowDatas[i].shadow;
 
             battleSystem.InBattleShadows.Add(newShadow.GetComponent<Shadow>());
         }
@@ -79,9 +78,10 @@ public class BattleObjectGenerator : MonoBehaviour
     {
         for (int i = 0; i < InBattlePlayers.Count; i++)
         {
-            var newPlayer = GameManager.Pool.Get(true, InBattlePlayers[i], PlayerPoints[i].position, Quaternion.identity);
+            var newPlayer = GameManager.Pool.Get(false, InBattlePlayers[i].data.BattlePrefab, PlayerPoints[i].position, Quaternion.identity);
 
-            battleSystem.InBattlePlayers.Add(newPlayer);
+            newPlayer.GetComponent<Player>().data = InBattlePlayers[i].data;
+            battleSystem.InBattlePlayers.Add(newPlayer.GetComponent<Player>());
         }
     }
 

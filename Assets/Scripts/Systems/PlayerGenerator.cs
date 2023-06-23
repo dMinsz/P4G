@@ -20,7 +20,7 @@ public class PlayerGenerator : MonoBehaviour
 
         for (int i = 0; i < GenratePos.Length; i++)
         {
-            var temp = GameManager.Pool.Get(true,playerData.player.Prefab, GenratePos[i].position, Quaternion.identity);
+            var temp = GameManager.Pool.Get(false,playerData.player.Prefab, GenratePos[i].position, Quaternion.identity);
 
             if (i == 0)
             {

@@ -13,31 +13,19 @@ public class BattleScene : BaseScene
 
         btg = GameObject.Find("@BattleSystem").GetComponent<BattleObjectGenerator>();
 
-        
+        GameManager.Pool.Init();
 
     }
 
     protected override IEnumerator LoadingRoutine()
     {
         btg.SetUp();
-
-        foreach (var player in btg.InBattlePlayers)
-        {
-            player.GetComponent<PlayerMover>().enabled = false;
-            player.GetComponent<PlayerAttacker>().enabled = false;
-            player.GetComponent<PlayerInput>().enabled = false;
-        }
-       
+        progress = 1.0f;
         yield return null;
     }
     public override void Clear()
     {
-        foreach (var player in btg.InBattlePlayers)
-        {
-            player.GetComponent<PlayerMover>().enabled = true;
-            player.GetComponent<PlayerAttacker>().enabled = true;
-            player.GetComponent<PlayerInput>().enabled = true;
-        }
+        
     }
 
 }
