@@ -52,7 +52,7 @@ public partial class SymbolAI : MonoBehaviour
                     anim.SetTrigger("AttackSuccess");
                 }
 
-                target.gameObject.GetComponent<PlayerAttacker>().TakeHit(this.gameObject);
+                target.gameObject.GetComponent<PlayerHiter>().TakeHit(this.gameObject);
 
 
             }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements;
 
 public class PoolManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PoolManager : MonoBehaviour
     Dictionary<string, Transform> poolContainer;// 풀 별로 모을 컨테이너
     
     Transform poolRoot; // 모든 풀들을 가지고있을 곳
+
     Transform DontDestroyPoolRoot; // 씬 전환시 없어지지않는 풀
     //UI 풀
     Canvas canvasRoot;
@@ -22,46 +24,108 @@ public class PoolManager : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+        //Init();
     }
 
     //Init new Pool Setting
     public void Init()
     {
-        Reset();
-        ResetOnDestroy();
-    }
-
-    public void Reset()
-    {
         poolDic = new Dictionary<string, ObjectPool<GameObject>>();
+
         poolContainer = new Dictionary<string, Transform>();
         poolRoot = new GameObject("PoolRoot").transform;
 
         canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+        
+        DontDestroyPoolRoot = new GameObject("DontDestroyPoolRoot").transform;
+        DontDestroyPoolRoot.transform.parent = transform;
+    }
+
+    public void Reset()
+    {
+        //poolDic = new Dictionary<string, ObjectPool<GameObject>>();
+        //poolContainer = new Dictionary<string, Transform>();
+        //poolRoot = new GameObject("PoolRoot").transform;
+
+        //canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+
     }
 
     public void ResetOnDestroy() 
     {
+        if (DontDestroyPoolRoot != null)
+        {
+            Destroy(DontDestroyPoolRoot.gameObject);
+        }
+
         DontDestroyPoolRoot = new GameObject("DontDestroyPoolRoot").transform;
         DontDestroyPoolRoot.transform.parent = transform;
+    }
 
+    public void CleanUpDontDestroyRoot() 
+    { // 비워있는 컨테이너 삭제
+        if (DontDestroyPoolRoot != null && DontDestroyPoolRoot.childCount > 0)
+        {
+
+            for (int i = 0; i < DontDestroyPoolRoot.childCount; i++)
+            {
+                var container = DontDestroyPoolRoot.GetChild(i);
+
+                if (container.childCount <= 0)
+                {
+                    Destroy(container.gameObject);
+                }
+
+            }
+        }
+    }
+
+    public void DestroyContainer(GameObject obj)
+    {
+        if (DontDestroyPoolRoot != null && DontDestroyPoolRoot.childCount > 0)
+        {
+
+            for (int i = 0; i < DontDestroyPoolRoot.childCount; i++)
+            {
+                var container = DontDestroyPoolRoot.GetChild(i);
+
+                if (container.childCount > 0)
+                {
+                    
+                    if (container.GetChild(0).gameObject == obj)
+                    {
+                        Destroy(container.gameObject);
+                    }
+                }
+
+
+            }
+        }
     }
 
 
 
-    public T Get<T>(bool IsDontDestroy,T original, Vector3 position, Quaternion rotation, Transform parent) where T : Object
+    public T Get<T>(bool IsDontDestroy,T original, Vector3 position, Quaternion rotation, Transform parent, string suffix = "") where T : Object
     {
         if (original is GameObject) // gameObject 일때
         {
             GameObject prefab = original as GameObject;
             string key = prefab.name; // 키를 오브젝트의 이름으로
 
+
+            if (suffix != "")
+            {
+                key += suffix;
+            }
+            GameObject obj;
+
+         
             if (!poolDic.ContainsKey(key)) // 이미 키로 설정되어 있지않으면(해당하는 이름의 풀이없으면)
                 CreatePool(key, prefab, IsDontDestroy); // 풀로만든다.
 
-            GameObject obj = poolDic[key].Get(); // 키로 이미 있으면 가져와서 쓰고 없으면 위에 만든 풀에서 가져와서쓴다
+            obj = poolDic[key].Get(); // 키로 이미 있으면 가져와서 쓰고 없으면 위에 만든 풀에서 가져와서쓴다
 
+       
             //해당하는 오브젝트에 부모,위치,포지션,로테이션 설정
             obj.transform.parent = parent;
             obj.transform.position = position;
@@ -73,11 +137,21 @@ public class PoolManager : MonoBehaviour
             Component component = original as Component;
             string key = component.gameObject.name;// 키를 해당 컴포넌트가 가지고있는 오브젝트의 이름으로
 
-            if (!poolDic.ContainsKey(key))// 이미 키로 설정되어 있지않으면(해당하는 이름의 풀이없으면)
-                CreatePool(key, component.gameObject, IsDontDestroy); //풀로만든다
+            if (suffix != "")
+            {
+                key += suffix;
+            }
 
-            GameObject obj = poolDic[key].Get();// 키로 이미 있으면 가져와서 쓰고 없으면 위에 만든 풀에서 가져와서쓴다
+            GameObject obj;
 
+         
+            if (!poolDic.ContainsKey(key)) // 이미 키로 설정되어 있지않으면(해당하는 이름의 풀이없으면)
+                CreatePool(key, component.gameObject, IsDontDestroy); // 풀로만든다.
+
+            obj = poolDic[key].Get(); // 키로 이미 있으면 가져와서 쓰고 없으면 위에 만든 풀에서 가져와서쓴다
+
+       
+ 
             //해당하는 오브젝트에 부모,위치,포지션,로테이션 설정
             obj.transform.parent = parent;
             obj.transform.position = position;
@@ -94,6 +168,12 @@ public class PoolManager : MonoBehaviour
     // 아래의 Get 함수들은 각각 하나의 값들씩 안넣을때 오버로딩
     // 안넣은 값은 기본값으로 넣어준다.
 
+    public T Get<T>(bool IsDontDestroy, T original, Vector3 position, Quaternion rotation , string suffix) where T : Object
+    {
+        return Get<T>(IsDontDestroy, original, position, rotation, null , suffix);
+    }
+
+
     public T Get<T>(bool IsDontDestroy, T original, Vector3 position, Quaternion rotation) where T : Object
     {
         return Get<T>(IsDontDestroy, original, position, rotation, null);
@@ -108,6 +188,8 @@ public class PoolManager : MonoBehaviour
     {
         return Get<T>(IsDontDestroy, original, Vector3.zero, Quaternion.identity, null);
     }
+
+
 
     //풀 에서 해제 / 릴리즈
     //풀에 없으면 
@@ -186,6 +268,7 @@ public class PoolManager : MonoBehaviour
             root.transform.parent = poolRoot;
         }
 
+      
         poolContainer.Add(key, root.transform);
 
         //유니티 지원 ObjectPool 을 만들때 
@@ -212,7 +295,10 @@ public class PoolManager : MonoBehaviour
                 Destroy(obj);
             }
             );
-        poolDic.Add(key, pool);
+
+
+            poolDic.Add(key, pool);
+
     }
 
 

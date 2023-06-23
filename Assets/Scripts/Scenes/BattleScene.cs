@@ -13,8 +13,10 @@ public class BattleScene : BaseScene
 
         btg = GameObject.Find("@BattleSystem").GetComponent<BattleObjectGenerator>();
 
-        GameManager.Pool.Reset();
+        //GameManager.Pool.Reset();
 
+
+        GameManager.Data.Dungeon.IsInit = false;
     }
 
     protected override IEnumerator LoadingRoutine()

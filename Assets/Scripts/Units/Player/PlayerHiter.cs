@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Symbols : MonoBehaviour, IHitable
+public class PlayerHiter : MonoBehaviour, IHitable
 {
-
-    public List<ShadowData> hasEnemys;
-
     public void TakeHit(GameObject attacker)
     {
         // 배틀씬으로 이동한다.
 
         Debug.Log("Symbol Take Hit , Go to Battle");
 
-        GameManager.Data.Dungeon.tempSymbolShadows = hasEnemys;
+        GameManager.Data.Dungeon.tempSymbolShadows = attacker.GetComponent<Symbols>().hasEnemys;
 
-        GameManager.Data.Dungeon.SetGoToBattle(DungeonDataSystem.Turn.Player, this.gameObject);
+        GameManager.Data.Dungeon.SetGoToBattle(DungeonDataSystem.Turn.Enemy, attacker);
+
 
         foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
         {
@@ -32,7 +30,8 @@ public class Symbols : MonoBehaviour, IHitable
         GameManager.Scene.LoadScene("BattleScene");
     }
 
-    public void ReleasePool() 
+
+    public void ReleasePool()
     {
         if (GameManager.Pool.IsContain(this.gameObject))
         {

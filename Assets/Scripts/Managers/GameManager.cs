@@ -39,14 +39,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake() // 유니티에서는 에디터상에서 추가할수 있기때문에 이런식으로구현
     {
-        if (instance != null)
+        if (instance != null && instance != this)
         {
             Debug.LogWarning("GameInstance: valid instance already registered.");
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
 
-        DontDestroyOnLoad(this); // 유니티는 씬을 전환하면 자동으로 오브젝트들이 삭제된다
+        DontDestroyOnLoad(gameObject); // 유니티는 씬을 전환하면 자동으로 오브젝트들이 삭제된다
                                  // 해당 코드로 삭제 안하고 유지
         instance = this;
 
@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         poolObj.name = "PoolManager";
         poolObj.transform.SetParent(transform);
         poolManager = poolObj.AddComponent<PoolManager>();
+        poolManager.Init();
 
         GameObject uiObj = new GameObject();
         uiObj.name = "UIManager";
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
 
         GameObject dObj = new GameObject();
         dObj.name = "DataManager";
-        dObj.transform.parent = transform;
+        dObj.transform.SetParent(transform);
         dataManager = dObj.AddComponent<DataManager>();
         dataManager.SetUp();
 

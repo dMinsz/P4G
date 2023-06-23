@@ -10,16 +10,17 @@ public class DataManager : MonoBehaviour
     public VideoSystem Video;
 
     //Dungeon Datas
+    
     public DungeonDataSystem Dungeon;
 
     public void SetUp()
     {
-        var vidobj = new GameObject();
+        var vidobj = new GameObject("VideoSystem");
         vidobj.transform.parent = transform;
         Video=vidobj.AddComponent<VideoSystem>();
 
 
-        var dObj = new GameObject();
+        var dObj = new GameObject("DungeonDataSystem");
         dObj.transform.parent = transform;
         Dungeon = dObj.AddComponent<DungeonDataSystem>();
         

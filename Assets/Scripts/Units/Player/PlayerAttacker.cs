@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-public class PlayerAttacker : MonoBehaviour, IHitable
+public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] bool debug;
 
@@ -51,7 +51,7 @@ public class PlayerAttacker : MonoBehaviour, IHitable
                 continue;                                                              
 
             IHitable hittable = collider.GetComponent<IHitable>();
-            hittable?.TakeHit(this.GetComponent<Player>());
+            hittable?.TakeHit(this.gameObject);
 
         }
     }
@@ -77,17 +77,4 @@ public class PlayerAttacker : MonoBehaviour, IHitable
         return new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian));
     }
 
-    public void TakeHit(Object attacker)
-    {
-        // 배틀씬으로 이동한다.
-
-        Debug.Log("Symbol Take Hit , Go to Battle");
-
-        GameManager.Data.Dungeon.tempSymbolShadows = attacker.GetComponent<Symbols>().hasEnemys;
-
-        GameManager.Data.Dungeon.StartTurn = DungeonDataSystem.Turn.Enemy;
-
-        GameManager.Pool.Release((Unit)this.GetComponent<Player>());
-        GameManager.Scene.LoadScene("BattleScene");
-    }
 }

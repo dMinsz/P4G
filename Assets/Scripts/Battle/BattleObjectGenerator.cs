@@ -12,10 +12,8 @@ public class BattleObjectGenerator : MonoBehaviour
 
     public Transform[] PlayerPoints;
 
-    [HideInInspector] public List<ShadowData> InBattleShadowDatas;
-    [HideInInspector] public List<Unit> InBattlePlayers;
-
-
+    //[HideInInspector] public List<ShadowData> InBattleShadowDatas;
+    //[HideInInspector] public List<Unit> InBattlePlayers;
 
     [HideInInspector]  public BattleSystem battleSystem;
 
@@ -34,23 +32,21 @@ public class BattleObjectGenerator : MonoBehaviour
 
     public void SetUp()
     {
-        InBattleShadowDatas = GameManager.Data.Dungeon.tempSymbolShadows;
-        InBattlePlayers = GameManager.Data.Dungeon.InBattlePlayers;
+        //GameManager.Data.Dungeon.tempSymbolShadows;
+        //GameManager.Data.Dungeon.InBattlePlayers;
 
         battleSystem = GetComponent<BattleSystem>();
 
-        if (InBattleShadowDatas.Count <= 0) 
+        if (GameManager.Data.Dungeon.tempSymbolShadows.Count <= 0) 
         {
             UnityEngine.Debug.Log("Shadow Data Is None");
         }
 
-        if (InBattleShadowDatas.Count == 1)
+        if (GameManager.Data.Dungeon.tempSymbolShadows.Count == 1)
         {
-            GameObject obj = InBattleShadowDatas[0].shadow.Prefab;
+            GameObject obj = GameManager.Data.Dungeon.tempSymbolShadows[0].shadow.Prefab;
             var newShadow = GameManager.Pool.Get(false,obj, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity);
-            //var newShadow = GameManager.Resource.Instantiate(InBattleShadowDatas[0].shadow.Prefab, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity);
-            newShadow.GetComponent<Shadow>().data = InBattleShadowDatas[0].shadow;
-            //newShadow.GetComponent<Shadow>().animator.Rebind();
+            newShadow.GetComponent<Shadow>().data = GameManager.Data.Dungeon.tempSymbolShadows[0].shadow;
             battleSystem.InBattleShadows.Add(newShadow.GetComponent<Shadow>());
 
             MakePlayers();
@@ -62,6 +58,8 @@ public class BattleObjectGenerator : MonoBehaviour
             MakePlayers();
         }
         SetUpUI();
+
+        battleSystem.SetUp();
     }
 
     public void SetUpUI()
@@ -85,13 +83,13 @@ public class BattleObjectGenerator : MonoBehaviour
 
     private void MakeShadows() 
     {
-        for (int i = 0; i < InBattleShadowDatas.Count; i++)
+        for (int i = 0; i < GameManager.Data.Dungeon.tempSymbolShadows.Count; i++)
         {
-            GameObject obj = InBattleShadowDatas[i].shadow.Prefab;
+            GameObject obj = GameManager.Data.Dungeon.tempSymbolShadows[i].shadow.Prefab;
 
-            var newShadow = GameManager.Pool.Get(false,obj, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity);
+            var newShadow = GameManager.Pool.Get(false,obj, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity , i.ToString());
 
-            newShadow.GetComponent<Shadow>().data = InBattleShadowDatas[i].shadow;
+            newShadow.GetComponent<Shadow>().data = GameManager.Data.Dungeon.tempSymbolShadows[i].shadow;
 
             battleSystem.InBattleShadows.Add(newShadow.GetComponent<Shadow>());
         }
@@ -100,17 +98,18 @@ public class BattleObjectGenerator : MonoBehaviour
 
     private void MakePlayers() 
     {
-        for (int i = 0; i < InBattlePlayers.Count; i++)
+        var players = GameManager.Data.Dungeon.InBattlePlayers;
+        for (int i = 0; i < players.Count; i++)
         {
-            var newPlayer = GameManager.Pool.Get(false, InBattlePlayers[i].data.BattlePrefab, PlayerPoints[i].position, Quaternion.identity);
+            var newPlayer = GameManager.Pool.Get(false, players[i].data.BattlePrefab, PlayerPoints[i].position, Quaternion.identity);
 
-            newPlayer.GetComponent<Player>().data = InBattlePlayers[i].data;
+            newPlayer.GetComponent<Player>().data = players[i].data;
 
-            newPlayer.GetComponent<Player>().MaxHp = InBattlePlayers[i].GetComponent<Player>().MaxHp;
-            newPlayer.GetComponent<Player>().MaxSp = InBattlePlayers[i].GetComponent<Player>().MaxSp;
+            newPlayer.GetComponent<Player>().MaxHp = players[i].GetComponent<Player>().MaxHp;
+            newPlayer.GetComponent<Player>().MaxSp = players[i].GetComponent<Player>().MaxSp;
 
-            newPlayer.GetComponent<Player>().curHp = InBattlePlayers[i].GetComponent<Player>().HP;
-            newPlayer.GetComponent<Player>().curSp = InBattlePlayers[i].GetComponent<Player>().SP;
+            newPlayer.GetComponent<Player>().curHp = players[i].GetComponent<Player>().HP;
+            newPlayer.GetComponent<Player>().curSp = players[i].GetComponent<Player>().SP;
             battleSystem.InBattlePlayers.Add(newPlayer.GetComponent<Player>());
         }
     }

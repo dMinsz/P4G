@@ -11,12 +11,13 @@ public class LobbyScene : BaseScene
         Debug.Log("Roby Scene Init");
 
         GameManager.Data.Dungeon.SetUp("Lobby");
-        GameManager.Pool.Reset();
+        
     }
 
     protected override IEnumerator LoadingRoutine()
     {
         // fake loading
+        GameManager.Data.Dungeon.SetUp("Lobby");
 
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 0.2f;
@@ -29,7 +30,10 @@ public class LobbyScene : BaseScene
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
     }
+
+
     public override void Clear()
-    {    
+    {
+        
     }
 }

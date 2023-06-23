@@ -3113,6 +3113,7 @@ GameObject:
   - component: {fileID: 5599131597469634986}
   - component: {fileID: 5599131597469634984}
   - component: {fileID: 5599131597469634985}
+  - component: {fileID: 6521109945183214141}
   m_Layer: 3
   m_Name: Yu
   m_TagString: Player
@@ -3154,6 +3155,7 @@ MonoBehaviour:
     Level: 0
     Hp: 0
     Mp: 0
+    Sp: 0
     Strength: 0
     Magic: 0
     Endurance: 0
@@ -3161,6 +3163,7 @@ MonoBehaviour:
     Luck: 0
     Prefab: {fileID: 0}
     BattlePrefab: {fileID: 0}
+    battleImage: {fileID: 0}
     resist:
       Physic: 0
       Fire: 0
@@ -3170,6 +3173,16 @@ MonoBehaviour:
       Light: 0
       Dark: 0
     skills: []
+  MaxHp: 0
+  curHp: 0
+  MaxSp: 0
+  curSp: 0
+  OnHpChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpChanged:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 0}
   Partys: []
 --- !u!143 &5599131597469634991
@@ -3278,6 +3291,18 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &6521109945183214141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5599131597469634992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c835424823980548a555d6ab0c70b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5684986362410561248
 GameObject:
   m_ObjectHideFlags: 0
