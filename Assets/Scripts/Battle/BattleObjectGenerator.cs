@@ -101,13 +101,25 @@ public class BattleObjectGenerator : MonoBehaviour
         {
             var newPlayer = GameManager.Pool.Get(false, players[i].data.BattlePrefab, PlayerPoints[i].position, Quaternion.identity);
 
-            newPlayer.GetComponent<Player>().data = players[i].data;
+            var player = newPlayer.GetComponent<Player>();
 
-            newPlayer.GetComponent<Player>().MaxHp = players[i].GetComponent<Player>().MaxHp;
-            newPlayer.GetComponent<Player>().MaxSp = players[i].GetComponent<Player>().MaxSp;
+            player.data = players[i].data;
 
-            newPlayer.GetComponent<Player>().curHp = players[i].GetComponent<Player>().HP;
-            newPlayer.GetComponent<Player>().curSp = players[i].GetComponent<Player>().SP;
+            player.MaxHp = players[i].GetComponent<Player>().MaxHp;
+            player.MaxSp = players[i].GetComponent<Player>().MaxSp;
+
+            player.curHp = players[i].GetComponent<Player>().HP;
+            player.curSp = players[i].GetComponent<Player>().SP;
+
+            //persona
+            player.Personas = players[i].GetComponent<Player>().Personas;
+
+            foreach (var persona in player.Personas)
+            {
+                var newPersona=GameManager.Pool.Get(false, persona, player.PersonaPoint.position, Quaternion.identity);
+                GameManager.Pool.Release(newPersona);
+            }
+
             battleSystem.InBattlePlayers.Add(newPlayer.GetComponent<Player>());
         }
     }

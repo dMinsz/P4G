@@ -1746,6 +1746,37 @@ Transform:
   m_Father: {fileID: 3943089761320538913}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2785653368884410428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171682941511130760}
+  m_Layer: 3
+  m_Name: PersonaPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &171682941511130760
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785653368884410428}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5599131597469634990}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2799996776196044100
 GameObject:
   m_ObjectHideFlags: 0
@@ -3129,6 +3160,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5349895894122362310}
+  - {fileID: 171682941511130760}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0.478, z: 0}
@@ -3149,6 +3181,7 @@ MonoBehaviour:
     Level: 0
     Hp: 0
     Mp: 0
+    Sp: 0
     Strength: 0
     Magic: 0
     Endurance: 0
@@ -3156,6 +3189,7 @@ MonoBehaviour:
     Luck: 0
     Prefab: {fileID: 0}
     BattlePrefab: {fileID: 0}
+    battleImage: {fileID: 0}
     resist:
       Physic: 0
       Fire: 0
@@ -3165,8 +3199,21 @@ MonoBehaviour:
       Light: 0
       Dark: 0
     skills: []
+  MaxHp: 0
+  curHp: 0
+  MaxSp: 0
+  curSp: 0
+  PersonaPoint: {fileID: 0}
+  OnHpChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpChanged:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 0}
   Partys: []
+  Personas: []
+  card: []
 --- !u!143 &5599131597469634991
 CharacterController:
   m_ObjectHideFlags: 0

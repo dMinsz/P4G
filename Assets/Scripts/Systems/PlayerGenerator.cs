@@ -30,6 +30,12 @@ public class PlayerGenerator : MonoBehaviour
             player.curHp = playerDatas[0].player.Hp;
             player.curSp = playerDatas[0].player.Sp;
 
+
+            //페르소나 추가
+            var data = GameManager.Resource.Load<PersonaData>("Datas/Personas/Izanagi");
+            player.Personas.Add(data.PData.prefabs.GetComponent<BattlePersona>());
+            player.Personas[0].data = data.PData;
+
             GameManager.Data.Dungeon.InBattlePlayers.Add(player);
 
             for (int i = 0; i < player.Partys.Count; i++)

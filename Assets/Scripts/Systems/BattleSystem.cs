@@ -70,6 +70,11 @@ public class BattleSystem : MonoBehaviour
         nowPlayer.Attack(nowShadow.attackPoint.position,nowShadow.transform.position);
     }
 
+    public void OnPlayerUsePersonaAttack() 
+    {
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position);
+    }
+
 
     public void ReleasePool() 
     {

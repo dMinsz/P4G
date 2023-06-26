@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static PersonaData;
 
 public class Player : Unit 
 {
@@ -11,7 +12,7 @@ public class Player : Unit
     public int MaxSp;
     public int curSp;
 
-    public Vector3 target;
+    public Transform PersonaPoint;
 
     public UnityEvent<int> OnHpChanged;
     public UnityEvent<int> OnSpChanged;
@@ -24,10 +25,19 @@ public class Player : Unit
     public List<Player> Partys = new List<Player>();
 
 
+    public List<BattlePersona> Personas = new List<BattlePersona>();
+    public Transform[] card;
+
     private void OnEnable()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
         animator.SetFloat("MoveSpeed", 0f);
+        PersonaPoint = transform.Find("PersonaPoint");
+
+        card = new Transform[2];
+        card[0] = transform.Find("Model").Find("card_0_Part");
+        card[1] = transform.Find("Model").Find("card_1_Part");
+
         ////animator.StartPlayback();
         //animator.Play("Idle");
     }
@@ -69,6 +79,13 @@ public class Player : Unit
 
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
 
+    }
+
+    public void UseSkill(Vector3 attackPoint, Vector3 lookPoint) 
+    {
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
+        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(Personas[0] , PersonaPoint, lookPoint));        
     }
 
     public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)
