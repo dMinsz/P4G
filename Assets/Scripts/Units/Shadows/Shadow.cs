@@ -12,6 +12,7 @@ public class Shadow : Unit
     public int MaxSp;
     public int curSp;
 
+    public Transform attackPoint;
 
     public UnityEvent<int> OnHpChanged;
     public UnityEvent<int> OnSpChanged;
@@ -24,13 +25,14 @@ public class Shadow : Unit
     private void Awake()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
+        attackPoint = transform.Find("AttackPoint").transform;
     }
 
     private void Start()
     {
     }
 
-    public override void Attack()
+    public override void Attack(Vector3 attackPoint, Vector3 lookPoint)
     {
         
     }

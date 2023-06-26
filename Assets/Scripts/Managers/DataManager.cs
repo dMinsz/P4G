@@ -13,6 +13,10 @@ public class DataManager : MonoBehaviour
     
     public DungeonDataSystem Dungeon;
 
+
+    //Battle Shared Data
+    public BattleSystem Battle;
+
     public void SetUp()
     {
         var vidobj = new GameObject("VideoSystem");
@@ -23,8 +27,12 @@ public class DataManager : MonoBehaviour
         var dObj = new GameObject("DungeonDataSystem");
         dObj.transform.parent = transform;
         Dungeon = dObj.AddComponent<DungeonDataSystem>();
-        
         Dungeon.Initialize();
+
+
+        var bObj = new GameObject("BattleDataSystem");
+        bObj.transform.parent = transform;
+        Battle = bObj.AddComponent<BattleSystem>();
     }
 
 }

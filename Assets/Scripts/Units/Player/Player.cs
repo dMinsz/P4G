@@ -11,6 +11,7 @@ public class Player : Unit
     public int MaxSp;
     public int curSp;
 
+    public Vector3 target;
 
     public UnityEvent<int> OnHpChanged;
     public UnityEvent<int> OnSpChanged;
@@ -27,8 +28,8 @@ public class Player : Unit
     {
         animator = transform.Find("Model").GetComponent<Animator>();
         animator.SetFloat("MoveSpeed", 0f);
-        //animator.StartPlayback();
-        animator.Play("Idle");
+        ////animator.StartPlayback();
+        //animator.Play("Idle");
     }
 
     private void OnDisable()
@@ -52,8 +53,22 @@ public class Player : Unit
             }
         }
     }
-    public override void Attack()
+    public override void Attack(Vector3 attackPoint, Vector3 lookPoint)
     {
+        Vector3 OriginPos = transform.position;
+        ////Move
+        GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
+        GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(attackPoint, transform , animator));
+
+        ////Attack
+        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowShadow, animator));
+
+        ////ReturnBack
+        GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(OriginPos, this.transform));
+        GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(OriginPos, transform, animator));
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
+
     }
 
     public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)

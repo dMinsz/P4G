@@ -24,18 +24,11 @@ public class BattleObjectGenerator : MonoBehaviour
         partyUI = ui.transform.Find("PartyUI");
     }
 
-    private void Start()
-    {
-      
-    }
-
-
     public void SetUp()
     {
-        //GameManager.Data.Dungeon.tempSymbolShadows;
-        //GameManager.Data.Dungeon.InBattlePlayers;
-
         battleSystem = GetComponent<BattleSystem>();
+        GameManager.Data.Battle = GetComponent<BattleSystem>();
+
 
         if (GameManager.Data.Dungeon.tempSymbolShadows.Count <= 0) 
         {
@@ -59,8 +52,15 @@ public class BattleObjectGenerator : MonoBehaviour
         }
         SetUpUI();
 
-        battleSystem.SetUp();
+        //BattleSystem set
+
+        battleSystem.LookSetUp();
+        battleSystem.SetTargets();
+
     }
+
+
+
 
     public void SetUpUI()
     {
@@ -77,8 +77,6 @@ public class BattleObjectGenerator : MonoBehaviour
             newUI.transform.Find("HPText").GetComponent<BarText>().player = battleSystem.InBattlePlayers[i];
         }
     }
-
-
 
 
     private void MakeShadows() 
