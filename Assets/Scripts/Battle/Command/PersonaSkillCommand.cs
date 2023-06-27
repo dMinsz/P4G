@@ -19,8 +19,9 @@ public class PersonaSkillCommand : Command
     }
     protected override async Task AsyncExecuter()
     {
-        var pobj = GameManager.Pool.Get(false, persona, summonPoint.position, Quaternion.identity);
 
+        var pobj = GameManager.Pool.Get(false, persona, summonPoint.position, Quaternion.identity);
+        pobj.transform.LookAt(lookTarget);
 
         if (type == BattleSystem.PersonaAttackType.Attack)
         {

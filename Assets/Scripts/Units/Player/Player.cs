@@ -87,7 +87,6 @@ public class Player : Unit
 
         GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
 
-        GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, Personas[nowPersonaIndex].transform));
         GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(Personas[0] , PersonaPoint, lookPoint , type));
 
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
