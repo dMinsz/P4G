@@ -29,8 +29,8 @@ public class Skill
     [SerializeField] public costType cType = costType.None;
     [SerializeField] public int cost; // HP 는 % 계산 , MP는 숫자계산
 
-    [SerializeField] ResType SkillType;
-    [SerializeField] Sprite skillImage;
+    [SerializeField] public ResType SkillType;
+    [SerializeField] public Sprite skillImage;
 
     [SerializeField] TargetType target;
 

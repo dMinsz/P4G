@@ -14,17 +14,17 @@ public class Player : Unit
 
     public Transform PersonaPoint;
 
-    public UnityEvent<int> OnHpChanged;
-    public UnityEvent<int> OnSpChanged;
+    public UnityEvent<int> OnHpChanged = new UnityEvent<int>();
+    public UnityEvent<int> OnSpChanged = new UnityEvent<int>();
 
-    public int HP { get { return curHp; } protected set { curHp = value; OnHpChanged?.Invoke(curHp); } }
-    public int SP { get { return curSp; } protected set { curSp = value; OnSpChanged?.Invoke(curSp); } }
+    public int HP { get { return curHp; } set { curHp = value; OnHpChanged?.Invoke(curHp); } }
+    public int SP { get { return curSp; } set { curSp = value; OnSpChanged?.Invoke(curSp); } }
 
 
     public Animator animator;
     public List<Player> Partys = new List<Player>();
 
-
+    public int nowPersonaIndex = 0;
     public List<BattlePersona> Personas = new List<BattlePersona>();
     public Transform[] card;
 
@@ -63,7 +63,7 @@ public class Player : Unit
             }
         }
     }
-    public override void Attack(Vector3 attackPoint, Vector3 lookPoint)
+    public void Attack(Vector3 attackPoint, Vector3 lookPoint , Transform ui)
     {
         Vector3 OriginPos = transform.position;
         ////Move
@@ -79,18 +79,26 @@ public class Player : Unit
 
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
 
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
-    public void UseSkill(Vector3 attackPoint, Vector3 lookPoint) 
+    public void UseSkill(Vector3 attackPoint, Vector3 lookPoint , Transform ui , BattleSystem.PersonaAttackType type) 
     {
 
         GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
-        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(Personas[0] , PersonaPoint, lookPoint));        
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, Personas[nowPersonaIndex].transform));
+        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(Personas[0] , PersonaPoint, lookPoint , type));
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
     public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)
     {
     }
 
-  
+    public override void Attack(Vector3 AttackPoint, Vector3 LookPoint)
+    {
+        throw new System.NotImplementedException();
+    }
 }

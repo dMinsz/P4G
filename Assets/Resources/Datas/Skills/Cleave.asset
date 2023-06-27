@@ -17,7 +17,7 @@ MonoBehaviour:
     cType: 1
     cost: 5
     SkillType: 1
-    skillImage: {fileID: 21300000, guid: 9d123b9557ce5214ebd0234e9f2eee5f, type: 3}
+    skillImage: {fileID: 646442428, guid: 669f476aea314684993adc91b19656bb, type: 3}
     target: 0
     power: 65
     critical: 20

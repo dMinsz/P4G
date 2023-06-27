@@ -7,11 +7,21 @@ using UnityEngine.UIElements;
 public class BattleSystem : MonoBehaviour
 {
 
+    public enum PersonaAttackType 
+    {
+        None,
+        Attack,
+        Skill,
+        Size
+    }
+
+
     public DungeonDataSystem.Turn turnType;
     public int turnCount = 0; //
 
     public Player nowPlayer;
     public Shadow nowShadow;
+    public BattlePersona nowPersona;
 
     public List<Shadow> InBattleShadows = new List<Shadow>();
     public List<Player> InBattlePlayers = new List<Player>();
@@ -19,6 +29,9 @@ public class BattleSystem : MonoBehaviour
     public Command activeCommand;
     public Queue<Command> commandQueue;
 
+    public BattleUIHandler uiHandler;
+
+    public PersonaAttackType personaAttackType;
 
     private void Awake()
     {
@@ -57,22 +70,28 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    public void SetTargets() 
+    public void SetDefalt() 
     {
         nowPlayer = InBattlePlayers[0];
         nowShadow = InBattleShadows[0];
+        nowPersona = InBattlePlayers[0].Personas[InBattlePlayers[0].nowPersonaIndex];
     }
 
 
     public void OnPlayerAttack() 
     {
-        
-        nowPlayer.Attack(nowShadow.attackPoint.position,nowShadow.transform.position);
+        uiHandler.MenuUI.gameObject.SetActive(false);
+        uiHandler.BattleUI.gameObject.SetActive(false);
+        nowPlayer.Attack(nowShadow.attackPoint.position,nowShadow.transform.position, uiHandler.BattleUI.transform );
+
+   
     }
 
     public void OnPlayerUsePersonaAttack() 
     {
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position);
+        uiHandler.MenuUI.gameObject.SetActive(false);
+        uiHandler.BattleUI.gameObject.SetActive(false);
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform,personaAttackType);
     }
 
 

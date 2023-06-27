@@ -34,4 +34,5 @@ MonoBehaviour:
       Wind: 1
       Light: 0
       Dark: 0
-    skills: []
+    skills:
+    - {fileID: 11400000, guid: bccb9b5bb0d050b408550ca1dab98719, type: 2}

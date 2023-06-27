@@ -7,13 +7,13 @@ public class BattleScene : BaseScene
 {
     BattleObjectGenerator btg;
 
-    void Awake()
+    protected override void Awake()
     {
         base.Awake();
 
         btg = GameObject.Find("@BattleSystem").GetComponent<BattleObjectGenerator>();
 
-        //GameManager.Pool.Reset();
+        GameManager.Pool.Reset();
 
 
         GameManager.Data.Dungeon.IsInit = false;

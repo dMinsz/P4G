@@ -17,17 +17,16 @@ public class BattleObjectGenerator : MonoBehaviour
 
     [HideInInspector]  public BattleSystem battleSystem;
 
-    public BattleUI ui;
-    public Transform partyUI;
+
     private void Awake()
     {
-        partyUI = ui.transform.Find("PartyUI");
+        
     }
 
     public void SetUp()
     {
-        battleSystem = GetComponent<BattleSystem>();
         GameManager.Data.Battle = GetComponent<BattleSystem>();
+        battleSystem = GetComponent<BattleSystem>();
 
 
         if (GameManager.Data.Dungeon.tempSymbolShadows.Count <= 0) 
@@ -50,33 +49,36 @@ public class BattleObjectGenerator : MonoBehaviour
 
             MakePlayers();
         }
-        SetUpUI();
+
+        GetComponent<BattleUIHandler>().SetUpUI(battleSystem);
+
+        //SetUpUI();
 
         //BattleSystem set
 
         battleSystem.LookSetUp();
-        battleSystem.SetTargets();
+        battleSystem.SetDefalt();
 
     }
 
 
 
 
-    public void SetUpUI()
-    {
-        for (int i = 0; i < battleSystem.InBattlePlayers.Count; i++)
-        {
-            var obj = GameManager.Resource.Load<GameObject>("UI/BattlePartyElement");
-            var newUI = GameManager.Pool.GetUI(obj, partyUI);
+    //public void SetUpUI()
+    //{
+    //    for (int i = 0; i < battleSystem.InBattlePlayers.Count; i++)
+    //    {
+    //        var obj = GameManager.Resource.Load<GameObject>("UI/BattlePartyElement");
+    //        var newUI = GameManager.Pool.GetUI(obj, partyUI);
 
-            newUI.transform.Find("Character").GetComponent<Image>().sprite = battleSystem.InBattlePlayers[i].data.battleImage;
-            newUI.transform.Find("Status").Find("SPSlider").GetComponent<SliderBar>().player = battleSystem.InBattlePlayers[i];
-            newUI.transform.Find("Status").Find("HPSlider").GetComponent<SliderBar>().player = battleSystem.InBattlePlayers[i];
+    //        newUI.transform.Find("Character").GetComponent<Image>().sprite = battleSystem.InBattlePlayers[i].data.battleImage;
+    //        newUI.transform.Find("Status").Find("SPSlider").GetComponent<SliderBar>().player = battleSystem.InBattlePlayers[i];
+    //        newUI.transform.Find("Status").Find("HPSlider").GetComponent<SliderBar>().player = battleSystem.InBattlePlayers[i];
 
-            newUI.transform.Find("SPText").GetComponent<BarText>().player = battleSystem.InBattlePlayers[i];
-            newUI.transform.Find("HPText").GetComponent<BarText>().player = battleSystem.InBattlePlayers[i];
-        }
-    }
+    //        newUI.transform.Find("SPText").GetComponent<BarText>().player = battleSystem.InBattlePlayers[i];
+    //        newUI.transform.Find("HPText").GetComponent<BarText>().player = battleSystem.InBattlePlayers[i];
+    //    }
+    //}
 
 
     private void MakeShadows() 

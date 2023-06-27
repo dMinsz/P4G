@@ -43,6 +43,8 @@ public class PoolManager : MonoBehaviour
 
     public void Reset()
     {
+        canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+
         //poolDic = new Dictionary<string, ObjectPool<GameObject>>();
         //poolContainer = new Dictionary<string, Transform>();
         //poolRoot = new GameObject("PoolRoot").transform;
@@ -303,12 +305,18 @@ public class PoolManager : MonoBehaviour
 
 
     // UI Ǯ
-    public T GetUI<T>(T original, Vector3 position) where T : Object
+    public T GetUI<T>(T original, Vector3 position, string suffix = "") where T : Object
     {
         if (original is GameObject)
         {
             GameObject prefab = original as GameObject;
             string key = prefab.name;
+
+            if (suffix != "")
+            {
+                key += suffix;
+            }
+            
 
             if (!poolDic.ContainsKey(key))
                 CreateUIPool(key, prefab);
@@ -321,6 +329,11 @@ public class PoolManager : MonoBehaviour
         {
             Component component = original as Component;
             string key = component.gameObject.name;
+
+            if (suffix != "")
+            {
+                key += suffix;
+            }
 
             if (!poolDic.ContainsKey(key))
                 CreateUIPool(key, component.gameObject);
@@ -335,12 +348,17 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public T GetUI<T>(T original, Transform parent) where T : Object
+    public T GetUI<T>(T original, Transform parent, string suffix = "") where T : Object
     {
         if (original is GameObject)
         {
             GameObject prefab = original as GameObject;
             string key = prefab.name;
+
+            if (suffix != "")
+            {
+                key += suffix;
+            }
 
             if (!poolDic.ContainsKey(key))
                 CreateUIPool(key, prefab);
@@ -354,6 +372,11 @@ public class PoolManager : MonoBehaviour
         {
             Component component = original as Component;
             string key = component.gameObject.name;
+
+            if (suffix != "")
+            {
+                key += suffix;
+            }
 
             if (!poolDic.ContainsKey(key))
                 CreateUIPool(key, component.gameObject);
@@ -369,12 +392,17 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public T GetUI<T>(T original) where T : Object
+    public T GetUI<T>(T original, string suffix = "") where T : Object
     {
         if (original is GameObject)
         {
             GameObject prefab = original as GameObject;
             string key = prefab.name;
+
+            if (suffix != "")
+            {
+                key += suffix;
+            }
 
             if (!poolDic.ContainsKey(key))
                 CreateUIPool(key, prefab);
@@ -386,6 +414,11 @@ public class PoolManager : MonoBehaviour
         {
             Component component = original as Component;
             string key = component.gameObject.name;
+
+            if (suffix != "")
+            {
+                key += suffix;
+            }
 
             if (!poolDic.ContainsKey(key))
                 CreateUIPool(key, component.gameObject);

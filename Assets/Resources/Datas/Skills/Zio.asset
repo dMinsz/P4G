@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill:
     skillName: Zio
-    cType: 2
+    cType: 3
     cost: 4
     SkillType: 4
-    skillImage: {fileID: 21300000, guid: 184e3368943ff49449bf29040efb2359, type: 3}
+    skillImage: {fileID: -2122789598, guid: 669f476aea314684993adc91b19656bb, type: 3}
     target: 0
     power: 40
     critical: 20
