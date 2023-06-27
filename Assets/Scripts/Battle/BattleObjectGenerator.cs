@@ -11,7 +11,7 @@ public class BattleObjectGenerator : MonoBehaviour
     public float shadowGenerateRange;
 
     public Transform[] PlayerPoints;
-
+    public Transform[] EnemyPoints;
     //[HideInInspector] public List<ShadowData> InBattleShadowDatas;
     //[HideInInspector] public List<Unit> InBattlePlayers;
 
@@ -37,7 +37,7 @@ public class BattleObjectGenerator : MonoBehaviour
         if (GameManager.Data.Dungeon.tempSymbolShadows.Count == 1)
         {
             GameObject obj = GameManager.Data.Dungeon.tempSymbolShadows[0].shadow.Prefab;
-            var newShadow = GameManager.Pool.Get(false,obj, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity);
+            var newShadow = GameManager.Pool.Get(false,obj, EnemyPoints[0].position, Quaternion.identity);
             newShadow.GetComponent<Shadow>().data = GameManager.Data.Dungeon.tempSymbolShadows[0].shadow;
             battleSystem.InBattleShadows.Add(newShadow.GetComponent<Shadow>());
 
@@ -83,11 +83,12 @@ public class BattleObjectGenerator : MonoBehaviour
 
     private void MakeShadows() 
     {
+        //최대 3마리
         for (int i = 0; i < GameManager.Data.Dungeon.tempSymbolShadows.Count; i++)
         {
             GameObject obj = GameManager.Data.Dungeon.tempSymbolShadows[i].shadow.Prefab;
 
-            var newShadow = GameManager.Pool.Get(false,obj, RandomSphereInPoint(shadowGenerateRange), Quaternion.identity , i.ToString());
+            var newShadow = GameManager.Pool.Get(false,obj, EnemyPoints[i].position, Quaternion.identity , i.ToString());
 
             newShadow.GetComponent<Shadow>().data = GameManager.Data.Dungeon.tempSymbolShadows[i].shadow;
 
