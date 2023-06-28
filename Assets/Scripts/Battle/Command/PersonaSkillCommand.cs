@@ -44,7 +44,7 @@ public class PersonaSkillCommand : Command
         }
         
         await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 1000);
-
+        await Task.Delay(1000);
         GameManager.Pool.Release(pobj);
     }
 

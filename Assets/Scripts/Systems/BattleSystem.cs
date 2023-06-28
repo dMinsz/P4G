@@ -58,15 +58,28 @@ public class BattleSystem : MonoBehaviour
 
     public void LookSetUp()
     {
+
+        var nowplayer = nowPlayer;
+        if (nowplayer == null)
+        {
+            nowplayer = InBattlePlayers[0];
+        }
+
+        var nowshadow = nowShadow;
+        if (nowshadow == null)
+        {
+            nowshadow = InBattleShadows[0];
+        }
+
         //Look Set
         foreach (var shadow in InBattleShadows) 
         {
-            shadow.transform.LookAt(InBattlePlayers[0].transform.position);
+            shadow.transform.LookAt(nowplayer.transform.position);
         }
 
         foreach (var player in InBattlePlayers) 
         {
-            player.transform.LookAt(InBattleShadows[0].transform.position);
+            player.transform.LookAt(nowshadow.transform.position);
         }
     }
 
@@ -86,8 +99,8 @@ public class BattleSystem : MonoBehaviour
         uiHandler.MenuUI.gameObject.SetActive(false);
         uiHandler.BattleUI.gameObject.SetActive(false);
         nowPlayer.Attack(nowShadow.attackPoint.position,nowShadow.transform.position, uiHandler.BattleUI.transform);
-
-   
+        //NextPlayer();
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
     }
 
     public void OnPlayerUsePersonaAttack() 
@@ -95,8 +108,53 @@ public class BattleSystem : MonoBehaviour
         uiHandler.MenuUI.gameObject.SetActive(false);
         uiHandler.BattleUI.gameObject.SetActive(false);
         nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform,personaAttackType, cam);
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
+       
     }
 
+
+    public void NextPlayer() 
+    {
+        int nowIndex = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
+        int nowCount = nowIndex + 1;
+        int MaxCount = GameManager.Data.Battle.InBattlePlayers.Count;
+
+        if (nowCount < MaxCount)
+        {
+            GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[++nowIndex];
+            cam.nextPlayer();
+            LookSetUp();
+            //return true;
+        }
+        else 
+        {
+
+            //text Code
+            var index = (GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer)+1) % GameManager.Data.Battle.InBattlePlayers.Count;
+            GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[index];
+            
+            //text Code
+            //uiHandler.MenuUI.gameObject.SetActive(false);
+            //uiHandler.BattleUI.gameObject.SetActive(false);
+
+            //text Code
+            cam.nextPlayer();
+            LookSetUp();
+
+
+            //real Code
+            //EnemyTurn();
+            
+        }
+
+
+    }
+
+    public void EnemyTurn() 
+    {
+        Debug.Log("Enemy Turn Start");
+    }
 
     public void ReleasePool() 
     {
