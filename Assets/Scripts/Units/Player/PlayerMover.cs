@@ -8,6 +8,7 @@ public class PlayerMover : MonoBehaviour
 {
     [SerializeField] bool debug;
 
+    [SerializeField] public List<Transform> ChacePoitns = new List<Transform>();
     [SerializeField] float moveSpeed;
     private float curSpeed;
 
@@ -17,6 +18,7 @@ public class PlayerMover : MonoBehaviour
     private float ySpeed = 0;
     Coroutine moveRoutine;
     Coroutine gravityRoutine;
+
 
     private void Awake()
     {

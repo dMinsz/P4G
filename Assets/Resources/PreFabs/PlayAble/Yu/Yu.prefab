@@ -1683,6 +1683,37 @@ Transform:
   m_Father: {fileID: 9152506343151948820}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2691796176371848771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3131437650288623748}
+  m_Layer: 3
+  m_Name: ChacePoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3131437650288623748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691796176371848771}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: -0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5599131597469634990}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2735224472746229517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,6 +3166,8 @@ Transform:
   m_Children:
   - {fileID: 5349895894122362310}
   - {fileID: 4396164363511344924}
+  - {fileID: 9010823690645585500}
+  - {fileID: 3131437650288623748}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0.478, z: 0}
@@ -3177,6 +3210,7 @@ MonoBehaviour:
   curHp: 0
   MaxSp: 0
   curSp: 0
+  PersonaPoint: {fileID: 0}
   OnHpChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3185,6 +3219,9 @@ MonoBehaviour:
       m_Calls: []
   animator: {fileID: 0}
   Partys: []
+  nowPersonaIndex: 0
+  Personas: []
+  card: []
 --- !u!143 &5599131597469634991
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3216,6 +3253,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 1
+  ChacePoitns:
+  - {fileID: 9010823690645585500}
+  - {fileID: 3131437650288623748}
   moveSpeed: 5
 --- !u!114 &5599131597469634987
 MonoBehaviour:
@@ -3288,9 +3328,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.8
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &6521109945183214141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3932,6 +3972,37 @@ Transform:
   m_Father: {fileID: 4710376516620540172}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6850150934396496111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9010823690645585500}
+  m_Layer: 3
+  m_Name: ChacePoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9010823690645585500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6850150934396496111}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: -0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5599131597469634990}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7015722165906430454
 GameObject:
   m_ObjectHideFlags: 0
@@ -4253,7 +4324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7329110685891695406}
   m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0}
+  m_LocalPosition: {x: -0, y: 1.5, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

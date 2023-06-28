@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f569fdb01b33f9f4f88d510f2a757ae4, type: 3}
-  m_Name: Yu
+  m_Name: Chie
   m_EditorClassIdentifier: 
   player:
-    unitName: Yu
+    unitName: Chie
     Level: 1
     Hp: 80
     Mp: 50
@@ -23,9 +23,9 @@ MonoBehaviour:
     Endurance: 10
     Agility: 10
     Luck: 12
-    Prefab: {fileID: 5599131597469634992, guid: f9a56de79b2d8f14181591523dcd2e01, type: 3}
-    BattlePrefab: {fileID: 5599131597469634992, guid: 62643c997fa1a114992debc9d9595a51, type: 3}
-    battleImage: {fileID: 21300000, guid: 4130dc2eada683b4caafcad7343f9a5d, type: 3}
+    Prefab: {fileID: 8534396320381577170, guid: 389ddd8165cb9a046a7b922da8d91490, type: 3}
+    BattlePrefab: {fileID: 8534396320381577170, guid: 1fea099a17bfd4a478f200ce8b1caa9c, type: 3}
+    battleImage: {fileID: 21300000, guid: 47d232f97530f374cad65ef3742b6665, type: 3}
     resist:
       Physic: 0
       Fire: 0
@@ -37,4 +37,4 @@ MonoBehaviour:
     skills:
     - {fileID: 11400000, guid: bccb9b5bb0d050b408550ca1dab98719, type: 2}
   PersonaNames:
-  - Izanagi
+  - Tomoe

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using static PersonaData;
 
 public class SummonsCommand : Command
 {
@@ -9,7 +10,8 @@ public class SummonsCommand : Command
     Player player;
     Animator playerAnim;
 
-    public SummonsCommand(Player Player, Animator PlayerAnimator)
+
+    public SummonsCommand(Player Player, Animator PlayerAnimator )
     {
         this.player = Player;
         this.playerAnim = PlayerAnimator;

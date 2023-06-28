@@ -63,24 +63,6 @@ public class BattleObjectGenerator : MonoBehaviour
 
 
 
-
-    //public void SetUpUI()
-    //{
-    //    for (int i = 0; i < battleSystem.InBattlePlayers.Count; i++)
-    //    {
-    //        var obj = GameManager.Resource.Load<GameObject>("UI/BattlePartyElement");
-    //        var newUI = GameManager.Pool.GetUI(obj, partyUI);
-
-    //        newUI.transform.Find("Character").GetComponent<Image>().sprite = battleSystem.InBattlePlayers[i].data.battleImage;
-    //        newUI.transform.Find("Status").Find("SPSlider").GetComponent<SliderBar>().player = battleSystem.InBattlePlayers[i];
-    //        newUI.transform.Find("Status").Find("HPSlider").GetComponent<SliderBar>().player = battleSystem.InBattlePlayers[i];
-
-    //        newUI.transform.Find("SPText").GetComponent<BarText>().player = battleSystem.InBattlePlayers[i];
-    //        newUI.transform.Find("HPText").GetComponent<BarText>().player = battleSystem.InBattlePlayers[i];
-    //    }
-    //}
-
-
     private void MakeShadows() 
     {
         //최대 3마리

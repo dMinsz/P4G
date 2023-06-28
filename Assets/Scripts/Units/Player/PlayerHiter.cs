@@ -23,7 +23,7 @@ public class PlayerHiter : MonoBehaviour, IHitable
 
         foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
         {
-            player.GetComponent<PlayerHiter>().ReleasePool();
+            GameManager.Pool.Release(player);
         }
 
 

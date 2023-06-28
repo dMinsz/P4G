@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   persona:
     personaName: Izanagi
+    Level: 1
     Strength: 3
     Magic: 2
     Endurance: 2

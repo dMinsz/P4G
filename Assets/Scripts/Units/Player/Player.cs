@@ -31,7 +31,7 @@ public class Player : Unit
     private void OnEnable()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
-        animator.SetFloat("MoveSpeed", 0f);
+       // animator.SetFloat("MoveSpeed", 0f);
         PersonaPoint = transform.Find("PersonaPoint");
 
         card = new Transform[2];
@@ -49,8 +49,20 @@ public class Player : Unit
     public void AddParty(string name) 
     {
         //todo Change
-        var data = GameManager.Resource.Load<Player>("Datas/"+name);
-        Partys.Add(data);
+        //Debug.Log("Datas/Players/" + name);
+
+        var data = GameManager.Resource.Load<PlayerData>("Datas/Players/" + name);
+        var ally = GameManager.Pool.Get(true, data.player.Prefab.GetComponent<Player>());
+
+        ally.data = data.player;
+
+        ally.MaxHp = data.player.Hp;
+        ally.MaxSp = data.player.Sp;
+        ally.curHp = data.player.Hp;
+        ally.curSp = data.player.Sp;
+
+        GameManager.Pool.Release(ally);
+        Partys.Add(ally);
     }
     public void RemoveParty(string name)
     {
@@ -82,19 +94,41 @@ public class Player : Unit
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
-    public void UseSkill(Vector3 attackPoint, Vector3 lookPoint , Transform ui , BattleSystem.PersonaAttackType type) 
+    public void UseSkill(Vector3 attackPoint, Vector3 lookPoint , Transform ui , BattleSystem.PersonaAttackType type , BattleCamSystem cam) 
     {
 
+        var persona = GameManager.Data.Battle.nowPlayer.Personas[0];
+
+        SetFrontCam(cam);
         GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
-
-        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(Personas[0] , PersonaPoint, lookPoint , type));
-
+        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint,lookPoint, type , this , cam));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
     public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)
     {
     }
+
+
+    public void SetFrontCam(BattleCamSystem cam) 
+    {
+        if (GameManager.Data.Battle.InBattlePlayers.IndexOf(this) == 0)
+        {
+            cam.setPlayer1(true);
+        }
+        else if (GameManager.Data.Battle.InBattlePlayers.IndexOf(this) == 1)
+        {
+            cam.setPlayer2(true);
+        }
+        else if (GameManager.Data.Battle.InBattlePlayers.IndexOf(this) == 2)
+        {
+            cam.setPlayer3(true);
+        }
+    }
+
+
+   
+
 
     public override void Attack(Vector3 AttackPoint, Vector3 LookPoint)
     {

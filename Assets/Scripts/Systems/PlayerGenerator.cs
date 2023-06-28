@@ -15,7 +15,7 @@ public class PlayerGenerator : MonoBehaviour
         if (GameManager.Data.Dungeon.IsInit)
         {
             playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/Yu"));
-
+            //playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/Chie"));
 
             var temp = GameManager.Pool.Get(true, playerDatas[0].player.Prefab, GenratePos[0].position, Quaternion.identity);
 
@@ -32,27 +32,47 @@ public class PlayerGenerator : MonoBehaviour
 
 
             //페르소나 추가
-            var data = GameManager.Resource.Load<PersonaData>("Datas/Personas/Izanagi");
-            player.Personas.Add(data.PData.prefabs.GetComponent<BattlePersona>());
-            player.Personas[0].data = data.PData;
+            for (int i = 0; i < playerDatas[0].PersonaNames.Count; i++)
+            {
+                var data = GameManager.Resource.Load<PersonaData>("Datas/Personas/" + playerDatas[0].PersonaNames[i]);
+                player.Personas.Add(data.PData.prefabs.GetComponent<BattlePersona>());
+                player.Personas[i].data = data.PData;
+            }
+
+            
+            //party 추가
+            player.AddParty("Chie");
 
             GameManager.Data.Dungeon.InBattlePlayers.Add(player);
 
-            for (int i = 0; i < player.Partys.Count; i++)
+            for (int i = 0; i < player.Partys.Count; i++) // persona 추가해야함
             {
                 var newAllyName = player.Partys[i].data.unitName;
 
                 playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/" + newAllyName));
 
-                var newAlly = GameManager.Pool.Get(true, playerDatas[++i].player.Prefab, GenratePos[++i].position, Quaternion.identity);
+                var newAlly = GameManager.Pool.Get(true, playerDatas[i+1].player.Prefab, GenratePos[i+1].position, Quaternion.identity);
+
+                newAlly.GetComponent<AllyMover>().ChacePos = player.GetComponent<PlayerMover>().ChacePoitns[i];
+
                 var Ally = newAlly.GetComponent<Player>();
 
-                Ally.data = playerDatas[++i].player;
+                Ally.data = playerDatas[i + 1].player;
 
-                Ally.MaxHp = playerDatas[++i].player.Hp;
-                Ally.MaxSp = playerDatas[++i].player.Sp;
-                Ally.curHp = playerDatas[++i].player.Hp;
-                Ally.curSp = playerDatas[++i].player.Sp;
+                Ally.MaxHp = playerDatas[i+1].player.Hp;
+                Ally.MaxSp = playerDatas[i+1].player.Sp;
+                Ally.curHp = playerDatas[i+1].player.Hp;
+                Ally.curSp = playerDatas[i+1].player.Sp;
+
+                //페르소나 추가
+                for (int j = 0; j < playerDatas[i+1].PersonaNames.Count; j++)
+                {
+                    var data = GameManager.Resource.Load<PersonaData>("Datas/Personas/" + playerDatas[i + 1].PersonaNames[j]);
+                    Ally.Personas.Add(data.PData.prefabs.GetComponent<BattlePersona>());
+                    Ally.Personas[j].data = data.PData;
+                }
+
+
 
                 GameManager.Data.Dungeon.InBattlePlayers.Add(Ally);
 

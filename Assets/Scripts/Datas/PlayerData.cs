@@ -7,5 +7,6 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     [SerializeField] public UnitData player;
+    [SerializeField] public List<string> PersonaNames;
     public UnitData Player { get { return player; } }
 }

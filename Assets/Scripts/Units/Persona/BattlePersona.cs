@@ -13,7 +13,7 @@ public class BattlePersona : MonoBehaviour
 
     public PersonaData.Persona data;
 
-    public Animator animator;
+    public Animator animator = new Animator();
 
     public UnityEvent OnAttack;
 

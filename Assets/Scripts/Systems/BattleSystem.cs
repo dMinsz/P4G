@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 
 public class BattleSystem : MonoBehaviour
 {
-
     public enum PersonaAttackType 
     {
         None,
@@ -15,9 +14,8 @@ public class BattleSystem : MonoBehaviour
         Size
     }
 
-
     public DungeonDataSystem.Turn turnType;
-    public int turnCount = 0; //
+    public int turnCount = 1; //
 
     public Player nowPlayer;
     public Shadow nowShadow;
@@ -30,6 +28,7 @@ public class BattleSystem : MonoBehaviour
     public Queue<Command> commandQueue;
 
     public BattleUIHandler uiHandler;
+    public BattleCamSystem cam;
 
     public PersonaAttackType personaAttackType;
 
@@ -37,6 +36,7 @@ public class BattleSystem : MonoBehaviour
     {
         turnType = GameManager.Data.Dungeon.StartTurn;
         commandQueue = new Queue<Command>();
+        cam = GetComponent<BattleCamSystem>();
     }
 
     private void Start()
@@ -74,6 +74,9 @@ public class BattleSystem : MonoBehaviour
     {
         nowPlayer = InBattlePlayers[0];
         nowShadow = InBattleShadows[0];
+
+        nowShadow.targetUI.gameObject.SetActive(true);
+
         nowPersona = InBattlePlayers[0].Personas[InBattlePlayers[0].nowPersonaIndex];
     }
 
@@ -82,7 +85,7 @@ public class BattleSystem : MonoBehaviour
     {
         uiHandler.MenuUI.gameObject.SetActive(false);
         uiHandler.BattleUI.gameObject.SetActive(false);
-        nowPlayer.Attack(nowShadow.attackPoint.position,nowShadow.transform.position, uiHandler.BattleUI.transform );
+        nowPlayer.Attack(nowShadow.attackPoint.position,nowShadow.transform.position, uiHandler.BattleUI.transform);
 
    
     }
@@ -91,7 +94,7 @@ public class BattleSystem : MonoBehaviour
     {
         uiHandler.MenuUI.gameObject.SetActive(false);
         uiHandler.BattleUI.gameObject.SetActive(false);
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform,personaAttackType);
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform,personaAttackType, cam);
     }
 
 
