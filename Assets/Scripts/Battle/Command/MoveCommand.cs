@@ -30,6 +30,7 @@ public class MoveCommand : Command
                                                                 target,
                                                                  0.10f);
                 await Task.Delay(10);
+               
 
                 animator.SetFloat("MoveSpeed", 0f);
 

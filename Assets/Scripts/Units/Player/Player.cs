@@ -126,12 +126,4 @@ public class Player : Unit
         }
     }
 
-
-   
-
-
-    public override void Attack(Vector3 AttackPoint, Vector3 LookPoint)
-    {
-        throw new System.NotImplementedException();
-    }
 }

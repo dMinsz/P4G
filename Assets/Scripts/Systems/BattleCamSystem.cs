@@ -1,5 +1,6 @@
 using Cinemachine;
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,6 +68,11 @@ public class BattleCamSystem : MonoBehaviour
         // 0,2,4
         Cams[(index * 2)].Priority = 2;
 
+    }
+
+    public void SetPlayerCam(int indexPlayer) 
+    {
+        Cams[(indexPlayer * 2)].Priority = 2;
     }
 
 }

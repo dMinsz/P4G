@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class BattleSystem : MonoBehaviour
 {
-    public enum PersonaAttackType 
+    public enum PersonaAttackType
     {
         None,
         Attack,
@@ -72,18 +72,18 @@ public class BattleSystem : MonoBehaviour
         }
 
         //Look Set
-        foreach (var shadow in InBattleShadows) 
+        foreach (var shadow in InBattleShadows)
         {
             shadow.transform.LookAt(nowplayer.transform.position);
         }
 
-        foreach (var player in InBattlePlayers) 
+        foreach (var player in InBattlePlayers)
         {
             player.transform.LookAt(nowshadow.transform.position);
         }
     }
 
-    public void SetDefalt() 
+    public void SetDefalt()
     {
         nowPlayer = InBattlePlayers[0];
         nowShadow = InBattleShadows[0];
@@ -91,30 +91,32 @@ public class BattleSystem : MonoBehaviour
         nowShadow.targetUI.gameObject.SetActive(true);
 
         nowPersona = InBattlePlayers[0].Personas[InBattlePlayers[0].nowPersonaIndex];
+
+        uiHandler.ChangeCommandUI();
     }
 
 
-    public void OnPlayerAttack() 
+    public void OnPlayerAttack()
     {
         uiHandler.MenuUI.gameObject.SetActive(false);
         uiHandler.BattleUI.gameObject.SetActive(false);
-        nowPlayer.Attack(nowShadow.attackPoint.position,nowShadow.transform.position, uiHandler.BattleUI.transform);
+        nowPlayer.Attack(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform);
         //NextPlayer();
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
     }
 
-    public void OnPlayerUsePersonaAttack() 
+    public void OnPlayerUsePersonaAttack()
     {
         uiHandler.MenuUI.gameObject.SetActive(false);
         uiHandler.BattleUI.gameObject.SetActive(false);
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform,personaAttackType, cam);
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform, personaAttackType, cam);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
-       
+
     }
 
 
-    public void NextPlayer() 
+    public void NextPlayer()
     {
         int nowIndex = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
         int nowCount = nowIndex + 1;
@@ -123,20 +125,21 @@ public class BattleSystem : MonoBehaviour
         if (nowCount < MaxCount)
         {
             GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[++nowIndex];
+            uiHandler.ChangeCommandUI();
             cam.nextPlayer();
             LookSetUp();
             //return true;
         }
-        else 
+        else
         {
 
             //text Code
-            var index = (GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer)+1) % GameManager.Data.Battle.InBattlePlayers.Count;
-            GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[index];
-            
+            //var index = (GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer)+1) % GameManager.Data.Battle.InBattlePlayers.Count;
+            //GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[index];
+            //uiHandler.ChangeCommandUI();
             //text Code
-            //uiHandler.MenuUI.gameObject.SetActive(false);
-            //uiHandler.BattleUI.gameObject.SetActive(false);
+            uiHandler.MenuUI.gameObject.SetActive(false);
+            uiHandler.BattleUI.gameObject.SetActive(false);
 
             //text Code
             cam.nextPlayer();
@@ -145,18 +148,91 @@ public class BattleSystem : MonoBehaviour
 
             //real Code
             //EnemyTurn();
-            
+
+            isEnemyDone = false;
+
+            TurnRoutine = StartCoroutine(EnemyTurnRoutine());
+
+            turnCount++;
         }
 
 
     }
 
-    public void EnemyTurn() 
+
+
+    Coroutine TurnRoutine;
+
+    bool isEnemyDone = false;
+    IEnumerator EnemyTurnRoutine()
     {
-        Debug.Log("Enemy Turn Start");
+        if (!isEnemyDone)
+        {
+            isEnemyDone = true;
+            Debug.Log("Enemy Turn Routine Start");
+
+
+            foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
+            {//·£´ý°ø°Ý
+
+                shadow.targetUI.gameObject.SetActive(false);
+
+                int rand = Random.Range(0, GameManager.Data.Battle.InBattlePlayers.Count);
+
+                var randomPlayer = GameManager.Data.Battle.InBattlePlayers[rand];
+                GameManager.Data.Battle.nowPlayer = randomPlayer;
+
+                yield return new WaitForSeconds(1);
+
+                shadow.GetComponent<Shadow>().Attack(randomPlayer.PersonaPoint.position, randomPlayer.transform.position, uiHandler.BattleUI.transform, cam);
+            }
+
+
+            yield return new WaitForSeconds(3);
+            //Á×Àº°Å È®ÀÎÇØÁà¾ßÇÔ
+            GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[0];
+            cam.SetPlayerCam(0);
+            uiHandler.ChangeCommandUI();
+            turnCount++;
+
+            yield return null;
+        }
+        else 
+        {
+            isEnemyDone = false;
+            yield break;
+        }
+      
     }
 
-    public void ReleasePool() 
+
+
+    //public void EnemyTurn()
+    //{
+    //    Debug.Log("Enemy Turn Start");
+
+
+    //    foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
+    //    {//·£´ý°ø°Ý
+
+    //        shadow.targetUI.gameObject.SetActive(false);
+
+    //        int rand = Random.Range(0, GameManager.Data.Battle.InBattlePlayers.Count);
+
+    //        var randomPlayer = GameManager.Data.Battle.InBattlePlayers[rand];
+    //        GameManager.Data.Battle.nowPlayer = randomPlayer;
+
+    //        shadow.GetComponent<Shadow>().Attack(randomPlayer.PersonaPoint.position, randomPlayer.transform.position, uiHandler.BattleUI.transform, cam);
+    //    }
+
+    //    //Á×Àº°Å È®ÀÎÇØÁà¾ßÇÔ
+    //    GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[0];
+    //    cam.SetPlayerCam(0);
+    //    uiHandler.ChangeCommandUI();
+    //    turnCount++;
+    //}
+
+    public void ReleasePool()
     {
         foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
         {
@@ -165,13 +241,13 @@ public class BattleSystem : MonoBehaviour
 
     }
 
-    public void EndBattle() 
+    public void EndBattle()
     {
         var nowSymbol = GameManager.Data.Dungeon.nowSymbol;
         GameManager.Data.Dungeon.aliveInDungeonSymbols.Remove(nowSymbol);
         GameManager.Data.Dungeon.nowSymbol = null;
 
-       
+
         GameManager.Pool.DestroyContainer(nowSymbol);
 
         GameManager.Scene.LoadScene("LobbyScene");

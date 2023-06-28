@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,6 +18,8 @@ public class BattleUIHandler : MonoBehaviour
 
     private GameObject skillObj;
     private List<GameObject> NowObejcts = new List<GameObject>();
+    private List<GameObject> commandUI = new List<GameObject>();
+
     public void SetUpUI(BattleSystem _battlesystem)
     {
         _battlesystem.uiHandler = this;
@@ -32,6 +35,9 @@ public class BattleUIHandler : MonoBehaviour
             var obj = GameManager.Resource.Load<GameObject>("UI/BattlePartyElement");
             var newUI = GameManager.Pool.GetUI(obj, partyUI);
 
+           
+
+
             newUI.transform.Find("Character").GetComponent<Image>().sprite = player.data.battleImage;
             newUI.transform.Find("Status").Find("SPSlider").GetComponent<SliderBar>().player = player;
             newUI.transform.Find("Status").Find("HPSlider").GetComponent<SliderBar>().player = player;
@@ -39,6 +45,8 @@ public class BattleUIHandler : MonoBehaviour
             newUI.transform.Find("SPText").GetComponent<BarText>().player = player;
             newUI.transform.Find("HPText").GetComponent<BarText>().player = player;
 
+            
+            commandUI.Add(newUI.transform.Find("Command").gameObject);
 
             //Skill Set
 
@@ -240,6 +248,21 @@ public class BattleUIHandler : MonoBehaviour
         }
         
     }
+
+    public void ChangeCommandUI() 
+    {
+        int index = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
+
+        for (int i = 0; i < commandUI.Count; i++)
+        {
+            commandUI[i].SetActive(false);
+        }
+
+        commandUI[index].SetActive(true);
+    }
+
+
+
 
 
     public void CloseMenu()

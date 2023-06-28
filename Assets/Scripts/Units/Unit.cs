@@ -8,7 +8,7 @@ public abstract class Unit : MonoBehaviour
 
     bool isDie = false;
 
-    public abstract void Attack(Vector3 AttackPoint, Vector3 LookPoint);
+    public virtual void Attack(Vector3 AttackPoint, Vector3 LookPoint) { }
 
     public virtual void TakeDamage(int AttackerEndurance , int AttackerLevel , int hits = 1) 
     {
