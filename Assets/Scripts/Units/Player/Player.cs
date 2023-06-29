@@ -91,7 +91,7 @@ public class Player : Unit
 
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
 
-        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
+        //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
     public void UseSkill(Vector3 attackPoint, Vector3 lookPoint , Transform ui , BattleSystem.PersonaAttackType type , BattleCamSystem cam) 
@@ -102,7 +102,7 @@ public class Player : Unit
         SetFrontCam(cam);
         GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
         GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint,lookPoint, type , this , cam));
-        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
+        //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
     public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)

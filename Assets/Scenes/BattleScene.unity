@@ -1882,6 +1882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BattleUI: {fileID: 3545443171898562226}
   partyUI: {fileID: 3545443171105629958}
+  SelectMenuUI: {fileID: 3545443170851810430}
   MenuUI: {fileID: 1403302119}
   MenuContentUI: {fileID: 1338402096}
   battleSystem: {fileID: 0}

@@ -92,23 +92,27 @@ public class BattleSystem : MonoBehaviour
 
         nowPersona = InBattlePlayers[0].Personas[InBattlePlayers[0].nowPersonaIndex];
 
+        cam.SetPlayerCam(0);
         uiHandler.ChangeCommandUI();
+
+        LookSetUp();
     }
 
 
     public void OnPlayerAttack()
     {
-        uiHandler.MenuUI.gameObject.SetActive(false);
-        uiHandler.BattleUI.gameObject.SetActive(false);
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
         nowPlayer.Attack(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform);
-        //NextPlayer();
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
     }
 
     public void OnPlayerUsePersonaAttack()
     {
-        uiHandler.MenuUI.gameObject.SetActive(false);
-        uiHandler.BattleUI.gameObject.SetActive(false);
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
         nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform, personaAttackType, cam);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
@@ -127,35 +131,18 @@ public class BattleSystem : MonoBehaviour
             GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[++nowIndex];
             uiHandler.ChangeCommandUI();
             cam.nextPlayer();
+
+
+            GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, true));
+            GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
+
             LookSetUp();
-            //return true;
         }
         else
         {
-
-            //text Code
-            //var index = (GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer)+1) % GameManager.Data.Battle.InBattlePlayers.Count;
-            //GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[index];
-            //uiHandler.ChangeCommandUI();
-            //text Code
-            uiHandler.MenuUI.gameObject.SetActive(false);
-            uiHandler.BattleUI.gameObject.SetActive(false);
-
-            //text Code
-            cam.nextPlayer();
-            LookSetUp();
-
-
-            //real Code
-            //EnemyTurn();
-
-            isEnemyDone = false;
-
             TurnRoutine = StartCoroutine(EnemyTurnRoutine());
-
             turnCount++;
         }
-
 
     }
 
@@ -163,74 +150,82 @@ public class BattleSystem : MonoBehaviour
 
     Coroutine TurnRoutine;
 
-    bool isEnemyDone = false;
+
     IEnumerator EnemyTurnRoutine()
     {
-        if (!isEnemyDone)
+        Debug.Log("Enemy Turn Routine Start");
+        uiHandler.RemoveCommandUI();
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
+
+        foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
+        {//·£´ý°ø°Ý
+            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OffShadowTargeting));
+
+            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetRandomPlayer));
+
+            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(shadow.GetComponent<Shadow>().Attack));
+
+        }
+
+        while (true)
         {
-            isEnemyDone = true;
-            Debug.Log("Enemy Turn Routine Start");
-
-
-            foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
-            {//·£´ý°ø°Ý
-
-                shadow.targetUI.gameObject.SetActive(false);
-
-                int rand = Random.Range(0, GameManager.Data.Battle.InBattlePlayers.Count);
-
-                var randomPlayer = GameManager.Data.Battle.InBattlePlayers[rand];
-                GameManager.Data.Battle.nowPlayer = randomPlayer;
-
-                yield return new WaitForSeconds(1);
-
-                shadow.GetComponent<Shadow>().Attack(randomPlayer.PersonaPoint.position, randomPlayer.transform.position, uiHandler.BattleUI.transform, cam);
+            if (GameManager.Data.Battle.commandQueue.Count > 0)
+            {
+                yield return null;
             }
+            else
+            {
+                //targeting
+                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OnShadowTargeting));
 
+                //default Seting // need is Dead check
+                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetDefalt));
 
-            yield return new WaitForSeconds(3);
-            //Á×Àº°Å È®ÀÎÇØÁà¾ßÇÔ
-            GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[0];
-            cam.SetPlayerCam(0);
-            uiHandler.ChangeCommandUI();
-            turnCount++;
+                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.BattleUI.transform, true));
+                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, true));
+                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
 
-            yield return null;
+                turnCount++;
+                Debug.Log("Enemy Turn Routine Done");
+                yield break;
+            }
         }
-        else 
+    }
+
+    public void SetRandomPlayer() 
+    {
+        int rand = Random.Range(0, GameManager.Data.Battle.InBattlePlayers.Count);
+
+        var randomPlayer = GameManager.Data.Battle.InBattlePlayers[rand];
+        GameManager.Data.Battle.nowPlayer = randomPlayer;
+    }
+
+    public void FilmingHitedPlayer() 
+    {
+        cam.ResetCams();
+        int index = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
+        cam.SetPlayerCam(index);
+        LookSetUp();
+    }
+
+    public void OffShadowTargeting() 
+    {
+        foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
         {
-            isEnemyDone = false;
-            yield break;
+            shadow.targetUI.SetActive(false);
+            shadow.isShadowTurn = true;
         }
-      
+    }
+    public void OnShadowTargeting()
+    {
+        foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
+        {
+            shadow.isShadowTurn = false;
+        }
     }
 
 
-
-    //public void EnemyTurn()
-    //{
-    //    Debug.Log("Enemy Turn Start");
-
-
-    //    foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
-    //    {//·£´ý°ø°Ý
-
-    //        shadow.targetUI.gameObject.SetActive(false);
-
-    //        int rand = Random.Range(0, GameManager.Data.Battle.InBattlePlayers.Count);
-
-    //        var randomPlayer = GameManager.Data.Battle.InBattlePlayers[rand];
-    //        GameManager.Data.Battle.nowPlayer = randomPlayer;
-
-    //        shadow.GetComponent<Shadow>().Attack(randomPlayer.PersonaPoint.position, randomPlayer.transform.position, uiHandler.BattleUI.transform, cam);
-    //    }
-
-    //    //Á×Àº°Å È®ÀÎÇØÁà¾ßÇÔ
-    //    GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[0];
-    //    cam.SetPlayerCam(0);
-    //    uiHandler.ChangeCommandUI();
-    //    turnCount++;
-    //}
 
     public void ReleasePool()
     {

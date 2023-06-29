@@ -72,6 +72,8 @@ public class BattleCamSystem : MonoBehaviour
 
     public void SetPlayerCam(int indexPlayer) 
     {
+        ResetCams();
+
         Cams[(indexPlayer * 2)].Priority = 2;
     }
 

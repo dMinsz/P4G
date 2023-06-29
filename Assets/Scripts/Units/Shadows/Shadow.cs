@@ -24,7 +24,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
     public int SP { get { return curSp; } protected set { curSp = value; OnSpChanged?.Invoke(curSp); } }
 
     public Animator animator;
-    BattleCamSystem cam;
+    //BattleCamSystem cam;
     private void Awake()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
@@ -42,9 +42,11 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
         }
     }
 
-    public void Attack(Vector3 attackPoint, Vector3 lookPoint, Transform ui , BattleCamSystem cam)
+    public void Attack()
     {
-        this.cam = cam;
+        GameManager.Data.Battle.commandQueue.Enqueue(new FillmCommand(GameManager.Data.Battle.cam, GameManager.Data.Battle.nowPlayer));
+        Vector3 attackPoint = GameManager.Data.Battle.nowPlayer.PersonaPoint.position;
+        Vector3 lookPoint = GameManager.Data.Battle.nowPlayer.transform.position;
 
         Vector3 OriginPos = transform.position;
         ////Move
@@ -59,89 +61,75 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(OriginPos, transform, animator));
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
 
-        //camSet
-        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetBackCam));
-
-
-        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
     public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)
     {
-        
-    }
-
-
-    public void SetBackCam()
-    {
-        var player = GameManager.Data.Battle.nowPlayer;
-        if (GameManager.Data.Battle.InBattlePlayers.IndexOf(player) == 0)
-        {
-            cam.setPlayer1(false);
-        }
-        else if (GameManager.Data.Battle.InBattlePlayers.IndexOf(player) == 1)
-        {
-            cam.setPlayer2(false);
-        }
-        else if (GameManager.Data.Battle.InBattlePlayers.IndexOf(player) == 2)
-        {
-            cam.setPlayer3(false);
-        }
 
     }
+
 
     //Targeting
     public bool isTargeted = false;
 
-    public void SetTarget(bool istarget) 
+    public bool isShadowTurn = false;
+
+    public void SetTarget(bool istarget)
     {
         isTargeted = istarget;
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        targetUI.gameObject.SetActive(true);
-
-        if (!isTargeted)
+        if (!isShadowTurn)
         {
-            targetSprite.color = new Color(1f, 1f, 1f, 0.7f);
+            targetUI.gameObject.SetActive(true);
+
+            if (!isTargeted)
+            {
+                targetSprite.color = new Color(1f, 1f, 1f, 0.7f);
+            }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!isTargeted)
+        if (!isShadowTurn)
         {
-            targetUI.gameObject.SetActive(false);
+            if (!isTargeted)
+            {
+                targetUI.gameObject.SetActive(false);
+            }
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!isTargeted) 
+        if (!isShadowTurn)
         {
-            if (GameManager.Data.Battle.nowShadow == null || GameManager.Data.Battle.nowShadow == this)
+
+            if (!isTargeted)
             {
-                isTargeted = true;
-                GameManager.Data.Battle.nowShadow = this;
+                if (GameManager.Data.Battle.nowShadow == null || GameManager.Data.Battle.nowShadow == this)
+                {
+                    isTargeted = true;
+                    GameManager.Data.Battle.nowShadow = this;
 
-                targetUI.gameObject.SetActive(true);
-                targetSprite.color = new Color(1f, 1f, 1f, 1.0f);
+                    targetUI.gameObject.SetActive(true);
+                    targetSprite.color = new Color(1f, 1f, 1f, 1.0f);
+                }
+                else
+                {
+                    isTargeted = true;
+
+                    GameManager.Data.Battle.nowShadow.SetTarget(false);
+                    GameManager.Data.Battle.nowShadow.targetUI.gameObject.SetActive(false);
+
+                    GameManager.Data.Battle.nowShadow = this;
+
+                    targetUI.gameObject.SetActive(true);
+                    targetSprite.color = new Color(1f, 1f, 1f, 1.0f);
+                }
             }
-            else 
-            {
-                isTargeted = true;
-
-                GameManager.Data.Battle.nowShadow.SetTarget(false);
-                GameManager.Data.Battle.nowShadow.targetUI.gameObject.SetActive(false);
-
-                GameManager.Data.Battle.nowShadow = this;
-
-                targetUI.gameObject.SetActive(true);
-                targetSprite.color = new Color(1f, 1f, 1f, 1.0f);
-            }
-          
-
-            
         }
     }
 

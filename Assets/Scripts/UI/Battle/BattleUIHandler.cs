@@ -12,6 +12,7 @@ public class BattleUIHandler : MonoBehaviour
 
     public BattleUI BattleUI;
     public Transform partyUI;
+    public Transform SelectMenuUI;
     public Transform MenuUI;
     public Transform MenuContentUI;
     [HideInInspector] public BattleSystem battleSystem;
@@ -24,6 +25,7 @@ public class BattleUIHandler : MonoBehaviour
     {
         _battlesystem.uiHandler = this;
         this.battleSystem = _battlesystem;
+
         MenuUI.gameObject.SetActive(false);
 
         skillObj = GameManager.Resource.Load<GameObject>("UI/SkillItem");
@@ -253,12 +255,17 @@ public class BattleUIHandler : MonoBehaviour
     {
         int index = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
 
+        RemoveCommandUI();
+
+        commandUI[index].SetActive(true);
+    }
+
+    public void RemoveCommandUI() 
+    {
         for (int i = 0; i < commandUI.Count; i++)
         {
             commandUI[i].SetActive(false);
         }
-
-        commandUI[index].SetActive(true);
     }
 
 
