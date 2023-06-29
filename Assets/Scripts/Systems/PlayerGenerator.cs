@@ -42,10 +42,11 @@ public class PlayerGenerator : MonoBehaviour
             
             //party 추가
             player.AddParty("Chie");
+            player.AddParty("Kanji");
 
             GameManager.Data.Dungeon.InBattlePlayers.Add(player);
 
-            for (int i = 0; i < player.Partys.Count; i++) // persona 추가해야함
+            for (int i = 0; i < player.Partys.Count; i++) 
             {
                 var newAllyName = player.Partys[i].data.unitName;
 

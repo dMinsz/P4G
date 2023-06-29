@@ -1825,7 +1825,6 @@ MonoBehaviour:
   - {fileID: 1775211016}
   - {fileID: 844235374}
   - {fileID: 357492812}
-  - {fileID: 1480674705}
   EnemyPoints:
   - {fileID: 1445265557}
   - {fileID: 1878937024}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdc7160d4381fd4598039dd6b103743, type: 3}
+  m_Name: MahaZio
+  m_EditorClassIdentifier: 
+  skill:
+    skillName: 
+    cType: 0
+    cost: 0
+    SkillType: 0
+    skillImage: {fileID: 0}
+    target: 0
+    power: 1
+    critical: 1
+    hits: 1
