@@ -24,7 +24,10 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
     public int SP { get { return curSp; } protected set { curSp = value; OnSpChanged?.Invoke(curSp); } }
 
     public Animator animator;
-    //BattleCamSystem cam;
+
+    public ParticleSystem hitEffect;
+
+
     private void Awake()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
@@ -54,7 +57,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(attackPoint, transform, animator));
 
         ////Attack
-        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowPlayer, animator));
+        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowPlayer, animator, GameManager.Data.Battle.nowPlayer.animator));
 
         ////ReturnBack
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(OriginPos, this.transform));
@@ -68,6 +71,14 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
 
     }
 
+    public override void TakeDamage(int AttackerEndurance, int AttackerLevel, int hits = 1)
+    {
+        //animator.SetTrigger("Hit");
+
+
+
+        base.TakeDamage(AttackerEndurance, AttackerLevel, hits);
+    }
 
     //Targeting
     public bool isTargeted = false;

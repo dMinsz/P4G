@@ -9,31 +9,39 @@ public class AttackCommand : Command
     Unit uactor;
     BattlePersona pactor;
     Unit target;
-    Animator animator;
-    public AttackCommand(Unit actor, Unit target,Animator animator) 
+    Animator actorAnim;
+    Animator targetAnim;
+    public AttackCommand(Unit actor, Unit target,Animator actorAnimator, Animator targetAnimator) 
     {
         this.uactor = actor;
         this.target = target;
-        this.animator = animator;
-    }
-    public AttackCommand(BattlePersona actor, Unit target, Animator animator)
-    {
-        this.pactor = actor;
-        this.target = target;
-        this.animator = animator;
+        this.actorAnim = actorAnimator;
+        this.targetAnim = targetAnimator;
     }
     protected override async Task AsyncExecuter()
     {
    
-        animator.SetTrigger("Attack");
-
+        actorAnim.SetTrigger("Attack");
+        await Task.Delay((int)actorAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
+        await Task.Delay(100);
 
         if (uactor != null)
         {
+
+            await Task.Delay(100);
+            targetAnim.SetTrigger("Hit");
+            await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
+
+
             target.TakeDamage(uactor.data.Endurance, uactor.data.Level);
         }
         else if (pactor != null)
         {
+            await Task.Delay(100);
+            targetAnim.SetTrigger("Hit");
+
+            await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
+
             target.TakeDamage(pactor.data.Endurance, pactor.data.Level);
         }
         else 
@@ -43,7 +51,7 @@ public class AttackCommand : Command
 
        
 
-        await Task.Delay(1500);
+        await Task.Delay(100);
     }
 
    

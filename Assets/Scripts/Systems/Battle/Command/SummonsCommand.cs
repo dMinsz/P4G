@@ -19,13 +19,14 @@ public class SummonsCommand : Command
 
     protected override async Task AsyncExecuter()
     {
-
+        player.summonEffect.Play();
         player.card[0].gameObject.SetActive(true);
         player.card[1].gameObject.SetActive(true);
 
         playerAnim.SetTrigger("Persona");
         await Task.Delay((int)playerAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
+        player.summonEffect.Stop();
         player.card[0].gameObject.SetActive(false);
         player.card[1].gameObject.SetActive(false);
     }

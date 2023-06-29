@@ -8,15 +8,15 @@ public class PersonaSkillCommand : Command
 {
     BattlePersona persona;
     Transform summonPoint;
-    Vector3 lookTarget;
     BattleSystem.PersonaAttackType type;
     Player player;
     BattleCamSystem cam;
-    public PersonaSkillCommand(BattlePersona persona , Transform summonPoint, Vector3 lookTarget,  BattleSystem.PersonaAttackType type , Player player , BattleCamSystem cam)
+    Shadow target;
+    public PersonaSkillCommand(BattlePersona persona , Transform summonPoint, Shadow target,  BattleSystem.PersonaAttackType type , Player player , BattleCamSystem cam)
     {
         this.persona = persona;
         this.summonPoint = summonPoint;
-        this.lookTarget = lookTarget;
+        this.target = target;
 
         this.type = type;
         this.player = player;
@@ -26,7 +26,7 @@ public class PersonaSkillCommand : Command
     {
 
         var pobj = GameManager.Pool.Get(false, persona, summonPoint.position, Quaternion.identity);
-        pobj.transform.LookAt(lookTarget);
+        pobj.transform.LookAt(target.transform);
 
         await Task.Delay(1000);
 
@@ -35,16 +35,45 @@ public class PersonaSkillCommand : Command
 
         if (type == BattleSystem.PersonaAttackType.Attack)
         {
-
             pobj.Attack();
+
+            //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
+            //await Task.Delay(500);
+            var pos = this.target.transform.position;
+            pos.y += 2;
+
+            pobj.attackEffect.transform.position = pos;
+            
+            pobj.attackEffect.Play();
+
+            await Task.Delay(1000);
+            //testing
+            target.animator.SetTrigger("Hit");
+
         }
         else 
         {
+
             pobj.UseSkill();
+
+            //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
+            //await Task.Delay(500);
+            var pos = this.target.transform.position;
+            pos.y += 2;
+
+            pobj.skillEffect.transform.position = pos;
+            pobj.skillEffect.Play();
+
+            //testing
+            await Task.Delay(1000);
+            target.animator.SetTrigger("Hit");
+
         }
-        
+
         await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 1000);
+        pobj.skillEffect.Stop();
         await Task.Delay(1000);
+
         GameManager.Pool.Release(pobj);
     }
 

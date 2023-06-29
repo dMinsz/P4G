@@ -28,6 +28,7 @@ public class Player : Unit
     public List<BattlePersona> Personas = new List<BattlePersona>();
     public Transform[] card;
 
+    public ParticleSystem summonEffect;
     private void OnEnable()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
@@ -77,13 +78,14 @@ public class Player : Unit
     }
     public void Attack(Vector3 attackPoint, Vector3 lookPoint , Transform ui)
     {
+
         Vector3 OriginPos = transform.position;
         ////Move
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(attackPoint, transform , animator));
 
         ////Attack
-        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowShadow, animator));
+        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowShadow, animator , GameManager.Data.Battle.nowShadow.animator));
 
         ////ReturnBack
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(OriginPos, this.transform));
@@ -94,14 +96,14 @@ public class Player : Unit
         //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
-    public void UseSkill(Vector3 attackPoint, Vector3 lookPoint , Transform ui , BattleSystem.PersonaAttackType type , BattleCamSystem cam) 
+    public void UseSkill(Vector3 attackPoint, Shadow target , Transform ui , BattleSystem.PersonaAttackType type , BattleCamSystem cam) 
     {
 
         var persona = GameManager.Data.Battle.nowPlayer.Personas[0];
 
         SetFrontCam(cam);
         GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
-        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint,lookPoint, type , this , cam));
+        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint, target, type , this , cam));
         //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 

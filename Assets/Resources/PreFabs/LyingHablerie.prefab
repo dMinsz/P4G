@@ -84,7 +84,9 @@ MonoBehaviour:
       m_Calls: []
   targetUI: {fileID: 1206673750637881788}
   animator: {fileID: 0}
+  hitEffect: {fileID: 0}
   isTargeted: 0
+  isShadowTurn: 0
 --- !u!65 &7201861317345377759
 BoxCollider:
   m_ObjectHideFlags: 0

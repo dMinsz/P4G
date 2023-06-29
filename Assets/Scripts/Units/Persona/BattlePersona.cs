@@ -17,6 +17,11 @@ public class BattlePersona : MonoBehaviour
 
     public UnityEvent OnAttack;
 
+    public ParticleSystem summonEffect;
+
+    public ParticleSystem skillEffect;
+    public ParticleSystem attackEffect;
+
     private void Awake()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
@@ -24,11 +29,13 @@ public class BattlePersona : MonoBehaviour
 
     public void Attack() 
     {
+        summonEffect.Play();
         animator.SetTrigger("Attack");
     }
 
     public void UseSkill() 
     {
+        summonEffect.Play();
         animator.SetTrigger("Skill");
     }
 }

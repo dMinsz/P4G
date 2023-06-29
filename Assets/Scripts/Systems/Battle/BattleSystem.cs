@@ -113,7 +113,7 @@ public class BattleSystem : MonoBehaviour
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform, personaAttackType, cam);
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, personaAttackType, cam);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
 
