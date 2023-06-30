@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -7,7 +9,7 @@ using UnityEngine.EventSystems;
 public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
-    public int Maxhp;
+    public int MaxHp;
     public int curHp;
 
     public int MaxSp;
@@ -57,7 +59,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(attackPoint, transform, animator));
 
         ////Attack
-        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowPlayer, animator, GameManager.Data.Battle.nowPlayer.animator , GameManager.Data.Battle.nowSkill));
+        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowPlayer, animator, GameManager.Data.Battle.nowPlayer.animator, GameManager.Data.Battle.nowSkill));
 
         ////ReturnBack
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(OriginPos, this.transform));
@@ -65,6 +67,86 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(lookPoint, this.transform));
 
     }
+
+    public override void TakeDamage(int strength, Skill nowskill)
+    {
+        float rand = UnityEngine.Random.Range(0.95f, 1.06f);
+
+        int DMG = (int)((strength * strength) / (data.Endurance * 1.5) * rand);
+
+
+        var index = GameManager.Data.Battle.InBattleShadows.FindIndex(v => v == GameManager.Data.Battle.nowShadow);
+        var damageui = GameManager.Data.Battle.uiHandler.DamageUIs[index];
+        damageui.SetTarget(this.transform);
+        damageui.SetDamage(DMG);
+
+        GameManager.UI.ShowInGameUI(damageui);
+
+
+        if (!isDie)
+        {
+            HP -= DMG;
+
+            if (HP < 0)
+            {
+                HP = 0;
+                isDie = true;
+            }
+        }
+    }
+
+    public override void TakeSkillDamage(Skill nowskill)
+    {
+        float rand = UnityEngine.Random.Range(0.95f, 1.06f);
+        int defenseFactor = 1;
+
+        string resistname = Enum.GetName(typeof(ResType), nowskill.SkillType);
+
+
+        Resistance res = Resistance.None;
+
+        FieldInfo fld = typeof(Resistances).GetField(resistname);
+        res = (Resistance)fld.GetValue(data.resist);
+
+        if (res == Resistance.Null)
+        {
+            Debug.Log("공격이 안통함");
+            return;
+        }
+        else if (res == Resistance.Strength)
+        {
+            defenseFactor = (int)(data.Magic * 1.6);
+        }
+        else if (res == Resistance.Weak)
+        {
+            defenseFactor = (int)(data.Magic * 0.5);
+        }
+
+        int DMG = (int)(nowskill.power / defenseFactor * rand);
+
+
+
+        var index = GameManager.Data.Battle.InBattleShadows.FindIndex(v => v == GameManager.Data.Battle.nowShadow);
+        index %= GameManager.Data.Battle.InBattleShadows.Count;
+        var damageui = GameManager.Data.Battle.uiHandler.DamageUIs[index];
+        damageui.SetTarget(this.transform);
+        damageui.SetDamage(DMG);
+
+        GameManager.UI.ShowInGameUI(damageui);
+
+
+        if (!isDie)
+        {
+            HP -= DMG;
+
+            if (HP < 0)
+            {
+                HP = 0;
+                isDie = true;
+            }
+        }
+    }
+
 
 
     //Targeting

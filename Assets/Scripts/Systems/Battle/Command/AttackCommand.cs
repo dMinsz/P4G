@@ -33,19 +33,18 @@ public class AttackCommand : Command
 
             await Task.Delay(100);
             targetAnim.SetTrigger("Hit");
+            target.TakeDamage(uactor.data.Strength,nowSkill);
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
-
-            target.TakeDamage(uactor.data.Strength,nowSkill);
         }
         else if (pactor != null)
         {
             await Task.Delay(100);
             targetAnim.SetTrigger("Hit");
+            target.TakeDamage(uactor.data.Strength, nowSkill);
 
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
-            target.TakeDamage(uactor.data.Strength, nowSkill);
         }
         else 
         {

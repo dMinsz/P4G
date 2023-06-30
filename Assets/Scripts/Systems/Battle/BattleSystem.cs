@@ -24,23 +24,26 @@ public class BattleSystem : MonoBehaviour
     public BattleUIHandler uiHandler;
     public BattleCamSystem cam;
 
-    //public ResType resType;
-    //public TargetType targetType;
-    //public int skillPower;
-    //public int skillCri;
-    //public int skillHit;
-
     public Skill nowSkill;
+
+    public TargetAttributeUI AttributeUIPrefab;
 
     private void Awake()
     {
         turnType = GameManager.Data.Dungeon.StartTurn;
         commandQueue = new Queue<Command>();
         cam = GetComponent<BattleCamSystem>();
+
     }
 
     private void Start()
     {
+    }
+    public void Initialize()
+    {
+        var uiobj = GameManager.Resource.Load<TargetAttributeUI>("UI/TargetAttribute");
+        AttributeUIPrefab = GameManager.UI.ShowInGameUI(uiobj);
+        GameManager.UI.CloseInGameUI(AttributeUIPrefab);
     }
 
 
@@ -98,6 +101,21 @@ public class BattleSystem : MonoBehaviour
         LookSetUp();
     }
 
+    public void OnAnalysis() 
+    {
+        uiHandler.AnalysisingUI.gameObject.SetActive(true);
+
+        var obj = GameManager.UI.ShowInGameUI(AttributeUIPrefab);
+        obj.Setup(nowShadow.data.resist);
+        obj.SetTarget(nowShadow.transform);
+    }
+
+    public void OffAnlysis() 
+    {
+        GameManager.UI.CloseInGameUI(AttributeUIPrefab);
+
+        uiHandler.AnalysisingUI.gameObject.SetActive(false);
+    }
 
     public void OnPlayerAttack()
     {

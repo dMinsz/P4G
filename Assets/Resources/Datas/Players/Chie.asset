@@ -15,9 +15,9 @@ MonoBehaviour:
   player:
     unitName: Chie
     Level: 1
-    Hp: 9
+    Hp: 50
     Mp: 50
-    Sp: 40
+    Sp: 50
     Strength: 7
     Magic: 5
     Endurance: 5

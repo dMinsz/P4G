@@ -21,6 +21,9 @@ public class BattleUIHandler : MonoBehaviour
     private List<GameObject> NowObejcts = new List<GameObject>();
     private List<GameObject> commandUI = new List<GameObject>();
 
+    public Transform AnalysisingUI;
+
+    public List<ShadowHPBar> DamageUIs = new List<ShadowHPBar>();
     public void SetUpUI(BattleSystem _battlesystem)
     {
         _battlesystem.uiHandler = this;

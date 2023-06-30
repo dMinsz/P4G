@@ -21,7 +21,9 @@ public class BattleScene : BaseScene
 
     protected override IEnumerator LoadingRoutine()
     {
+        GameManager.UI.Reset();
         btg.SetUp();
+        GameManager.Data.Battle.Initialize();
         progress = 1.0f;
         yield return null;
     }

@@ -15,9 +15,9 @@ MonoBehaviour:
   player:
     unitName: Kanji
     Level: 1
-    Hp: 0
+    Hp: 70
     Mp: 50
-    Sp: 40
+    Sp: 60
     Strength: 10
     Magic: 5
     Endurance: 15

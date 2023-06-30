@@ -59,6 +59,8 @@ public class PersonaSkillCommand : Command
             //testing
             target.animator.SetTrigger("Hit");
 
+            target.TakeSkillDamage(nowskill);
+
         }
         else 
         {
@@ -66,6 +68,7 @@ public class PersonaSkillCommand : Command
             { // 전체 공격
                 foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
                 {
+                    GameManager.Data.Battle.nowShadow = shadow;
                     pobj.UseSkill();
 
                     //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
@@ -82,6 +85,7 @@ public class PersonaSkillCommand : Command
                     shadow.animator.SetTrigger("Hit");
 
                     shadow.TakeSkillDamage(nowskill);
+
                 }
             }
             else 
@@ -98,8 +102,6 @@ public class PersonaSkillCommand : Command
 
                 //testing
                 await Task.Delay(1000);
-
-
 
                 target.animator.SetTrigger("Hit");
 

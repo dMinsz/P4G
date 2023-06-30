@@ -71,12 +71,13 @@ public class GameManager : MonoBehaviour
         poolObj.name = "PoolManager";
         poolObj.transform.SetParent(transform);
         poolManager = poolObj.AddComponent<PoolManager>();
-        poolManager.Init();
+
 
         GameObject uiObj = new GameObject();
         uiObj.name = "UIManager";
         uiObj.transform.parent = transform;
         uiManager = uiObj.AddComponent<UIManager>();
+
 
         GameObject sObj = new GameObject();
         sObj.name = "SceneManagerEX";
@@ -87,6 +88,8 @@ public class GameManager : MonoBehaviour
         dObj.name = "DataManager";
         dObj.transform.SetParent(transform);
         dataManager = dObj.AddComponent<DataManager>();
+        
+        poolManager.Init();
         dataManager.SetUp();
 
     }

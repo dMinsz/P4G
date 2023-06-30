@@ -15,8 +15,8 @@ public class BattleObjectGenerator : MonoBehaviour
     //[HideInInspector] public List<ShadowData> InBattleShadowDatas;
     //[HideInInspector] public List<Unit> InBattlePlayers;
 
-    [HideInInspector]  public BattleSystem battleSystem;
-
+    [HideInInspector]   public BattleSystem battleSystem;
+    [HideInInspector]   public BattleUIHandler uIHandler;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class BattleObjectGenerator : MonoBehaviour
     {
         GameManager.Data.Battle = GetComponent<BattleSystem>();
         battleSystem = GetComponent<BattleSystem>();
-
+        uIHandler = GetComponent<BattleUIHandler>();
 
         if (GameManager.Data.Dungeon.tempSymbolShadows.Count <= 0) 
         {
@@ -37,9 +37,29 @@ public class BattleObjectGenerator : MonoBehaviour
         if (GameManager.Data.Dungeon.tempSymbolShadows.Count == 1)
         {
             GameObject obj = GameManager.Data.Dungeon.tempSymbolShadows[0].shadow.Prefab;
-            var newShadow = GameManager.Pool.Get(false,obj, EnemyPoints[0].position, Quaternion.identity);
-            newShadow.GetComponent<Shadow>().data = GameManager.Data.Dungeon.tempSymbolShadows[0].shadow;
-            battleSystem.InBattleShadows.Add(newShadow.GetComponent<Shadow>());
+
+            var newShadowObj = GameManager.Pool.Get(false, obj, EnemyPoints[0].position, Quaternion.identity);
+            var newShadow = newShadowObj.GetComponent<Shadow>();
+
+
+            newShadow.data = GameManager.Data.Dungeon.tempSymbolShadows[0].shadow;
+
+            newShadow.MaxHp = newShadow.data.Hp;
+            newShadow.curHp = newShadow.data.Hp;
+
+            newShadow.MaxSp = newShadow.data.Sp;
+            newShadow.curSp = newShadow.data.Sp;
+
+            battleSystem.InBattleShadows.Add(newShadow);
+
+            var dobj = GameManager.Resource.Load<ShadowHPBar>("UI/DamageUI");
+            ShadowHPBar ui = GameManager.UI.ShowInGameUI<ShadowHPBar>(dobj);
+
+            ui.shadow = newShadow;
+            ui.SetBar();
+
+            uIHandler.DamageUIs.Add(ui);
+            GameManager.UI.CloseInGameUI(ui);
 
             MakePlayers();
         }
@@ -70,11 +90,32 @@ public class BattleObjectGenerator : MonoBehaviour
         {
             GameObject obj = GameManager.Data.Dungeon.tempSymbolShadows[i].shadow.Prefab;
 
-            var newShadow = GameManager.Pool.Get(false,obj, EnemyPoints[i].position, Quaternion.identity , i.ToString());
+            var newShadowObj = GameManager.Pool.Get(false,obj, EnemyPoints[i].position, Quaternion.identity , i.ToString());
+            var newShadow = newShadowObj.GetComponent<Shadow>();
 
-            newShadow.GetComponent<Shadow>().data = GameManager.Data.Dungeon.tempSymbolShadows[i].shadow;
 
-            battleSystem.InBattleShadows.Add(newShadow.GetComponent<Shadow>());
+            newShadow.data = GameManager.Data.Dungeon.tempSymbolShadows[i].shadow;
+
+            newShadow.MaxHp = newShadow.data.Hp;
+            newShadow.curHp = newShadow.data.Hp;
+
+            newShadow.MaxSp = newShadow.data.Sp;
+            newShadow.curSp = newShadow.data.Sp;
+
+            battleSystem.InBattleShadows.Add(newShadow);
+
+
+            //hpbar
+
+            var dobj = GameManager.Resource.Load<ShadowHPBar>("UI/DamageUI");
+            dobj.name += i;
+            ShadowHPBar ui = GameManager.UI.ShowInGameUI<ShadowHPBar>(dobj);
+
+            ui.shadow = newShadow;
+            ui.SetBar();
+
+            uIHandler.DamageUIs.Add(ui);
+            GameManager.UI.CloseInGameUI(ui);
         }
 
     }
