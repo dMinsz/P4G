@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: GuardUp
   m_EditorClassIdentifier: 
   skill:
-    skillName: 
-    cType: 0
-    cost: 0
+    skillName: GuardUp
+    cType: 3
+    cost: 5
     SkillType: 0
-    skillImage: {fileID: 0}
-    target: 0
-    power: 1
+    skillImage: {fileID: -1828747172, guid: 669f476aea314684993adc91b19656bb, type: 3}
+    target: 4
+    power: 50
     critical: 1
     hits: 1

@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static Skill;
 
 public class BattleSystem : MonoBehaviour
 {
-    public enum PersonaAttackType
-    {
-        None,
-        Attack,
-        Skill,
-        Size
-    }
-
+ 
     public DungeonDataSystem.Turn turnType;
     public int turnCount = 1; //
 
@@ -30,7 +24,12 @@ public class BattleSystem : MonoBehaviour
     public BattleUIHandler uiHandler;
     public BattleCamSystem cam;
 
-    public PersonaAttackType personaAttackType;
+    public ResType resType;
+    public TargetType targetType;
+    public int skillPower;
+    public int skillCri;
+    public int skillHit;
+
 
     private void Awake()
     {
@@ -113,7 +112,9 @@ public class BattleSystem : MonoBehaviour
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, personaAttackType, cam);
+        
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, 
+                            resType,skillPower,skillCri,targetType, cam);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
 

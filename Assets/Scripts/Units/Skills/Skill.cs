@@ -32,9 +32,9 @@ public class Skill
     [SerializeField] public ResType SkillType;
     [SerializeField] public Sprite skillImage;
 
-    [SerializeField] TargetType target;
+    [SerializeField] public TargetType target;
 
-    [SerializeField] int power = 1;
-    [SerializeField] int critical = 1;
-    [SerializeField] int hits = 1;
+    [SerializeField] public int power = 1;
+    [SerializeField] public int critical = 1;
+    [SerializeField] public int hits = 1;
 }

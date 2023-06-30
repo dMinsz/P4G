@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static PersonaData;
+using static Skill;
 
 public class Player : Unit 
 {
@@ -96,14 +97,15 @@ public class Player : Unit
         //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
-    public void UseSkill(Vector3 attackPoint, Shadow target , Transform ui , BattleSystem.PersonaAttackType type , BattleCamSystem cam) 
+    public void UseSkill(Vector3 attackPoint, Shadow target , Transform ui ,ResType restype ,int skillPower,int skillcritical, TargetType targetType, BattleCamSystem cam) 
     {
 
         var persona = GameManager.Data.Battle.nowPlayer.Personas[0];
 
         SetFrontCam(cam);
         GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
-        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint, target, type , this , cam));
+        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint, target, this , cam
+            ,restype,targetType,skillPower,skillcritical));
         //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: MahaZio
   m_EditorClassIdentifier: 
   skill:
-    skillName: 
-    cType: 0
-    cost: 0
-    SkillType: 0
-    skillImage: {fileID: 0}
-    target: 0
-    power: 1
-    critical: 1
+    skillName: MahaZio
+    cType: 3
+    cost: 10
+    SkillType: 4
+    skillImage: {fileID: -2122789598, guid: 669f476aea314684993adc91b19656bb, type: 3}
+    target: 1
+    power: 40
+    critical: 10
     hits: 1

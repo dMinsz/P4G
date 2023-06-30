@@ -17,12 +17,15 @@ MonoBehaviour:
     Level: 5
     Hp: 73
     Mp: 51
+    Sp: 40
     Strength: 5
     Magic: 5
     Endurance: 3
     Agility: 3
     Luck: 3
     Prefab: {fileID: 5952763855675320682, guid: f0beb72f5708b8643b4aa08859d03765, type: 3}
+    BattlePrefab: {fileID: 0}
+    battleImage: {fileID: 0}
     resist:
       Physic: 0
       Fire: 2

@@ -15,11 +15,11 @@ MonoBehaviour:
   persona:
     personaName: Mikazuchi
     Level: 1
-    Strength: 20
+    Strength: 10
     Magic: 5
     Endurance: 10
-    Agility: 8
-    Luck: 3
+    Agility: 9
+    Luck: 5
     resist:
       Physic: 2
       Fire: 1
@@ -28,6 +28,7 @@ MonoBehaviour:
       Wind: 1
       Light: 1
       Dark: 0
-    skills: []
+    skills:
+    - {fileID: 11400000, guid: a8a9c7f8cd03b2e4182b8bda5688c602, type: 2}
     bustup: {fileID: 21300000, guid: 39781d2114fbc1041acc487358cf0a73, type: 3}
     prefabs: {fileID: 4366964864910304017, guid: 9d7a3c659a0bacf4eb9a7cd29f98564e, type: 3}

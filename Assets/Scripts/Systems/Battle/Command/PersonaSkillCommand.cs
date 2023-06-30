@@ -2,25 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using static PersonaData;
+using static Skill;
 
 public class PersonaSkillCommand : Command
 {
     BattlePersona persona;
     Transform summonPoint;
-    BattleSystem.PersonaAttackType type;
     Player player;
     BattleCamSystem cam;
     Shadow target;
-    public PersonaSkillCommand(BattlePersona persona , Transform summonPoint, Shadow target,  BattleSystem.PersonaAttackType type , Player player , BattleCamSystem cam)
+    ResType resistype;
+    TargetType targetType;
+    int skillPower;
+    int skillCri;
+    public PersonaSkillCommand(BattlePersona persona , Transform summonPoint, Shadow target,Player player , BattleCamSystem cam,
+        ResType resistype, TargetType targetType, int skillPower, int skillCri)
     {
         this.persona = persona;
         this.summonPoint = summonPoint;
         this.target = target;
-
-        this.type = type;
         this.player = player;
         this.cam = cam;
+
+        this.resistype = resistype;
+        this.targetType = targetType;
+        this.skillPower = skillPower;
+        this.skillCri = skillCri;
+
+
     }
     protected override async Task AsyncExecuter()
     {
@@ -33,7 +44,7 @@ public class PersonaSkillCommand : Command
         SetBackCam(this.cam);
 
 
-        if (type == BattleSystem.PersonaAttackType.Attack)
+        if (resistype == ResType.Physic)
         {
             pobj.Attack();
 
@@ -53,21 +64,49 @@ public class PersonaSkillCommand : Command
         }
         else 
         {
+            if (targetType == TargetType.AllEnemy)
+            { // 전체 공격
+                foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
+                {
+                    pobj.UseSkill();
 
-            pobj.UseSkill();
+                    //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
+                    //await Task.Delay(500);
+                    var pos = this.target.transform.position;
+                    pos.y += 2;
 
-            //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
-            //await Task.Delay(500);
-            var pos = this.target.transform.position;
-            pos.y += 2;
+                    pobj.skillEffect.transform.position = pos;
+                    pobj.skillEffect.Play();
 
-            pobj.skillEffect.transform.position = pos;
-            pobj.skillEffect.Play();
+                    //testing
+                    await Task.Delay(500);
 
-            //testing
-            await Task.Delay(1000);
-            target.animator.SetTrigger("Hit");
+                    shadow.animator.SetTrigger("Hit");
 
+                    shadow.TakeSkillDamage(resistype, skillPower, skillCri, 1);
+                }
+            }
+            else 
+            {
+                pobj.UseSkill();
+
+                //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
+                //await Task.Delay(500);
+                var pos = this.target.transform.position;
+                pos.y += 2;
+
+                pobj.skillEffect.transform.position = pos;
+                pobj.skillEffect.Play();
+
+                //testing
+                await Task.Delay(1000);
+
+
+
+                target.animator.SetTrigger("Hit");
+
+                target.TakeSkillDamage(resistype, skillPower, skillCri, 1);
+            }
         }
 
         await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 1000);

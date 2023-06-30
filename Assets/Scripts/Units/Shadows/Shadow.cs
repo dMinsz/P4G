@@ -66,19 +66,6 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
 
     }
 
-    public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)
-    {
-
-    }
-
-    public override void TakeDamage(int AttackerEndurance, int AttackerLevel, int hits = 1)
-    {
-        //animator.SetTrigger("Hit");
-
-
-
-        base.TakeDamage(AttackerEndurance, AttackerLevel, hits);
-    }
 
     //Targeting
     public bool isTargeted = false;

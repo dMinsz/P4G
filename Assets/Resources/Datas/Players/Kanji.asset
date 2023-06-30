@@ -15,12 +15,12 @@ MonoBehaviour:
   player:
     unitName: Kanji
     Level: 1
-    Hp: 80
+    Hp: 0
     Mp: 50
     Sp: 40
     Strength: 10
     Magic: 5
-    Endurance: 10
+    Endurance: 15
     Agility: 10
     Luck: 12
     Prefab: {fileID: 2493383125885445103, guid: e5c96d52b956a3c4aa6c64c87d565cb8, type: 3}
@@ -34,6 +34,8 @@ MonoBehaviour:
       Wind: 1
       Light: 0
       Dark: 0
-    skills: []
+    skills:
+    - {fileID: 11400000, guid: bccb9b5bb0d050b408550ca1dab98719, type: 2}
+    - {fileID: 11400000, guid: fa801b75efb474a4ca1504a5c2a82d48, type: 2}
   PersonaNames:
   - Mikazuchi

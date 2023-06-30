@@ -15,13 +15,13 @@ MonoBehaviour:
   player:
     unitName: Chie
     Level: 1
-    Hp: 80
+    Hp: 9
     Mp: 50
     Sp: 40
-    Strength: 10
+    Strength: 7
     Magic: 5
-    Endurance: 10
-    Agility: 10
+    Endurance: 5
+    Agility: 5
     Luck: 12
     Prefab: {fileID: 8534396320381577170, guid: 389ddd8165cb9a046a7b922da8d91490, type: 3}
     BattlePrefab: {fileID: 8534396320381577170, guid: 1fea099a17bfd4a478f200ce8b1caa9c, type: 3}

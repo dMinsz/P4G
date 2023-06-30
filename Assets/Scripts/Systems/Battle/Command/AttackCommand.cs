@@ -33,7 +33,7 @@ public class AttackCommand : Command
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
 
-            target.TakeDamage(uactor.data.Endurance, uactor.data.Level);
+            target.TakeDamage(uactor.data.Strength);
         }
         else if (pactor != null)
         {
@@ -42,7 +42,7 @@ public class AttackCommand : Command
 
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
-            target.TakeDamage(pactor.data.Endurance, pactor.data.Level);
+            target.TakeDamage(uactor.data.Strength);
         }
         else 
         {
