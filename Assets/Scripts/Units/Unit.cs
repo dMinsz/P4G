@@ -9,7 +9,7 @@ public abstract class Unit : MonoBehaviour
 {
     public UnitData data;
 
-    protected bool isDie = false;
+    public bool isDie = false;
 
     public virtual void Attack(Vector3 AttackPoint, Vector3 LookPoint) { }
 

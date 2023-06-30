@@ -119,23 +119,172 @@ public class BattleSystem : MonoBehaviour
 
     public void OnPlayerAttack()
     {
+
+        if (!nowPlayer.isDie)
+        {
+            if (!nowShadow.isDie)
+            {
+                PlayerAttack();
+            }
+            else
+            {
+                var index = InBattleShadows.IndexOf(nowShadow);
+                for (int i = index; i < InBattleShadows.Count; i++)
+                {
+                    nowShadow = InBattleShadows[(index + 1) % InBattleShadows.Count];
+
+                    if (!nowShadow.isDie)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        nowShadow = null;
+                    }
+                }
+
+                if (nowShadow == null)
+                {
+                    //ToDO
+                    //game End
+
+                    Debug.Log("Player ½Â¸®");
+                }
+
+                PlayerAttack();
+
+            }
+
+        }
+        else
+        {
+            var originIndex = InBattlePlayers.IndexOf(nowPlayer);
+
+            for (int i = originIndex; i < InBattlePlayers.Count; i++)
+            {
+                nowPlayer = InBattlePlayers[(originIndex + 1) % InBattlePlayers.Count];
+
+                if (!nowPlayer.isDie)
+                {
+                    break;
+                }
+                else
+                {
+                    nowPlayer = null;
+                }
+            }
+
+            if (nowPlayer == null)
+            {
+                //ToDO
+                //game End
+
+                Debug.Log("Player ÆÐ¹è");
+            }
+
+
+            nowPlayer = InBattlePlayers[originIndex];
+
+            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
+        
+        }
+
+        
+    }
+
+    private void PlayerAttack() 
+    {
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
+
         nowPlayer.Attack(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform);
+
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
     }
 
     public void OnPlayerUsePersonaAttack()
     {
+        if (!nowPlayer.isDie)
+        {
+            if (!nowShadow.isDie)
+            {
+                PlayerAttack();
+            }
+            else
+            {
+                var index = InBattleShadows.IndexOf(nowShadow);
+                for (int i = index; i < InBattleShadows.Count; i++)
+                {
+                    nowShadow = InBattleShadows[(index + 1) % InBattleShadows.Count];
+
+                    if (!nowShadow.isDie)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        nowShadow = null;
+                    }
+                }
+
+                if (nowShadow == null)
+                {
+                    //ToDO
+                    //game End
+
+                    Debug.Log("Player ½Â¸®");
+                }
+
+                PlayerPersonaAttack();
+
+            }
+
+        }
+        else
+        {
+            var originIndex = InBattlePlayers.IndexOf(nowPlayer);
+
+            for (int i = originIndex; i < InBattlePlayers.Count; i++)
+            {
+                nowPlayer = InBattlePlayers[(originIndex + 1) % InBattlePlayers.Count];
+
+                if (!nowPlayer.isDie)
+                {
+                    break;
+                }
+                else
+                {
+                    nowPlayer = null;
+                }
+            }
+
+            if (nowPlayer == null)
+            {
+                //ToDO
+                //game End
+
+                Debug.Log("Player ÆÐ¹è");
+            }
+
+
+            nowPlayer = InBattlePlayers[originIndex];
+
+            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
+
+        }
+
+    }
+
+    private void PlayerPersonaAttack() 
+    {
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
-        
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, cam , nowSkill);
+
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, cam, nowSkill);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
-
     }
 
 
@@ -177,14 +326,19 @@ public class BattleSystem : MonoBehaviour
 
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
 
+        
+
         foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
         {//·£´ý°ø°Ý
-            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OffShadowTargeting));
+            if (!shadow.isDie) 
+            {
+                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OffShadowTargeting));
 
-            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetRandomPlayer));
+                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetRandomPlayer));
 
-            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(shadow.GetComponent<Shadow>().Attack));
+                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(shadow.GetComponent<Shadow>().Attack));
 
+            }
         }
 
         while (true)

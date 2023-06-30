@@ -13,10 +13,6 @@ public class PersonaSkillCommand : Command
     Player player;
     BattleCamSystem cam;
     Shadow target;
-    //ResType resistype;
-    //TargetType targetType;
-    //int skillPower;
-    //int skillCri;
 
     Skill nowskill;
 

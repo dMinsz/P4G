@@ -127,6 +127,8 @@ public class Player : Unit
             {
                 HP = 0;
                 isDie = true;
+
+                animator.SetBool("IsDie", true);
             }
         }
     }
@@ -168,6 +170,7 @@ public class Player : Unit
             {
                 HP = 0;
                 isDie = true;
+                animator.SetBool("IsDie", true);
             }
         }
     }

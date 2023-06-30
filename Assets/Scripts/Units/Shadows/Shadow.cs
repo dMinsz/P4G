@@ -91,6 +91,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
             {
                 HP = 0;
                 isDie = true;
+                animator.SetBool("IsDie", true);
             }
         }
     }
@@ -143,6 +144,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
             {
                 HP = 0;
                 isDie = true;
+                animator.SetBool("IsDie", true);
             }
         }
     }
