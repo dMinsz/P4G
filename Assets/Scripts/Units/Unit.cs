@@ -12,11 +12,11 @@ public abstract class Unit : MonoBehaviour
 
     public virtual void Attack(Vector3 AttackPoint, Vector3 LookPoint) { }
 
-    public virtual void TakeDamage(int AttackerPower, int hits = 1) 
+    public virtual void TakeDamage(int strength,Skill nowskill) 
     {
         float rand = UnityEngine.Random.Range(0.95f, 1.06f);
 
-        int DMG = (int)((AttackerPower * AttackerPower) / (data.Endurance * 1.5) * rand);
+        int DMG = (int)((nowskill.power * nowskill.power) / (data.Endurance * 1.5) * rand);
 
         if (!isDie) 
         {
@@ -30,12 +30,12 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    public virtual void TakeSkillDamage(ResType AttackType, int power, int critical, int hit) 
+    public virtual void TakeSkillDamage(Skill nowskill) 
     {
         float rand = UnityEngine.Random.Range(0.95f, 1.06f);
         int defenseFactor = 1;
 
-        string resistname = Enum.GetName(typeof(ResType), AttackType);
+        string resistname = Enum.GetName(typeof(ResType), nowskill.SkillType);
 
    
         Resistance res = Resistance.None;
@@ -57,7 +57,7 @@ public abstract class Unit : MonoBehaviour
             defenseFactor = (int)(data.Magic * 0.5);
         }
 
-        int DMG = (int)( power  / defenseFactor * rand);
+        int DMG = (int)( nowskill.power / defenseFactor * rand);
 
         if (!isDie)
         {

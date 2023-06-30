@@ -11,12 +11,15 @@ public class AttackCommand : Command
     Unit target;
     Animator actorAnim;
     Animator targetAnim;
-    public AttackCommand(Unit actor, Unit target,Animator actorAnimator, Animator targetAnimator) 
+    Skill nowSkill;
+    public AttackCommand(Unit actor, Unit target,Animator actorAnimator, Animator targetAnimator , Skill nowSkill) 
     {
         this.uactor = actor;
         this.target = target;
         this.actorAnim = actorAnimator;
         this.targetAnim = targetAnimator;
+
+        this.nowSkill = nowSkill;
     }
     protected override async Task AsyncExecuter()
     {
@@ -33,7 +36,7 @@ public class AttackCommand : Command
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
 
-            target.TakeDamage(uactor.data.Strength);
+            target.TakeDamage(uactor.data.Strength,nowSkill);
         }
         else if (pactor != null)
         {
@@ -42,7 +45,7 @@ public class AttackCommand : Command
 
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
-            target.TakeDamage(uactor.data.Strength);
+            target.TakeDamage(uactor.data.Strength, nowSkill);
         }
         else 
         {

@@ -24,12 +24,13 @@ public class BattleSystem : MonoBehaviour
     public BattleUIHandler uiHandler;
     public BattleCamSystem cam;
 
-    public ResType resType;
-    public TargetType targetType;
-    public int skillPower;
-    public int skillCri;
-    public int skillHit;
+    //public ResType resType;
+    //public TargetType targetType;
+    //public int skillPower;
+    //public int skillCri;
+    //public int skillHit;
 
+    public Skill nowSkill;
 
     private void Awake()
     {
@@ -113,8 +114,7 @@ public class BattleSystem : MonoBehaviour
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
         
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, 
-                            resType,skillPower,skillCri,targetType, cam);
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, cam , nowSkill);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
 

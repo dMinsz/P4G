@@ -57,7 +57,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(attackPoint, transform, animator));
 
         ////Attack
-        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowPlayer, animator, GameManager.Data.Battle.nowPlayer.animator));
+        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowPlayer, animator, GameManager.Data.Battle.nowPlayer.animator , GameManager.Data.Battle.nowSkill));
 
         ////ReturnBack
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(OriginPos, this.transform));

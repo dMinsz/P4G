@@ -86,7 +86,7 @@ public class Player : Unit
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(attackPoint, transform , animator));
 
         ////Attack
-        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowShadow, animator , GameManager.Data.Battle.nowShadow.animator));
+        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowShadow, animator , GameManager.Data.Battle.nowShadow.animator, GameManager.Data.Battle.nowSkill));
 
         ////ReturnBack
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(OriginPos, this.transform));
@@ -97,20 +97,15 @@ public class Player : Unit
         //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
     }
 
-    public void UseSkill(Vector3 attackPoint, Shadow target , Transform ui ,ResType restype ,int skillPower,int skillcritical, TargetType targetType, BattleCamSystem cam) 
+    public void UseSkill(Vector3 attackPoint, Shadow target , Transform ui, BattleCamSystem cam, Skill nowSkill) 
     {
 
         var persona = GameManager.Data.Battle.nowPlayer.Personas[0];
 
         SetFrontCam(cam);
         GameManager.Data.Battle.commandQueue.Enqueue(new SummonsCommand(this, this.animator));
-        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint, target, this , cam
-            ,restype,targetType,skillPower,skillcritical));
+        GameManager.Data.Battle.commandQueue.Enqueue(new PersonaSkillCommand(persona, PersonaPoint, target, this , cam, nowSkill));
         //GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(ui, true));
-    }
-
-    public override void TakeSkillDamage(ResType AttackType, int power, int critical, int hit)
-    {
     }
 
 

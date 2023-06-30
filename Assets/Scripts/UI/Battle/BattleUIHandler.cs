@@ -88,13 +88,7 @@ public class BattleUIHandler : MonoBehaviour
                     //persona.OnAttack = new UnityEvent();
 
                     //공격과 스킬사용 애니메이션 바꿈
-
-                    item.targetType = pskill.skill.target;
-                    item.attackRes = pskill.skill.SkillType;
-                    item.skillPower = pskill.skill.power;
-                    item.skillCri = pskill.skill.critical;
-                    item.skillHit = pskill.skill.hits;
-
+                    item.nowSkill = pskill.skill;
 
                     //Battle Content Item Add Func
                     item.OnClick.AddListener(this.battleSystem.OnPlayerUsePersonaAttack);

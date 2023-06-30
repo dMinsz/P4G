@@ -13,12 +13,14 @@ public class PersonaSkillCommand : Command
     Player player;
     BattleCamSystem cam;
     Shadow target;
-    ResType resistype;
-    TargetType targetType;
-    int skillPower;
-    int skillCri;
-    public PersonaSkillCommand(BattlePersona persona , Transform summonPoint, Shadow target,Player player , BattleCamSystem cam,
-        ResType resistype, TargetType targetType, int skillPower, int skillCri)
+    //ResType resistype;
+    //TargetType targetType;
+    //int skillPower;
+    //int skillCri;
+
+    Skill nowskill;
+
+    public PersonaSkillCommand(BattlePersona persona , Transform summonPoint, Shadow target, Player player , BattleCamSystem cam , Skill nowSkill)
     {
         this.persona = persona;
         this.summonPoint = summonPoint;
@@ -26,12 +28,8 @@ public class PersonaSkillCommand : Command
         this.player = player;
         this.cam = cam;
 
-        this.resistype = resistype;
-        this.targetType = targetType;
-        this.skillPower = skillPower;
-        this.skillCri = skillCri;
 
-
+        this.nowskill = nowSkill;
     }
     protected override async Task AsyncExecuter()
     {
@@ -44,7 +42,7 @@ public class PersonaSkillCommand : Command
         SetBackCam(this.cam);
 
 
-        if (resistype == ResType.Physic)
+        if (nowskill.SkillType == ResType.Physic)
         {
             pobj.Attack();
 
@@ -64,7 +62,7 @@ public class PersonaSkillCommand : Command
         }
         else 
         {
-            if (targetType == TargetType.AllEnemy)
+            if (nowskill.target == TargetType.AllEnemy)
             { // 전체 공격
                 foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
                 {
@@ -83,7 +81,7 @@ public class PersonaSkillCommand : Command
 
                     shadow.animator.SetTrigger("Hit");
 
-                    shadow.TakeSkillDamage(resistype, skillPower, skillCri, 1);
+                    shadow.TakeSkillDamage(nowskill);
                 }
             }
             else 
@@ -105,7 +103,7 @@ public class PersonaSkillCommand : Command
 
                 target.animator.SetTrigger("Hit");
 
-                target.TakeSkillDamage(resistype, skillPower, skillCri, 1);
+                target.TakeSkillDamage(nowskill);
             }
         }
 

@@ -18,12 +18,13 @@ public class SkillItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public UnityEvent OnClick = new UnityEvent();
 
-    public ResType attackRes;
-    public TargetType targetType;
-    public int skillPower;
-    public int skillCri;
-    public int skillHit;
+    //public ResType attackRes;
+    //public TargetType targetType;
+    //public int skillPower;
+    //public int skillCri;
+    //public int skillHit;
 
+    public Skill nowSkill;
 
     private void Awake()
     {
@@ -73,11 +74,13 @@ public class SkillItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameManager.Data.Battle.resType = attackRes;
-        GameManager.Data.Battle.targetType = targetType;
-        GameManager.Data.Battle.skillPower = skillPower;
-        GameManager.Data.Battle.skillCri = skillCri;
-        GameManager.Data.Battle.skillHit = skillHit;
+        //GameManager.Data.Battle.resType = attackRes;
+        //GameManager.Data.Battle.targetType = targetType;
+        //GameManager.Data.Battle.skillPower = skillPower;
+        //GameManager.Data.Battle.skillCri = skillCri;
+        //GameManager.Data.Battle.skillHit = skillHit;
+
+        GameManager.Data.Battle.nowSkill = nowSkill;
 
         OnClick?.Invoke();
         ChangePlayerStatus();

@@ -37,4 +37,17 @@ public class Skill
     [SerializeField] public int power = 1;
     [SerializeField] public int critical = 1;
     [SerializeField] public int hits = 1;
+
+
+    public Skill(Skill skill) 
+    {
+        skillName = skill.skillName;
+        cType = skill.cType;
+        cost = skill.cost;
+        SkillType = skill.SkillType;
+        target = skill.target;
+        power = skill.power;
+        critical = skill.critical;
+        hits = skill.hits;
+    }
 }

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadow:
     unitName: LyingHablerie
-    Level: 5
-    Hp: 73
+    Level: 1
+    Hp: 0
     Mp: 51
     Sp: 40
     Strength: 5
