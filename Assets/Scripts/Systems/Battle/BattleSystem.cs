@@ -7,7 +7,7 @@ using static Skill;
 
 public class BattleSystem : MonoBehaviour
 {
- 
+
     public DungeonDataSystem.Turn turnType;
     public int turnCount = 1; //
 
@@ -101,7 +101,7 @@ public class BattleSystem : MonoBehaviour
         LookSetUp();
     }
 
-    public void OnAnalysis() 
+    public void OnAnalysis()
     {
         uiHandler.AnalysisingUI.gameObject.SetActive(true);
 
@@ -110,7 +110,7 @@ public class BattleSystem : MonoBehaviour
         obj.SetTarget(nowShadow.transform);
     }
 
-    public void OffAnlysis() 
+    public void OffAnlysis()
     {
         GameManager.UI.CloseInGameUI(AttributeUIPrefab);
 
@@ -119,80 +119,28 @@ public class BattleSystem : MonoBehaviour
 
     public void OnPlayerAttack()
     {
-
-        if (!nowPlayer.isDie)
+        if (!nowShadow.isDie)
         {
-            if (!nowShadow.isDie)
-            {
-                PlayerAttack();
-            }
-            else
-            {
-                var index = InBattleShadows.IndexOf(nowShadow);
-                for (int i = index; i < InBattleShadows.Count; i++)
-                {
-                    nowShadow = InBattleShadows[(index + 1) % InBattleShadows.Count];
-
-                    if (!nowShadow.isDie)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        nowShadow = null;
-                    }
-                }
-
-                if (nowShadow == null)
-                {
-                    //ToDO
-                    //game End
-
-                    Debug.Log("Player 승리");
-                }
-
-                PlayerAttack();
-
-            }
-
+            PlayerAttack();
         }
         else
         {
-            var originIndex = InBattlePlayers.IndexOf(nowPlayer);
+            //죽지않은 섀도우 찾기
+            NextShadow();
 
-            for (int i = originIndex; i < InBattlePlayers.Count; i++)
-            {
-                nowPlayer = InBattlePlayers[(originIndex + 1) % InBattlePlayers.Count];
-
-                if (!nowPlayer.isDie)
-                {
-                    break;
-                }
-                else
-                {
-                    nowPlayer = null;
-                }
-            }
-
-            if (nowPlayer == null)
+            if (nowShadow == null)
             {
                 //ToDO
                 //game End
 
-                Debug.Log("Player 패배");
+                Debug.Log("Player 승리");
             }
 
-
-            nowPlayer = InBattlePlayers[originIndex];
-
-            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
-        
+            PlayerAttack();
         }
-
-        
     }
 
-    private void PlayerAttack() 
+    private void PlayerAttack()
     {
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
@@ -205,78 +153,28 @@ public class BattleSystem : MonoBehaviour
 
     public void OnPlayerUsePersonaAttack()
     {
-        if (!nowPlayer.isDie)
+        if (!nowShadow.isDie)
         {
-            if (!nowShadow.isDie)
-            {
-                PlayerAttack();
-            }
-            else
-            {
-                var index = InBattleShadows.IndexOf(nowShadow);
-                for (int i = index; i < InBattleShadows.Count; i++)
-                {
-                    nowShadow = InBattleShadows[(index + 1) % InBattleShadows.Count];
-
-                    if (!nowShadow.isDie)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        nowShadow = null;
-                    }
-                }
-
-                if (nowShadow == null)
-                {
-                    //ToDO
-                    //game End
-
-                    Debug.Log("Player 승리");
-                }
-
-                PlayerPersonaAttack();
-
-            }
-
+            PlayerPersonaAttack();
         }
         else
         {
-            var originIndex = InBattlePlayers.IndexOf(nowPlayer);
+            NextShadow();
 
-            for (int i = originIndex; i < InBattlePlayers.Count; i++)
-            {
-                nowPlayer = InBattlePlayers[(originIndex + 1) % InBattlePlayers.Count];
-
-                if (!nowPlayer.isDie)
-                {
-                    break;
-                }
-                else
-                {
-                    nowPlayer = null;
-                }
-            }
-
-            if (nowPlayer == null)
+            if (nowShadow == null)
             {
                 //ToDO
                 //game End
 
-                Debug.Log("Player 패배");
+                Debug.Log("Player 승리");
             }
 
-
-            nowPlayer = InBattlePlayers[originIndex];
-
-            GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
-
+            PlayerPersonaAttack();
         }
 
     }
 
-    private void PlayerPersonaAttack() 
+    private void PlayerPersonaAttack()
     {
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
@@ -287,32 +185,175 @@ public class BattleSystem : MonoBehaviour
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
     }
 
-
+    bool isTurnChange = true;
     public void NextPlayer()
     {
+        if (CheckAllShadowDied() == true)
+        {
+            //Player Win
+
+            Debug.Log("Player win");
+
+            //change Scene etc
+
+            return;
+        }
+
+        if (CheckAllPlayerDied() == true)
+        {
+            //Player Lost
+
+            Debug.Log("Player Lost");
+
+            //change Scene etc
+
+            return;
+        }
+
+
         int nowIndex = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
         int nowCount = nowIndex + 1;
         int MaxCount = GameManager.Data.Battle.InBattlePlayers.Count;
 
-        if (nowCount < MaxCount)
+        if (isTurnChange == true)
         {
+            if (nowCount >= MaxCount)
+            {
+                TurnRoutine = StartCoroutine(EnemyTurnRoutine());
+                turnCount++;
+                return;
+            }
+        }
+        else 
+        {
+            turnCount++;
+
+            if (nowCount >= MaxCount)
+            {
+                GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[GameManager.Data.Battle.InBattlePlayers.Count-1];
+
+
+                uiHandler.ChangeCommandUI(); // 파티에 커맨드 표시 바꾸기
+                cam.nextPlayer(); // 캠변환
+
+
+                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, true));
+                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
+
+                LookSetUp();
+
+
+                return;
+            }
+        }
+
+
+        for (int i = nowIndex; i < MaxCount; i++)
+        {
+            if (IsDiedPlayer(nowIndex + 1))
+            {
+                nowIndex++;
+                continue;
+            }
+
             GameManager.Data.Battle.nowPlayer = GameManager.Data.Battle.InBattlePlayers[++nowIndex];
-            uiHandler.ChangeCommandUI();
-            cam.nextPlayer();
+
+
+            uiHandler.ChangeCommandUI(); // 파티에 커맨드 표시 바꾸기
+            cam.nextPlayer(); // 캠변환
 
 
             GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, true));
             GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
 
             LookSetUp();
+
+            return;
+        }
+
+        //여기까지오면 다음 플레이어가없는것
+        TurnRoutine = StartCoroutine(EnemyTurnRoutine());
+        turnCount++;
+
+
+    }
+
+    private bool IsDiedPlayer(int index)
+    {
+        if (index >= GameManager.Data.Battle.InBattlePlayers.Count)
+        {
+            return true;
+        }
+
+        if (GameManager.Data.Battle.InBattlePlayers[index].isDie == true)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool CheckAllShadowDied()
+    {
+        int dieCount = 0;
+        for (int i = 0; i < InBattleShadows.Count; i++)
+        {
+            if (InBattleShadows[i].isDie)
+            {
+                dieCount++;
+            }
+        }
+
+        if (dieCount == InBattleShadows.Count)
+        {
+            return true;
         }
         else
         {
-            TurnRoutine = StartCoroutine(EnemyTurnRoutine());
-            turnCount++;
+            return false;
         }
 
     }
+
+    private void NextShadow()
+    {
+        var index = InBattleShadows.IndexOf(nowShadow);
+        for (int i = index; i < InBattleShadows.Count; i++)
+        {
+            nowShadow = InBattleShadows[(index + 1) % InBattleShadows.Count];
+
+            if (!nowShadow.isDie)
+            {
+                break;
+            }
+            else
+            {
+                nowShadow = null;
+            }
+        }
+    }
+
+    private bool CheckAllPlayerDied()
+    {
+        int dieCount = 0;
+        for (int i = 0; i < InBattlePlayers.Count; i++)
+        {
+            if (InBattlePlayers[i].isDie)
+            {
+                dieCount++;
+            }
+        }
+
+        if (dieCount == InBattlePlayers.Count)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 
 
 
@@ -321,43 +362,36 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurnRoutine()
     {
+
         Debug.Log("Enemy Turn Routine Start");
         uiHandler.RemoveCommandUI();
 
+        //PartyUI 끄기
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
 
-        
+
+        bool GameDone = false;
 
         foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
-        {//랜덤공격
-            if (!shadow.isDie) 
+        {//랜덤공격 세팅
+            if (!shadow.isDie)
             {
-                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OffShadowTargeting));
-
-                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetRandomPlayer));
-
-                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(shadow.GetComponent<Shadow>().Attack));
-
+                GameDone = ShadowAttack(shadow);
             }
         }
 
-        while (true)
+        while (GameDone)
         {
             if (GameManager.Data.Battle.commandQueue.Count > 0)
-            {
+            {   //공격이 끝날때까지 기다린다.
                 yield return null;
             }
             else
             {
-                //targeting
-                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OnShadowTargeting));
 
-                //default Seting // need is Dead check
-                GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetDefalt));
-
-                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.BattleUI.transform, true));
-                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, true));
-                GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
+                yield return new WaitForSeconds(1.0f);
+                ShadowSetting();
 
                 turnCount++;
                 Debug.Log("Enemy Turn Routine Done");
@@ -365,12 +399,58 @@ public class BattleSystem : MonoBehaviour
             }
         }
     }
+    private bool ShadowAttack(Shadow shadow) 
+    {
+
+        if (CheckAllPlayerDied() == true)
+        {
+            //Player Lost
+            Debug.Log("Player Lost");
+            return false;
+        }
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OffShadowTargeting));
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(SetRandomPlayer));
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(shadow.GetComponent<Shadow>().Attack));
+
+        return true;
+    }
+
+    private void ShadowSetting() 
+    {
+        //targeting
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OnShadowTargeting));
+
+        //default Seting // need is Dead check
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(ShadowTurnDoneSetting));
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.BattleUI.transform, true));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, true));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, true));
+
+    }
 
     public void SetRandomPlayer() 
     {
         int rand = Random.Range(0, GameManager.Data.Battle.InBattlePlayers.Count);
 
         var randomPlayer = GameManager.Data.Battle.InBattlePlayers[rand];
+
+        if (randomPlayer.isDie) 
+        {
+
+            for (int i = 0; i < GameManager.Data.Battle.InBattlePlayers.Count; i++)
+            {
+                if (IsDiedPlayer(i))
+                {
+                    continue;
+                }
+
+                randomPlayer = GameManager.Data.Battle.InBattlePlayers[i];
+                break;
+            }
+        }
         GameManager.Data.Battle.nowPlayer = randomPlayer;
     }
 
@@ -398,6 +478,46 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    private void ShadowTurnDoneSetting() 
+    {
+        nowPlayer = InBattlePlayers[0];
+
+        nowShadow = InBattleShadows[0];
+
+
+        if (nowShadow == null || nowShadow.isDie == true)
+        {
+            NextShadow();
+        }
+
+
+        if (nowShadow == null) 
+        {
+            //playe win
+            Debug.Log("Player Win");
+            return;
+        }
+
+        nowShadow.targetUI.gameObject.SetActive(true);
+
+        nowPersona = InBattlePlayers[0].Personas[InBattlePlayers[0].nowPersonaIndex];
+
+
+        if (nowPlayer.isDie == true)
+        {
+            isTurnChange = false;
+            NextPlayer();
+            isTurnChange = true;
+
+        }
+        else 
+        {
+            cam.SetPlayerCam(0);
+            uiHandler.ChangeCommandUI();
+
+            LookSetUp();
+        }
+    }
 
 
     public void ReleasePool()
@@ -418,7 +538,8 @@ public class BattleSystem : MonoBehaviour
 
         GameManager.Pool.DestroyContainer(nowSymbol);
 
-        GameManager.Scene.LoadScene("LobbyScene");
+        
+        GameManager.Scene.LoadScene(GameManager.Data.Dungeon.nowDungeon.DungeonName);
     }
 
 }
