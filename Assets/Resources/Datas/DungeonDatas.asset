@@ -16,3 +16,6 @@ MonoBehaviour:
   - DungeonName: Lobby
     shadows:
     - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}
+  - DungeonName: 1F
+    shadows:
+    - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}

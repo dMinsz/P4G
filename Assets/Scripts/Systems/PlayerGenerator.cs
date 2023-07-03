@@ -41,8 +41,8 @@ public class PlayerGenerator : MonoBehaviour
 
             
             //party Ãß°¡
-            player.AddParty("Chie");
-            player.AddParty("Kanji");
+            //player.AddParty("Chie");
+            //player.AddParty("Kanji");
 
             GameManager.Data.Dungeon.InBattlePlayers.Add(player);
 

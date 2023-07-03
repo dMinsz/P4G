@@ -19,6 +19,7 @@ public class OffDamageUICommand : Command
             {
                 GameManager.UI.CloseInGameUI(damageui);
             }
+            await Task.Delay(1);
 
         }
         

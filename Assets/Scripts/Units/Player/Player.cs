@@ -36,15 +36,11 @@ public class Player : Unit
     private void OnEnable()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
-        // animator.SetFloat("MoveSpeed", 0f);
         PersonaPoint = transform.Find("PersonaPoint");
 
         card = new Transform[2];
         card[0] = transform.Find("Model").Find("card_0_Part");
         card[1] = transform.Find("Model").Find("card_1_Part");
-
-        ////animator.StartPlayback();
-        //animator.Play("Idle");
     }
 
     private void OnDisable()
@@ -128,7 +124,8 @@ public class Player : Unit
                 HP = 0;
                 isDie = true;
 
-                animator.SetBool("IsDie", true);
+                //animator.SetBool("IsDie", true);
+                animator.SetTrigger("IsDie");
             }
         }
     }
@@ -170,7 +167,8 @@ public class Player : Unit
             {
                 HP = 0;
                 isDie = true;
-                animator.SetBool("IsDie", true);
+                //animator.SetBool("IsDie", true);
+                animator.SetTrigger("IsDie");
             }
         }
     }

@@ -69,7 +69,7 @@ MonoBehaviour:
   patrollPointRange: 10
   idleMaxTime: 1
   attackRange: 1.2
-  viewRange: 6
+  viewRange: 4
   angle: 130
   targetMask:
     serializedVersion: 2

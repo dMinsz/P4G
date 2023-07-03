@@ -162,7 +162,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!isShadowTurn)
+        if (!isShadowTurn && !isDie)
         {
             targetUI.gameObject.SetActive(true);
 
@@ -175,7 +175,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!isShadowTurn)
+        if (!isShadowTurn && !isDie)
         {
             if (!isTargeted)
             {
@@ -186,7 +186,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!isShadowTurn)
+        if (!isShadowTurn && !isDie)
         {
 
             if (!isTargeted)
