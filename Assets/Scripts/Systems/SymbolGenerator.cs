@@ -14,7 +14,9 @@ public class SymbolGenerator : MonoBehaviour
             for (int i = 0; i < GenratePos.Length; i++)
             {
                 var newSymbol = GameManager.Pool.Get(true, Symbol, GenratePos[i].position, Quaternion.identity , i.ToString());
-               
+
+                newSymbol.GetComponent<SymbolAI>().agent.Warp(GenratePos[i].position);//agent 가 위치값에 에러를 만들어서 워프 시켜준다.
+
                 GameManager.Data.Dungeon.aliveInDungeonSymbols.Add(newSymbol);
 
                 int nowDungeonEachShadow = GameManager.Data.Dungeon.nowDungeon.symbolHaveShadow;
@@ -30,6 +32,8 @@ public class SymbolGenerator : MonoBehaviour
             {
                 var aliveSymbol = GameManager.Pool.Get(true, AliveSymbols[i], AliveSymbols[i].transform.position,
                                                        AliveSymbols[i].transform.rotation);
+
+                aliveSymbol.GetComponent<SymbolAI>().agent.Warp(AliveSymbols[i].transform.position);
             }
 
         }
