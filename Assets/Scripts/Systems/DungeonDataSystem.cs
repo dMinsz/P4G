@@ -57,8 +57,6 @@ public class DungeonDataSystem : MonoBehaviour
     {// 배틀에 들어가는 섀도우 초기화
         if (SetDungeon(dungeonName) == DungeonSet.New)
         {
-
-
             SetShadows();
             if (shadowDatas.Count <= 0)
             {

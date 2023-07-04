@@ -34,4 +34,13 @@ public class Videos: MonoBehaviour
             player.clip = clips[1];
         }
     }
+
+    public void GoToNextScene() 
+    {
+        player.Stop();
+
+        var next = GameManager.Data.Video.nextScene;
+
+        GameManager.Scene.LoadScene(next);
+    }
 }

@@ -14,13 +14,12 @@ public class SymbolGenerator : MonoBehaviour
             for (int i = 0; i < GenratePos.Length; i++)
             {
                 var newSymbol = GameManager.Pool.Get(true, Symbol, GenratePos[i].position, Quaternion.identity , i.ToString());
-
+               
                 GameManager.Data.Dungeon.aliveInDungeonSymbols.Add(newSymbol);
 
-
+                int nowDungeonEachShadow = GameManager.Data.Dungeon.nowDungeon.symbolHaveShadow;
                 //Shadow Instanciate
-                newSymbol.GetComponent<Symbols>().hasEnemys = GameManager.Data.Dungeon.GetRandomShadows(2);
-
+                newSymbol.GetComponent<Symbols>().hasEnemys = GameManager.Data.Dungeon.GetRandomShadows(nowDungeonEachShadow);
             }
         }
         else //배틀하고 나서 다시 돌아왔을때

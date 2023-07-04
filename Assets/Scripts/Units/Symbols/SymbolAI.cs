@@ -49,18 +49,20 @@ public partial class SymbolAI : MonoBehaviour
         stateMachine.AddState(State.Patroll, new PatrollState(this, stateMachine));
         stateMachine.AddState(State.Tracking, new TrackingState(this, stateMachine));
         stateMachine.AddState(State.Attack, new AttackState(this, stateMachine));
-
-
-        MakePatrollPos(PatrollCount);
     }
 
     private void Start()
     {
+        //test Code
+        var test = this.transform.position;
+        MakePatrollPos(PatrollCount);
         stateMachine.SetUp(State.Idle);
     }
 
     private void Update()
     {
+
+        var test = this.transform.position;
         stateMachine.Update();
     }
     public Unit FindPlayer()
@@ -114,6 +116,7 @@ public partial class SymbolAI : MonoBehaviour
 
     private void MakePatrollPos(int PatrollCount) 
     {
+        var test = this.transform.position;
         for (int i = 0; i < PatrollCount; i++)
         {
             patrollPoints.Add(RandomSphereInPoint(patrollPointRange));

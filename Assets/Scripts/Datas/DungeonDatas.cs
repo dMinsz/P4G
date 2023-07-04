@@ -19,5 +19,7 @@ public class DungeonDatas : ScriptableObject
         [Header("Can be Make Shadow")]
         public List<ShadowData> shadows;
 
+        public int symbolHaveShadow;
+
     }
 }

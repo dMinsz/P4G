@@ -17,6 +17,9 @@ public class DataManager : MonoBehaviour
     //Battle Shared Data
     public BattleSystem Battle;
 
+    //Dialogue
+    public Dialogue Dialog;
+
     public void SetUp()
     {
         var vidobj = new GameObject("VideoSystem");
@@ -34,6 +37,14 @@ public class DataManager : MonoBehaviour
         Battle = bObj.AddComponent<BattleSystem>();
         
         Dungeon.Initialize();
+
+
+        var dlObj = new GameObject("DialogueSystem");
+        dlObj.transform.parent = transform;
+        Dialog = dlObj.AddComponent<Dialogue>();
+
+        //Dialog.SetUp();
+
     }
 
 }
