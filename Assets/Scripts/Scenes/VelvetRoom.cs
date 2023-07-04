@@ -16,11 +16,10 @@ public class VelvetRoom : BaseScene
         GameManager.Data.Dialog.SetUp();
         GameManager.Data.Dialog.IsVelvetRoom = true;
 
-
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
 
-        dialog.StartRutine();
+        dialog.StartRutine(0);
     }
     public override void Clear()
     {

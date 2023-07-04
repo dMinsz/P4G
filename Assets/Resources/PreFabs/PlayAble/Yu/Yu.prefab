@@ -3206,6 +3206,7 @@ MonoBehaviour:
       Light: 0
       Dark: 0
     skills: []
+  isDie: 0
   MaxHp: 0
   curHp: 0
   MaxSp: 0
@@ -3222,6 +3223,7 @@ MonoBehaviour:
   nowPersonaIndex: 0
   Personas: []
   card: []
+  summonEffect: {fileID: 0}
 --- !u!143 &5599131597469634991
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3317,6 +3319,7 @@ MonoBehaviour:
   debug: 1
   point: {fileID: 5599131597469634990}
   range: 2
+  animator: {fileID: 5599131597162648182}
 --- !u!136 &5599131597469634985
 CapsuleCollider:
   m_ObjectHideFlags: 0

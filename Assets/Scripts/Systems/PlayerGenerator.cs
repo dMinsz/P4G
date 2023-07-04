@@ -73,8 +73,6 @@ public class PlayerGenerator : MonoBehaviour
                     Ally.Personas[j].data = data.PData;
                 }
 
-
-
                 GameManager.Data.Dungeon.InBattlePlayers.Add(Ally);
 
             }

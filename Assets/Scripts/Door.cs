@@ -6,10 +6,6 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
 
-
-
-
-
     public void OpenDoor() 
     {
         var newPos = this.gameObject.transform.position;

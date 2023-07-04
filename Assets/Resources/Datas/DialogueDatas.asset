@@ -54,9 +54,14 @@ MonoBehaviour:
         \uACC4\uC18D \uC62C\uB77C\uAC00\uBA74 \uC774 \uC138\uACC4\uC5D0\uC11C \uD0C8\uCD9C
         \uD560 \uC218 \uC788\uB2E4\uACE0\uD574"
       check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC228\uC5B4\uC788\uB294\uAC8C \uC544\uB2C8\uB2E4 \uACF0!\n\uB4A4\uC5D0\uC11C
+        \uB3C4\uC6C0\uC744 \uC8FC\uB294\uAC70\uB2E4 \uACF0!"
+      check_read: 0
     - name: "\uCE58\uC5D0"
       BustUp: {fileID: 21300000, guid: 5d0577593033d23469def461ded0073f, type: 3}
-      content: "\uADF8\uB798? \uADF8\uB7FC \uB098\uB3C4 \uAC19\uC774\uAC00\uC790.!"
+      content: "\uADF8\uB7EC\uBA74 \uB098\uB3C4 \uAC19\uC774 \uAC00\uC790!"
       check_read: 0
     cycle_index: 0
     check_cycle_read: 0

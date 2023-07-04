@@ -14,26 +14,26 @@ public class DialogueSystem : MonoBehaviour
         dialog = GameManager.Data.Dialog;
     }
 
-    public void StartRutine()
+    public void StartRutine(int index)
     {
-        StartCoroutine(DialogueRoutine());
+        StartCoroutine(DialogueRoutine(index));
     }
  
 
-    IEnumerator DialogueRoutine() 
+    IEnumerator DialogueRoutine(int index) 
     {
-        if (dialog.dialog_read(0) && !dialog.running)
+        if (dialog.dialog_read(index) && !dialog.running)
         {
-            IEnumerator dialog_co = dialog.dialog_system_start(0);
+            IEnumerator dialog_co = dialog.dialog_system_start(index);
             StartCoroutine(dialog_co);
         }
 
-        for (int i = 0; i < dialog.dialog_cycles[0].info.Count; i++) //대화 단위를 순서대로 확인
+        for (int i = 0; i < dialog.dialog_cycles[index].info.Count; i++) //대화 단위를 순서대로 확인
         {
 
             yield return new WaitUntil(() =>
             {
-                if (dialog.dialog_cycles[0].info[i].check_read)            //현재 대화를 읽었는지 아닌지
+                if (dialog.dialog_cycles[index].info[i].check_read)            //현재 대화를 읽었는지 아닌지
                 {
                     //Debug.Log("다읽음");
 
@@ -50,10 +50,13 @@ public class DialogueSystem : MonoBehaviour
         }
 
 
+        if (GameManager.Data.Dialog.IsVelvetRoom)
+        {
+            GameManager.Data.Dialog.IsVelvetRoom = false;
+            GameManager.Data.Video.SetVideo(1, "LobbyScene");
 
-        GameManager.Data.Dialog.IsVelvetRoom = false;
-        GameManager.Data.Video.SetVideo(1, "LobbyScene");
+            GameManager.Scene.LoadScene("VideoPlayScene");
+        }
 
-        GameManager.Scene.LoadScene("VideoPlayScene");
     }
 }

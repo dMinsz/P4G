@@ -10,6 +10,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] Transform point;
     [SerializeField] float range;
 
+    public Animator animator;
     public void Interact()
     {
         Collider[] colliders = Physics.OverlapSphere(point.position, range);
@@ -18,6 +19,7 @@ public class Interactor : MonoBehaviour
             InteractAdaptor adaptor = collider.GetComponent<InteractAdaptor>();
             if (adaptor != null)
             {
+                animator.Play("WinPose");
                 adaptor.Interact(this);
                 break;
             }
