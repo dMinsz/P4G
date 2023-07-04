@@ -41,6 +41,16 @@ MonoBehaviour:
       check_read: 0
     cycle_index: 0
     check_cycle_read: 0
+  - cycle_name: Portal
+    info:
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC544\uC9C1 \uC774\uCE35 \uC5B4\uB518\uAC00\uC5D0\n\uB2E4\uB978
+        \uC0AC\uB78C\uC774 \uB0A8\uC544\uC788\uB294\uAC70 \uAC19\uB2E4 \uACF0!\n\uADF8\uB0E5
+        \uAC08\uAC70\uB0D0\uACF0!"
+      check_read: 0
+    cycle_index: 0
+    check_cycle_read: 0
   - cycle_name: Chie
     info:
     - name: "\uCE58\uC5D0"

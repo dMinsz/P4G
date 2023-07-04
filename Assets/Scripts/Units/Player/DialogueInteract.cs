@@ -34,14 +34,14 @@ public class DialogueInteract : MonoBehaviour
         animator.SetTrigger("GetUp");
 
         var dialog = GameManager.Data.Dialog;
-        dialog.system.StartRutine(1);
+        dialog.system.StartRutine(2);
         player.GetComponent<PlayerInput>().enabled = false;
-        for (int i = 0; i < dialog.dialog_cycles[1].info.Count; i++) //대화 단위를 순서대로 확인
+        for (int i = 0; i < dialog.dialog_cycles[2].info.Count; i++) //대화 단위를 순서대로 확인
         {
 
             yield return new WaitUntil(() =>
             {
-                if (dialog.dialog_cycles[1].info[i].check_read)            //현재 대화를 읽었는지 아닌지
+                if (dialog.dialog_cycles[2].info[i].check_read)            //현재 대화를 읽었는지 아닌지
                 {
                     //Debug.Log("다읽음");
 
@@ -90,7 +90,7 @@ public class DialogueInteract : MonoBehaviour
         Destroy(Ally.transform.Find("DialogueInteract").GetComponent<DialogueInteract>()); // 필요없는거 삭제
         Destroy(Ally.transform.Find("DialogueInteract").GetComponent<SphereCollider>());
 
-        Ally.transform.position = this.transform.position;
+        Ally.transform.position = Root.transform.position;
 
         GameManager.Data.Dungeon.InBattlePlayers.Add(Ally);
 
