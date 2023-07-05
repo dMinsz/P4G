@@ -53,7 +53,7 @@ public class DialogueSystem : MonoBehaviour
         if (GameManager.Data.Dialog.IsVelvetRoom)
         {
             GameManager.Data.Dialog.IsVelvetRoom = false;
-            GameManager.Data.Video.SetVideo(1, "LobbyScene");
+            GameManager.Data.Video.SetVideo(1, "CutScene");
 
             GameManager.Scene.LoadScene("VideoPlayScene");
         }

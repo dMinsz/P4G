@@ -152,3 +152,98 @@ MonoBehaviour:
       check_read: 0
     cycle_index: 0
     check_cycle_read: 0
+  - cycle_name: CutScene
+    info:
+    - name: ??
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC73C\uC544\uC544\uC545! \uB10C \uBB50\uC57C!"
+      check_read: 0
+    - name: "\uB098"
+      BustUp: {fileID: 21300000, guid: 8acd53c300b58b14599246090314ba53, type: 3}
+      content: "\uC73C\uC5B4\uC5B5! \uC5EC\uAE34 \uBB50\uC57C!!"
+      check_read: 0
+    - name: ??
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uBB50\uAE34 \uBB50\uC57C \uB0B4 \uC138\uC0C1\uC774\uC9C0!\n\uB0B4\uC138\uC0C1\uC5D0\uC11C
+        \uC5BC\uB978 \uB098\uAC00!"
+      check_read: 0
+    - name: "\uB098"
+      BustUp: {fileID: 21300000, guid: 8acd53c300b58b14599246090314ba53, type: 3}
+      content: "\uBB34\uC2A8 \uC18C\uB9AC\uC57C \uADF8\uAC8C?\n\uB09C \uC5B4\uCA4C\uB2E4\uAC00
+        \uD2F0\uBE44\uC5D0 \uBE68\uB824\uB4E4\uC5B4\uC628\uAC70\uB77C\uACE0!"
+      check_read: 0
+    - name: ??
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uD760... \uBB54\uC18C\uB9AC\uC778\uC9C0 \uB294 \uBAA8\uB974\uACA0\uACE0!\n\uC5EC\uAE30\uC11C
+        \uB098\uAC00\uACA0\uB2E4\uB294 \uAC70\uC9C0?"
+      check_read: 0
+    - name: ??
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC73C\uC74C...?\n\uC774\uC0C1\uD55C \uAE30\uBD84\uC774 \uB4DC\uB294\uB370?\n\uC800\uAE30\uC11C
+        \uB108\uAC19\uC740 \uC560\uB4E4\uC758 \uD5A5\uAE30\uAC00 \uB09C\uB2E4"
+      check_read: 0
+    - name: "\uB098"
+      BustUp: {fileID: 21300000, guid: 8acd53c300b58b14599246090314ba53, type: 3}
+      content: "\uC774\uC0C1\uD55C \uC18C\uB9AC\uD558\uC9C0\uB9D0\uACE0\n\uB0A0 \uB0B4\uBCF4\uB0B4\uC918!"
+      check_read: 0
+    - name: ??
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC54C\uC558\uC5B4 \uB0B4\uBCF4\uB0B4\uC904\uAF10\n\uB300\uC2E0 \uC800\uAE30\uC5D0\uC11C
+        \uB108\uC640 \uBE44\uC2B7\uD55C \uC560\uB4E4\uC774 \uAC07\uD600\uC788\uB294\uAC70
+        \uAC19\uC73C\uB2C8 \n\uB108\uAC00 \uAC19\uC774 \uB300\uB824\uAC00!"
+      check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC5B4\uCA0B\uB4E0 \uB09C \uACF0\uC774\uB77C\uACE0 \uBD80\uB974\uBA74\uB3FC!\n\uC77C\uB2E8
+        \uC900\uBE44\uAC00 \uB418\uBA74 \uC800\uAE30 \uACC4\uB2E8\uC73C\uB85C \uAC00\uBA74\uB3FC"
+      check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC704\uD5D8\uD55C \"\uC100\uB3C4\uC6B0\" \uB4E4\uC774 \uC788\uC73C\uB2C8\uAE50\n\uB09C
+        \uB4A4\uC5D0\uC11C \uCAD3\uC544\uAC00\uC904\uAED8"
+      check_read: 0
+    - name: "\uB098"
+      BustUp: {fileID: 21300000, guid: 8acd53c300b58b14599246090314ba53, type: 3}
+      content: "\"\uC100\uB3C4\uC6B0\"? \uC704\uD5D8\uD55C? \n\uC704\uD5D8\uD558\uBA74
+        \uB108\uAC00 \uB3C4\uC640\uC918\uC57C\uC9C0!"
+      check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uB09C \uD798\uC774 \uC5C6\uB294\uAC78..\n\uB300\uC2E0 \uB10C \"\uD398\uB974\uC18C\uB098\"
+        \uC758 \uB0C4\uC0C8\uAC00 \uB098!\n\uC804\uD22C\uB97C \uD558\uBA74 \uB108\uC758
+        \uD798\uC744 \uC54C\uAC8C\uB420\uAC70\uC57C!"
+      check_read: 0
+    - name: "\uB098"
+      BustUp: {fileID: 21300000, guid: 8acd53c300b58b14599246090314ba53, type: 3}
+      content: "\uADF8\uAC8C \uB05D\uC774\uC57C...?"
+      check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC54C\uC558\uC5B4 \uC774 \uC57C\uAD6C\uBC29\uB9DD\uC774\uB77C\uB3C4
+        \uC368~"
+      check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uD398\uB974\uC18C\uB098\uC758 \uC0AC\uC6A9\uBC95\uB3C4 \uC54C\uB824\uC904\uAED8\n\uC7A0\uAE50\uB9CC!"
+      check_read: 0
+    cycle_index: 0
+    check_cycle_read: 0
+  - cycle_name: CutScene2
+    info:
+    - name: "\uB098"
+      BustUp: {fileID: 21300000, guid: 8acd53c300b58b14599246090314ba53, type: 3}
+      content: "\uBB50\uD558\uB294\uC9D3\uC774\uC57C!\n\uADF8\uB9AC\uACE0 \uC774\uAC74
+        \uBB50\uC57C..?"
+      check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uAC70\uBD10! \uD55C\uB300 \uB9DE\uC73C\uBA74 \uC815\uC2E0\uC774
+        \uBC88\uCA4D \uB4E4\uC9C0?\n\uADF8\uAC8C \uBC14\uB85C \uD398\uB974\uC18C\uB098\uC57C"
+      check_read: 0
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC774\uC81C \uADF8 \uD798\uC73C\uB85C \uB2E4 \uB300\uB9AC\uACE0
+        \uB5A0\uB098!"
+      check_read: 0
+    cycle_index: 0
+    check_cycle_read: 0

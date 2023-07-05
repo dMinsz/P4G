@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37985e40a0112e04fb8acd53f6435137, type: 3}
+  m_Name: Kuma
+  m_EditorClassIdentifier: 
+  shadow:
+    unitName: Kuma
+    Level: 1
+    Hp: 50
+    Mp: 5
+    Sp: 10
+    Strength: 2
+    Magic: 2
+    Endurance: 2
+    Agility: 2
+    Luck: 2
+    Prefab: {fileID: 0}
+    BattlePrefab: {fileID: 5011316973043251938, guid: c8ec9c5c57da42f4bac42433433d16ac, type: 3}
+    battleImage: {fileID: 0}
+    resist:
+      Physic: 1
+      Fire: 0
+      Ice: 0
+      Electronic: 1
+      Wind: 0
+      Light: 0
+      Dark: 0
+    skills: []

@@ -1,56 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Dungeon2f : BaseScene
+public class CutScene : BaseScene
 {
     public DialogueSystem dialog;
-    public PlayerGenerator playerGenerator;
-    //bool isInit = false;
+    public CutsceneDialogue cdialog;
+
     protected override void Awake()
     {
-        Debug.Log("Dungeon 2F Scene Init");
-
-        GameManager.Data.Dungeon.SetUp("2F");
+        Debug.Log("CutScene Init");
 
         GameManager.Pool.Reset();
         GameManager.UI.Reset();
 
- 
-    }
-
-
-    protected override IEnumerator LoadingRoutine()
-    {
-        yield return new WaitForSecondsRealtime(0.2f);
-
+   
         GameManager.Data.Dialog.SetUp();
         GameManager.Data.Dialog.system = dialog;
 
-        GameManager.Data.Dungeon.IsInit = false;
 
-        playerGenerator.Init();
+        cdialog.Interact();
+    }
 
-        if (GameManager.Data.Dungeon.didBattle)
-        {
-            GameManager.Data.Dungeon.IsSymbolInit = true;
-        }
-        else
-        {
-            GameManager.Data.Dungeon.IsSymbolInit = false;
-        }
+    protected override IEnumerator LoadingRoutine()
+    {
 
-
+        // fake loading
+        //yield return new WaitForSecondsRealtime(0.2f);
+        //progress = 0.2f;
+        //yield return new WaitForSecondsRealtime(0.2f);
+        //progress = 0.4f;
+        //yield return new WaitForSecondsRealtime(0.2f);
+        //progress = 0.6f;
+        //yield return new WaitForSecondsRealtime(0.2f);
+        //progress = 0.8f;
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
-        
+
+        //dialog.Interact();
     }
     public override void Clear()
     {
         GameManager.Data.Dialog.ResetData();
+        //다이알로그 릴리즈
+        //GameManager.Pool.ReleaseUI(GameManager.Data.Dialog.dialog_obj);
 
         GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+
 
         foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
         {
@@ -62,6 +58,4 @@ public class Dungeon2f : BaseScene
             GameManager.Pool.DestroyContainer(symbol);
         }
     }
-
-  
 }
