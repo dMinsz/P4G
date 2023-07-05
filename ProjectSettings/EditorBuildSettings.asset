@@ -12,15 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/VideoPlayScene.unity
     guid: 97b6db8c133cff742bdc171e4fedc52b
   - enabled: 1
-    path: Assets/Scenes/LobbyScene.unity
-    guid: 0996ce281a236034eb4a540093ba4aac
-  - enabled: 1
     path: Assets/Scenes/VelvetRoom.unity
     guid: 5deeb02bec557e04f99a736d1e9f3dcb
+  - enabled: 1
+    path: Assets/Scenes/LobbyScene.unity
+    guid: 0996ce281a236034eb4a540093ba4aac
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: a21fdc59309b3f1438333df182eb4e07
   - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: bd6ffd5ce9e416843afd02abb8b150de
+    path: Assets/Scenes/Dungeon1f.unity
+    guid: d2a14f4ef9dbb3941a101373fddd2786
+  - enabled: 1
+    path: Assets/Scenes/Dungeon2f.unity
+    guid: 2345054887853f04282616543e9bcf76
+  - enabled: 1
+    path: Assets/Scenes/FinalScene.unity
+    guid: dceee497d087ba04589734e2fd169330
   m_configObjects: {}

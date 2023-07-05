@@ -14,7 +14,9 @@ public class DungeonDataSystem : MonoBehaviour
     public Turn StartTurn;
     public GameObject nowSymbol;
 
-    public bool IsInit = true;
+    public bool IsInit;
+    public bool IsSymbolInit;
+    public bool didBattle = false;
 
     public DungeonDatas datas;
     public DungeonDatas.DungeonInfo nowDungeon; 
@@ -52,6 +54,8 @@ public class DungeonDataSystem : MonoBehaviour
         tempSymbolShadows = new List<ShadowData>();
         aliveInDungeonSymbols = new List<GameObject>();
 
+        IsInit = true;
+        IsSymbolInit = true;
     }
     public bool SetUp(string dungeonName)
     {// 배틀에 들어가는 섀도우 초기화

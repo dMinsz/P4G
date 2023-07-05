@@ -62,6 +62,11 @@ public class SceneManagerEX : MonoBehaviour
 
     IEnumerator LoadingRoutine(string sceneName)
     {
+        if (!CurrentScene.isClear)
+        {
+            CurrentScene.isClear = true;
+            CurrentScene.Clear();
+        }
         AsyncOperation oper = LoadSceneAsync(sceneName);
         //oper.allowSceneActivation = false; // Scene Load 가 끝나도 바로 씬으로 넘어가지않게
         Time.timeScale = 0f; // Loading 중에는 시간 멈춤
@@ -95,8 +100,4 @@ public class SceneManagerEX : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void Clear()
-    {
-        CurrentScene.Clear();
-    }
 }

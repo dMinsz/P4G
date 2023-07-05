@@ -9,6 +9,8 @@ public class DialogueInteract : MonoBehaviour
     public Transform checkUI;
     public Animator animator;
     public Transform Root;
+    public int DialogueIndex;
+    public string memberName;
     SphereCollider coll;
 
     Player player;
@@ -34,14 +36,16 @@ public class DialogueInteract : MonoBehaviour
         animator.SetTrigger("GetUp");
 
         var dialog = GameManager.Data.Dialog;
-        dialog.system.StartRutine(2);
+        dialog.system.StartRutine(DialogueIndex);
+
         player.GetComponent<PlayerInput>().enabled = false;
-        for (int i = 0; i < dialog.dialog_cycles[2].info.Count; i++) //대화 단위를 순서대로 확인
+
+        for (int i = 0; i < dialog.dialog_cycles[DialogueIndex].info.Count; i++) //대화 단위를 순서대로 확인
         {
 
             yield return new WaitUntil(() =>
             {
-                if (dialog.dialog_cycles[2].info[i].check_read)            //현재 대화를 읽었는지 아닌지
+                if (dialog.dialog_cycles[DialogueIndex].info[i].check_read)            //현재 대화를 읽었는지 아닌지
                 {
                     //Debug.Log("다읽음");
 
@@ -58,19 +62,40 @@ public class DialogueInteract : MonoBehaviour
         }
 
         //파티에 추가
-        player.AddParty("Chie");
+        player.AddParty(memberName);
 
 
-        var PlayerData = GameManager.Resource.Load<PlayerData>("Datas/Players/Chie");
+        var PlayerData = GameManager.Resource.Load<PlayerData>("Datas/Players/"+ memberName);
 
-        var newAllyName = player.Partys[0].data.unitName;
+
+
+        int partyIndex = 0;
+
+        if (player.Partys.Count == 1)
+        {
+            var newAllyName = player.Partys[0].data.unitName;
+        }
+        else 
+        {
+            partyIndex++;
+            var newAllyName = player.Partys[partyIndex].data.unitName;
+        }
+
+
 
 
         var newAlly = GameManager.Pool.Get(true, PlayerData.player.Prefab, this.transform.position, Quaternion.identity);
 
-        newAlly.GetComponent<AllyMover>().ChacePos = player.GetComponent<PlayerMover>().ChacePoitns[0];
+        newAlly.GetComponent<AllyMover>().ChacePos = player.GetComponent<PlayerMover>().ChacePoitns[partyIndex];
+
 
         var Ally = newAlly.GetComponent<Player>();
+
+        Ally.GetComponent<CharacterController>().enabled = false;
+
+        Ally.transform.position = Root.transform.position;
+
+        Ally.GetComponent<CharacterController>().enabled = true;
 
         Ally.data = PlayerData.player;
 
@@ -87,13 +112,13 @@ public class DialogueInteract : MonoBehaviour
             Ally.Personas[j].data = personadata.PData;
         }
 
-        Destroy(Ally.transform.Find("DialogueInteract").GetComponent<DialogueInteract>()); // 필요없는거 삭제
-        Destroy(Ally.transform.Find("DialogueInteract").GetComponent<SphereCollider>());
+        Destroy(Ally.transform.Find("DialogueInteract").gameObject); // 필요없는거 삭제
+       
 
-        Ally.transform.position = Root.transform.position;
 
         GameManager.Data.Dungeon.InBattlePlayers.Add(Ally);
 
+       
         player.GetComponent<PlayerInput>().enabled = true;
         Destroy(Root.gameObject);
 

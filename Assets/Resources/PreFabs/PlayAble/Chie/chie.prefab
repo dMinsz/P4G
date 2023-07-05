@@ -167,6 +167,9 @@ MonoBehaviour:
   checkUI: {fileID: 3954366389718852772}
   animator: {fileID: 8534396319305058704}
   Root: {fileID: 8534396320381577182}
+  DialogueIndex: 2
+  PartyIndex: 0
+  memberName: Chie
 --- !u!135 &5728299046393204669
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -423,9 +426,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 3
+  m_Height: 5
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1001 &8534396319305058707
 PrefabInstance:
   m_ObjectHideFlags: 0

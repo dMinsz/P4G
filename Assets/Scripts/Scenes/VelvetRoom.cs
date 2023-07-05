@@ -8,10 +8,12 @@ public class VelvetRoom : BaseScene
     protected override void Awake()
     {
         Debug.Log("VelvetRoom Scene Init");
+        
     }
 
     protected override IEnumerator LoadingRoutine()
     {
+        GameManager.Pool.Reset();
         GameManager.UI.Reset();
         GameManager.Data.Dialog.SetUp();
         GameManager.Data.Dialog.IsVelvetRoom = true;
@@ -20,12 +22,16 @@ public class VelvetRoom : BaseScene
         progress = 1.0f;
 
         dialog.StartRutine(0);
+
     }
     public override void Clear()
     {
         GameManager.Data.Dialog.IsVelvetRoom = false;
 
+        GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+
+        GameManager.Data.Dialog.ResetData();
     }
 
-    
+
 }

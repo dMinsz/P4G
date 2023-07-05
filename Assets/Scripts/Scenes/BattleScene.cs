@@ -29,7 +29,8 @@ public class BattleScene : BaseScene
     }
     public override void Clear()
     {
-        
+        GameManager.Data.Dungeon.IsSymbolInit = false;
+        GameManager.Data.Dungeon.didBattle = true;
     }
 
 }

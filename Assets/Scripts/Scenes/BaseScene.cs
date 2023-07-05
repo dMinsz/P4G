@@ -5,11 +5,13 @@ using UnityEngine;
 public abstract class BaseScene : MonoBehaviour
 {
     #region Loading
+    public bool isClear = false;
     public float progress { get; protected set; }
     protected abstract IEnumerator LoadingRoutine();
 
     public void LoadAsync()
     {
+        //Clear();
         StartCoroutine(LoadingRoutine());
     }
     #endregion
@@ -25,7 +27,6 @@ public abstract class BaseScene : MonoBehaviour
 
     private void OnDestroy()
     {
-        Clear();
     }
 
     public abstract void Clear();

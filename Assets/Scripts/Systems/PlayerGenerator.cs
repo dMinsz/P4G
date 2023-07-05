@@ -10,7 +10,7 @@ public class PlayerGenerator : MonoBehaviour
     public List<PlayerData> playerDatas;
     public CinemachineVirtualCamera cam;
 
-    private void Start()
+    public void Init()
     {
         if (GameManager.Data.Dungeon.IsInit)
         {
@@ -23,6 +23,13 @@ public class PlayerGenerator : MonoBehaviour
             cam.Follow = temp.transform.Find("CamPos");
 
             var player = temp.GetComponent<Player>();
+
+            player.GetComponent<CharacterController>().enabled = false;
+
+            player.transform.position = GenratePos[0].position;
+
+            player.GetComponent<CharacterController>().enabled = true;
+
             player.data = playerDatas[0].player;
 
             player.MaxHp = playerDatas[0].player.Hp;
@@ -39,11 +46,6 @@ public class PlayerGenerator : MonoBehaviour
                 player.Personas[i].data = data.PData;
             }
 
-            
-            //party 추가
-            //player.AddParty("Chie");
-            //player.AddParty("Kanji");
-
             GameManager.Data.Dungeon.InBattlePlayers.Add(player);
 
             for (int i = 0; i < player.Partys.Count; i++) 
@@ -53,6 +55,15 @@ public class PlayerGenerator : MonoBehaviour
                 playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/" + newAllyName));
 
                 var newAlly = GameManager.Pool.Get(true, playerDatas[i+1].player.Prefab, GenratePos[i+1].position, Quaternion.identity);
+
+
+                newAlly.GetComponent<CharacterController>().enabled = false;
+
+                newAlly.transform.position = GenratePos[i + 1].position;
+
+                newAlly.GetComponent<CharacterController>().enabled = true;
+
+
 
                 newAlly.GetComponent<AllyMover>().ChacePos = player.GetComponent<PlayerMover>().ChacePoitns[i];
 
@@ -74,7 +85,6 @@ public class PlayerGenerator : MonoBehaviour
                 }
 
                 GameManager.Data.Dungeon.InBattlePlayers.Add(Ally);
-
             }
         }
         else 
@@ -89,7 +99,24 @@ public class PlayerGenerator : MonoBehaviour
                 {
                     cam.Follow = player.transform.Find("CamPos");
                 }
-              
+                player.GetComponent<CharacterController>().enabled = false;
+
+                if (GameManager.Data.Dungeon.didBattle) // 배틀을 하고왔으면
+                {
+                    player.transform.position = Players[i].transform.position;
+                    player.transform.rotation = Players[i].transform.rotation; //포지션 유지
+
+                    GameManager.Data.Dungeon.didBattle = false;
+                }
+                else 
+                {
+                    player.transform.position = GenratePos[i].transform.position;
+                    player.transform.rotation = GenratePos[i].transform.rotation; //생성위치에 생성
+                }
+
+                player.GetComponent<CharacterController>().enabled = true;
+
+
             }
 
         }

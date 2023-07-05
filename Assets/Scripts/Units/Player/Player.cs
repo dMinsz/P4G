@@ -44,9 +44,9 @@ public class Player : Unit
     }
 
     private void OnDisable()
-    {
-
+    { 
     }
+
     public void AddParty(string name)
     {
         //todo Change

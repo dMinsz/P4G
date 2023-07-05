@@ -75,3 +75,80 @@ MonoBehaviour:
       check_read: 0
     cycle_index: 0
     check_cycle_read: 0
+  - cycle_name: Kanji
+    info:
+    - name: "\uCE78\uC9C0"
+      BustUp: {fileID: 21300000, guid: 987288e2bc412324288727bd56e7e878, type: 3}
+      content: "\uB10C \uBB50\uC57C!"
+      check_read: 0
+    - name: "\uB098"
+      BustUp: {fileID: 21300000, guid: 8acd53c300b58b14599246090314ba53, type: 3}
+      content: "\uC5EC\uAE30\uB97C \uD0C8\uCD9C\uD558\uB824\uACE0\uD558\uACE0\uC788\uC5B4....\n\uAC19\uC774\uAC08\uB798?"
+      check_read: 0
+    - name: "\uCE78\uC9C0"
+      BustUp: {fileID: 21300000, guid: 987288e2bc412324288727bd56e7e878, type: 3}
+      content: "\uD760... \uADF8\uB798 \uB0B4\uAC00 \uB3C4\uC640\uC8FC\uB3C4\uB85D
+        \uD558\uC9C0"
+      check_read: 0
+    cycle_index: 0
+    check_cycle_read: 0
+  - cycle_name: Final-Bad
+    info:
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uB610 \uB9CC\uB098\uBD59\uAC8C\uB418\uC5B4 \uC601\uAD11\uC785\uB2C8\uB2E4."
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uC0C8\uB85C\uC6B4 \uC138\uACC4\uB294 \uC7AC\uBBF8\uC788\uC73C\uC168\uC2B5\uB2C8\uAE4C?"
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uC548\uD0C0\uAE5D\uAC8C\uB3C4 \uBAA8\uB450\uB97C \uAD6C\uD558\uC9C4
+        \uBABB\uD558\uC168\uAD70\uC694...\n"
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uB2F9\uC2E0\uC758 \uC120\uD0DD\uC5D0 \uC720\uAC10\uC740 \uC5C6\uC2B5\uB2C8\uB2E4\uB9CC..\n\uC870\uAE08
+        \uC548\uD0C0\uAE5D\uAD70\uC694..."
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uC5B8\uC820\uAC00 \uB294 \uB610 \uB9CC\uB0A0\uC218\uC788\uACA0\uC9C0\uC694\n\uADF8\uB7FC
+        \uC774\uB9CC.."
+      check_read: 0
+    cycle_index: 0
+    check_cycle_read: 0
+  - cycle_name: Final-Good
+    info:
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uB610 \uB9CC\uB098\uBD59\uAC8C\uB418\uC5B4 \uC601\uAD11\uC785\uB2C8\uB2E4."
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uC0C8\uB85C\uC6B4 \uC138\uACC4\uB294 \uC7AC\uBBF8\uC788\uC73C\uC168\uC2B5\uB2C8\uAE4C?"
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uB180\uB78D\uAC8C\uB3C4 \uBAA8\uB450\uB97C \uAD6C\uD558\uC168\uAD70\uC694!\n"
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uB2F9\uC2E0\uC758 \uC120\uD0DD\uC5D0 \uCC2C\uC0AC\uB97C \uBCF4\uB0C5\uB2C8\uB2E4."
+      check_read: 0
+    - name: "\uC774\uACE0\uB974"
+      BustUp: {fileID: 21300000, guid: fbba1d75923fd274398851be33a76c78, type: 3}
+      content: "\uC5B8\uC820\uAC00 \uB294 \uB610 \uB9CC\uB0A0\uC218\uC788\uACA0\uC9C0\uC694\n\uADF8\uB7FC
+        \uC774\uB9CC.."
+      check_read: 0
+    cycle_index: 0
+    check_cycle_read: 0
+  - cycle_name: LobbyPortalDialogue
+    info:
+    - name: "\uACF0"
+      BustUp: {fileID: 21300000, guid: 01dd9c5554dba7b4aa55db006249cf44, type: 3}
+      content: "\uC774\uC81C \uC62C\uB77C\uAC08\uAC70\uC57C?\n\uC900\uBE44 \uB2E4\uB410\uC5B4?"
+      check_read: 0
+    cycle_index: 0
+    check_cycle_read: 0

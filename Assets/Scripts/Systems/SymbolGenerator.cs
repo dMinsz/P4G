@@ -9,7 +9,7 @@ public class SymbolGenerator : MonoBehaviour
     //public List<ShadowData> shadowDatas;
     private void Start()
     {
-        if (GameManager.Data.Dungeon.IsInit) // 처음 시작할때 
+        if (GameManager.Data.Dungeon.IsSymbolInit) // 처음 시작할때 
         {
             for (int i = 0; i < GenratePos.Length; i++)
             {
