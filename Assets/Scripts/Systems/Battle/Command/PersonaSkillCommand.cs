@@ -52,10 +52,20 @@ public class PersonaSkillCommand : Command
             pobj.attackEffect.Play();
 
             await Task.Delay(1000);
-            //testing
-            target.animator.SetTrigger("Hit");
+           
 
             target.TakeSkillDamage(nowskill);
+
+
+            if (target.isDie)
+            {
+                target.animator.SetBool("IsDie",true);
+            }
+            else
+            {
+                target.animator.SetTrigger("Hit");
+            }
+
 
         }
         else 
@@ -64,24 +74,35 @@ public class PersonaSkillCommand : Command
             { // 전체 공격
                 foreach (var shadow in GameManager.Data.Battle.InBattleShadows)
                 {
-                    GameManager.Data.Battle.nowShadow = shadow;
-                    pobj.UseSkill();
+                    if (shadow.isDie == false)
+                    {
+                        GameManager.Data.Battle.nowShadow = shadow;
+                        pobj.UseSkill();
 
-                    //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
-                    //await Task.Delay(500);
-                    var pos = this.target.transform.position;
-                    pos.y += 2;
+                        //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
+                        //await Task.Delay(500);
+                        var pos = this.target.transform.position;
+                        pos.y += 2;
 
-                    pobj.skillEffect.transform.position = pos;
-                    pobj.skillEffect.Play();
+                        pobj.skillEffect.transform.position = pos;
+                        pobj.skillEffect.Play();
 
-                    //testing
-                    await Task.Delay(500);
+                        //testing
+                        await Task.Delay(500);
 
-                    shadow.animator.SetTrigger("Hit");
+                        shadow.TakeSkillDamage(nowskill);
 
-                    shadow.TakeSkillDamage(nowskill);
 
+
+                        if (shadow.isDie)
+                        {
+                            shadow.animator.SetBool("IsDie", true);
+                        }
+                        else
+                        {
+                            shadow.animator.SetTrigger("Hit");
+                        }
+                    }
                 }
             }
             else 
@@ -99,9 +120,21 @@ public class PersonaSkillCommand : Command
                 //testing
                 await Task.Delay(1000);
 
-                target.animator.SetTrigger("Hit");
+                //target.animator.SetTrigger("Hit");
 
                 target.TakeSkillDamage(nowskill);
+
+                if (target.isDie)
+                {
+                    target.animator.SetBool("IsDie", true);
+                }
+                else
+                {
+                    target.animator.SetTrigger("Hit");
+                }
+
+
+
             }
         }
 

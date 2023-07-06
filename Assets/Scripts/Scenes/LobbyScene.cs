@@ -6,12 +6,40 @@ public class LobbyScene : BaseScene
 {
     public DialogueSystem dialog;
     public PlayerGenerator playerGenerator;
+    bool TestScenIsAwake = false;
     protected override void Awake()
     {
         Debug.Log("Roby Scene Init");
 
         //GameManager.Data.Dungeon.SetUp("Lobby");
+
+        //test
         GameManager.Data.Dungeon.IsSymbolInit = true;
+
+        GameManager.Pool.Reset();
+        GameManager.UI.Reset();
+        GameManager.Data.Dialog.SetUp();
+        GameManager.Data.Dialog.system = dialog;
+
+
+        // fake loading
+        GameManager.Data.Dungeon.SetUp("LobbyScene");
+
+        //test
+        if (!TestScenIsAwake)
+        {
+            playerGenerator.Init();
+            TestScenIsAwake = true;
+        }
+
+        if (!GameManager.Data.Dungeon.didBattle)
+        {
+            GameManager.Data.Dungeon.IsSymbolInit = true;
+        }
+        else
+        {
+            GameManager.Data.Dungeon.IsSymbolInit = false;
+        }
 
     }
 
@@ -24,19 +52,16 @@ public class LobbyScene : BaseScene
 
 
         // fake loading
-        GameManager.Data.Dungeon.SetUp("Lobby");
+        GameManager.Data.Dungeon.SetUp("LobbyScene");
 
-        playerGenerator.Init();
-
-
-        if (GameManager.Data.Dungeon.didBattle)
+        if (!TestScenIsAwake)
         {
-            GameManager.Data.Dungeon.IsSymbolInit = true;
+            playerGenerator.Init();
+            TestScenIsAwake = true;
         }
-        else
-        {
-            GameManager.Data.Dungeon.IsSymbolInit = false;
-        }
+
+
+       
 
         //yield return new WaitForSecondsRealtime(0.2f);
         //progress = 0.2f;
@@ -54,6 +79,8 @@ public class LobbyScene : BaseScene
     public override void Clear()
     {
 
+        GameManager.Data.Dungeon.didBattle = false;
+
         GameManager.Data.Dialog.ResetData();
 
         GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
@@ -65,8 +92,14 @@ public class LobbyScene : BaseScene
         }
 
         foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        {//심볼컨테이너 삭제
-            GameManager.Pool.DestroyContainer(symbol);
+        {
+            GameManager.Pool.Release(symbol);
         }
+
+        //foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
+        //{//심볼컨테이너 삭제
+        //    GameManager.Pool.DestroyContainer(symbol);
+        //}
+
     }
 }

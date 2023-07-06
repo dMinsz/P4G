@@ -15,16 +15,17 @@ public class PlayerGenerator : MonoBehaviour
         if (GameManager.Data.Dungeon.IsInit)
         {
             playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/Yu"));
-            //playerDatas.Add(GameManager.Resource.Load<PlayerData>("Datas/Players/Chie"));
 
             var temp = GameManager.Pool.Get(true, playerDatas[0].player.Prefab, GenratePos[0].position, Quaternion.identity);
 
 
             cam.Follow = temp.transform.Find("CamPos");
 
+            temp.GetComponent<PlayerHiter>().Cam = cam; // 배틀씬 이동할때 카메라 조정을 위하여넣어준다.
+
             var player = temp.GetComponent<Player>();
 
-            player.GetComponent<CharacterController>().enabled = false;
+            player.GetComponent<CharacterController>().enabled = false; // 캐릭터 위치에 이동
 
             player.transform.position = GenratePos[0].position;
 
@@ -98,6 +99,9 @@ public class PlayerGenerator : MonoBehaviour
                 if (i == 0)
                 {
                     cam.Follow = player.transform.Find("CamPos");
+
+                    player.GetComponent<PlayerHiter>().Cam = cam; // 배틀씬 이동할때 카메라 조정을 위하여넣어준다.
+
                 }
                 player.GetComponent<CharacterController>().enabled = false;
 
@@ -105,8 +109,6 @@ public class PlayerGenerator : MonoBehaviour
                 {
                     player.transform.position = Players[i].transform.position;
                     player.transform.rotation = Players[i].transform.rotation; //포지션 유지
-
-                    GameManager.Data.Dungeon.didBattle = false;
                 }
                 else 
                 {
@@ -121,11 +123,5 @@ public class PlayerGenerator : MonoBehaviour
 
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

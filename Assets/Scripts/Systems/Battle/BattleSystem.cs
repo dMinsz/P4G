@@ -28,6 +28,8 @@ public class BattleSystem : MonoBehaviour
 
     public TargetAttributeUI AttributeUIPrefab;
 
+    public BattleEndPage end;
+
     private void Awake()
     {
         turnType = GameManager.Data.Dungeon.StartTurn;
@@ -193,7 +195,7 @@ public class BattleSystem : MonoBehaviour
             //Player Win
 
             Debug.Log("Player win");
-
+            end.Show("YOU WIN");
             //change Scene etc
 
             return;
@@ -204,6 +206,8 @@ public class BattleSystem : MonoBehaviour
             //Player Lost
 
             Debug.Log("Player Lost");
+
+            end.Show("YOU LOSE");
 
             //change Scene etc
 
@@ -406,6 +410,7 @@ public class BattleSystem : MonoBehaviour
         {
             //Player Lost
             Debug.Log("Player Lost");
+            end.Show("YOU LOSE");
             return false;
         }
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(OffShadowTargeting));
@@ -495,6 +500,7 @@ public class BattleSystem : MonoBehaviour
         {
             //playe win
             Debug.Log("Player Win");
+            end.Show("YOU WIN");
             return;
         }
 
@@ -520,21 +526,14 @@ public class BattleSystem : MonoBehaviour
     }
 
 
-    public void ReleasePool()
-    {
-        foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        {
-            symbol.GetComponent<Symbols>().ReleasePool();
-        }
-
-    }
-
     public void EndBattle()
     {
         var nowSymbol = GameManager.Data.Dungeon.nowSymbol;
         GameManager.Data.Dungeon.aliveInDungeonSymbols.Remove(nowSymbol);
         GameManager.Data.Dungeon.nowSymbol = null;
 
+
+        
 
         GameManager.Pool.DestroyContainer(nowSymbol);
 

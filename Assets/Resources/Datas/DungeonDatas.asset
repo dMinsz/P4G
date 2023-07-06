@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: DungeonDatas
   m_EditorClassIdentifier: 
   dungeons:
-  - DungeonName: Lobby
+  - DungeonName: LobbyScene
+    shadows:
+    - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}
+    symbolHaveShadow: 1
+  - DungeonName: Dungeon1f
     shadows:
     - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}
     symbolHaveShadow: 2
-  - DungeonName: 1F
+  - DungeonName: Dungeon2f
     shadows:
     - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}
-    symbolHaveShadow: 1
-  - DungeonName: 2F
-    shadows:
-    - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}
-    symbolHaveShadow: 1
+    symbolHaveShadow: 3

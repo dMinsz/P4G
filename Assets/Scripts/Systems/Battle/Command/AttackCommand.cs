@@ -32,16 +32,35 @@ public class AttackCommand : Command
         {
 
             await Task.Delay(100);
-            targetAnim.SetTrigger("Hit");
+            //targetAnim.SetTrigger("Hit");
             target.TakeDamage(uactor.data.Strength,nowSkill);
+
+            if (target.isDie)
+            {
+                targetAnim.SetTrigger("IsDie");
+            }
+            else
+            {
+                targetAnim.SetTrigger("Hit");
+            }
+
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
         }
         else if (pactor != null)
         {
             await Task.Delay(100);
-            targetAnim.SetTrigger("Hit");
+            //targetAnim.SetTrigger("Hit");
             target.TakeDamage(uactor.data.Strength, nowSkill);
+
+            if (target.isDie)
+            {
+                targetAnim.SetTrigger("IsDie");
+            }
+            else 
+            {
+                targetAnim.SetTrigger("Hit");
+            }
 
             await Task.Delay((int)targetAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 

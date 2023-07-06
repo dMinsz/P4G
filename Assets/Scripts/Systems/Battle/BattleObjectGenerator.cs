@@ -52,6 +52,11 @@ public class BattleObjectGenerator : MonoBehaviour
 
             battleSystem.InBattleShadows.Add(newShadow);
 
+            if (GameManager.Resource.resources.ContainsKey("ShadowHPBar.UI/DamageUI"))
+            {
+                GameManager.Resource.resources.Remove("ShadowHPBar.UI/DamageUI");
+            }
+
             var dobj = GameManager.Resource.Load<ShadowHPBar>("UI/DamageUI");
             ShadowHPBar ui = GameManager.UI.ShowInGameUI<ShadowHPBar>(dobj);
 
@@ -142,7 +147,7 @@ public class BattleObjectGenerator : MonoBehaviour
 
             foreach (var persona in player.Personas)
             {
-                var newPersona=GameManager.Pool.Get(false, persona, player.PersonaPoint.position, Quaternion.identity);
+                var newPersona = GameManager.Pool.Get(true, persona, player.PersonaPoint.position, Quaternion.identity);
                 GameManager.Pool.Release(newPersona);
             }
 

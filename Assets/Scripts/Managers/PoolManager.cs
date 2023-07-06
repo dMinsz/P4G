@@ -11,7 +11,12 @@ public class PoolManager : MonoBehaviour
 
     //key는 오브젝트의 이름으로 하기로 약속해둔다.
 
-    Dictionary<string, ObjectPool<GameObject>> poolDic; //사용할 풀
+    public Dictionary<string, ObjectPool<GameObject>> poolDic; //사용할 풀
+
+
+    public Dictionary<string, ObjectPool<GameObject>> uipoolDic; //사용할 풀
+
+
     Dictionary<string, Transform> poolContainer;// 풀 별로 모을 컨테이너
     
     Transform poolRoot; // 모든 풀들을 가지고있을 곳
@@ -34,7 +39,7 @@ public class PoolManager : MonoBehaviour
     public void Init()
     {
         poolDic = new Dictionary<string, ObjectPool<GameObject>>();
-
+        uipoolDic = new Dictionary<string, ObjectPool<GameObject>>();
         poolContainer = new Dictionary<string, Transform>();
         poolRoot = new GameObject("PoolRoot").transform;
 
@@ -47,6 +52,10 @@ public class PoolManager : MonoBehaviour
     public void Reset()
     {
         canvasRoot = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+        uipoolDic = new Dictionary<string, ObjectPool<GameObject>>();
+
+
+
 
         //poolDic = new Dictionary<string, ObjectPool<GameObject>>();
         //poolContainer = new Dictionary<string, Transform>();
@@ -94,13 +103,12 @@ public class PoolManager : MonoBehaviour
             {
                 var container = DontDestroyPoolRoot.GetChild(i);
 
-                if (container.childCount <= 0)
+                if (container.childCount == 0)
                 {
-                    Destroy(container.gameObject);
-                    
-                    //if (container.GetChild(0).gameObject == obj)
-                    //{
-                    //}
+                    if (container.GetChild(0).gameObject == obj)
+                    {
+                        Destroy(container.gameObject);
+                    }
                 }
 
 
@@ -321,10 +329,10 @@ public class PoolManager : MonoBehaviour
             }
             
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 CreateUIPool(key, prefab);
 
-            GameObject obj = poolDic[key].Get();
+            GameObject obj = uipoolDic[key].Get();
             obj.transform.position = position;
             return obj as T;
         }
@@ -338,10 +346,10 @@ public class PoolManager : MonoBehaviour
                 key += suffix;
             }
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 CreateUIPool(key, component.gameObject);
 
-            GameObject obj = poolDic[key].Get();
+            GameObject obj = uipoolDic[key].Get();
             obj.transform.position = position;
             return obj.GetComponent<T>();
         }
@@ -363,10 +371,10 @@ public class PoolManager : MonoBehaviour
                 key += suffix;
             }
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 CreateUIPool(key, prefab);
 
-            GameObject obj = poolDic[key].Get();
+            GameObject obj = uipoolDic[key].Get();
             //obj.transform.position = position;
             obj.transform.SetParent(parent, false);
             return obj as T;
@@ -381,10 +389,10 @@ public class PoolManager : MonoBehaviour
                 key += suffix;
             }
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 CreateUIPool(key, component.gameObject);
 
-            GameObject obj = poolDic[key].Get();
+            GameObject obj = uipoolDic[key].Get();
             //obj.transform.position = position;
             obj.transform.SetParent(parent, false);
             return obj.GetComponent<T>();
@@ -407,10 +415,10 @@ public class PoolManager : MonoBehaviour
                 key += suffix;
             }
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 CreateUIPool(key, prefab);
 
-            GameObject obj = poolDic[key].Get();
+            GameObject obj = uipoolDic[key].Get();
             return obj as T;
         }
         else if (original is Component)
@@ -423,10 +431,10 @@ public class PoolManager : MonoBehaviour
                 key += suffix;
             }
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 CreateUIPool(key, component.gameObject);
 
-            GameObject obj = poolDic[key].Get();
+            GameObject obj = uipoolDic[key].Get();
             return obj.GetComponent<T>();
         }
         else
@@ -442,10 +450,10 @@ public class PoolManager : MonoBehaviour
             GameObject go = instance as GameObject;
             string key = go.name;
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 return false;
 
-            poolDic[key].Release(go);
+            uipoolDic[key].Release(go);
             return true;
         }
         else if (instance is Component)
@@ -453,10 +461,10 @@ public class PoolManager : MonoBehaviour
             Component component = instance as Component;
             string key = component.gameObject.name;
 
-            if (!poolDic.ContainsKey(key))
+            if (!uipoolDic.ContainsKey(key))
                 return false;
 
-            poolDic[key].Release(component.gameObject);
+            uipoolDic[key].Release(component.gameObject);
             return true;
         }
         else
@@ -490,7 +498,7 @@ public class PoolManager : MonoBehaviour
                 Destroy(obj);
             }
             );
-        poolDic.Add(key, pool);
+        uipoolDic.Add(key, pool);
     }
 
 

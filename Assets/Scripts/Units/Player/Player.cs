@@ -125,7 +125,7 @@ public class Player : Unit
                 isDie = true;
 
                 //animator.SetBool("IsDie", true);
-                animator.SetTrigger("IsDie");
+                //animator.SetTrigger("IsDie");
             }
         }
     }
@@ -168,7 +168,7 @@ public class Player : Unit
                 HP = 0;
                 isDie = true;
                 //animator.SetBool("IsDie", true);
-                animator.SetTrigger("IsDie");
+                
             }
         }
     }

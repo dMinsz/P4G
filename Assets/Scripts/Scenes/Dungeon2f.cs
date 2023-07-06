@@ -12,7 +12,7 @@ public class Dungeon2f : BaseScene
     {
         Debug.Log("Dungeon 2F Scene Init");
 
-        GameManager.Data.Dungeon.SetUp("2F");
+        GameManager.Data.Dungeon.SetUp("Dungeon2f");
 
         GameManager.Pool.Reset();
         GameManager.UI.Reset();
@@ -32,7 +32,7 @@ public class Dungeon2f : BaseScene
 
         playerGenerator.Init();
 
-        if (GameManager.Data.Dungeon.didBattle)
+        if (!GameManager.Data.Dungeon.didBattle)
         {
             GameManager.Data.Dungeon.IsSymbolInit = true;
         }
@@ -48,19 +48,29 @@ public class Dungeon2f : BaseScene
     }
     public override void Clear()
     {
+        GameManager.Data.Dungeon.didBattle = false;
+
         GameManager.Data.Dialog.ResetData();
+        //다이알로그 릴리즈
 
         GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+
 
         foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
         {
             GameManager.Pool.Release(player);
         }
 
+        //foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
+        //{
+        //    GameManager.Pool.Release(symbol);
+        //}
+
         foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
         {//심볼컨테이너 삭제
             GameManager.Pool.DestroyContainer(symbol);
         }
+
     }
 
   

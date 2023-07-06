@@ -12,7 +12,7 @@ public class Dungeon1f : BaseScene
     {
         Debug.Log("Dungeon 1F Scene Init");
 
-        GameManager.Data.Dungeon.SetUp("1F");
+        GameManager.Data.Dungeon.SetUp("Dungeon1f");
         
         GameManager.Pool.Reset();
         GameManager.UI.Reset();
@@ -28,7 +28,7 @@ public class Dungeon1f : BaseScene
 
         playerGenerator.Init();
 
-        if (GameManager.Data.Dungeon.didBattle)
+        if (!GameManager.Data.Dungeon.didBattle)
         {
             GameManager.Data.Dungeon.IsSymbolInit = true;
         }
@@ -53,6 +53,8 @@ public class Dungeon1f : BaseScene
 
     public override void Clear()
     {
+        GameManager.Data.Dungeon.didBattle = false;
+
         GameManager.Data.Dialog.ResetData();
         //다이알로그 릴리즈
         //GameManager.Pool.ReleaseUI(GameManager.Data.Dialog.dialog_obj);
@@ -64,6 +66,11 @@ public class Dungeon1f : BaseScene
         {
             GameManager.Pool.Release(player);
         }
+
+        //foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
+        //{
+        //    GameManager.Pool.Release(symbol);
+        //}
 
         foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
         {//심볼컨테이너 삭제

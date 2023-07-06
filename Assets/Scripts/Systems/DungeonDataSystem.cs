@@ -16,7 +16,7 @@ public class DungeonDataSystem : MonoBehaviour
 
     public bool IsInit;
     public bool IsSymbolInit;
-    public bool didBattle = false;
+    public bool didBattle;
 
     public DungeonDatas datas;
     public DungeonDatas.DungeonInfo nowDungeon; 
@@ -56,6 +56,7 @@ public class DungeonDataSystem : MonoBehaviour
 
         IsInit = true;
         IsSymbolInit = true;
+        didBattle = false;
     }
     public bool SetUp(string dungeonName)
     {// 배틀에 들어가는 섀도우 초기화
