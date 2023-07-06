@@ -542,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GenratePos:
   - {fileID: 1323417814}
+  - {fileID: 691060286}
   Symbol: {fileID: 8385800809207106233, guid: f64bbb19c97279a4c8b4cb5ea2a684d1, type: 3}
 --- !u!4 &285453074
 Transform:
@@ -1013,7 +1014,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691060285}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.34, y: 0, z: -3.2}
+  m_LocalPosition: {x: 7.77, y: 0, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

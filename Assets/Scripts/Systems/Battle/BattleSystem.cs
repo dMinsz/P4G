@@ -103,6 +103,17 @@ public class BattleSystem : MonoBehaviour
         LookSetUp();
     }
 
+    public void OnGuard() 
+    {
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
+        GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
+
+        GameManager.Data.Battle.commandQueue.Enqueue(new GuardCommand(nowPlayer));
+        GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
+    }
+
+
     public void OnAnalysis()
     {
         uiHandler.AnalysisingUI.gameObject.SetActive(true);
@@ -132,10 +143,11 @@ public class BattleSystem : MonoBehaviour
 
             if (nowShadow == null)
             {
-                //ToDO
+                
                 //game End
-
                 Debug.Log("Player ½Â¸®");
+                end.Show("YOU WIN");
+
             }
 
             PlayerAttack();
@@ -169,6 +181,7 @@ public class BattleSystem : MonoBehaviour
                 //game End
 
                 Debug.Log("Player ½Â¸®");
+                end.Show("YOU WIN");
             }
 
             PlayerPersonaAttack();
@@ -532,12 +545,10 @@ public class BattleSystem : MonoBehaviour
         GameManager.Data.Dungeon.aliveInDungeonSymbols.Remove(nowSymbol);
         GameManager.Data.Dungeon.nowSymbol = null;
 
-
-        
-
+        GameManager.Pool.erasePoolDicContet(nowSymbol.gameObject.name);
+        GameManager.Pool.eraseContainerContet(nowSymbol.gameObject.name);
         GameManager.Pool.DestroyContainer(nowSymbol);
 
-        
         GameManager.Scene.LoadScene(GameManager.Data.Dungeon.nowDungeon.DungeonName);
     }
 

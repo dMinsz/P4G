@@ -33,6 +33,8 @@ public class Player : Unit
     public Transform[] card;
 
     public ParticleSystem summonEffect;
+
+    public bool isGuard = false;
     private void OnEnable()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
@@ -110,10 +112,17 @@ public class Player : Unit
 
     public override void TakeDamage(int strength, Skill nowskill)
     {
-
         float rand = UnityEngine.Random.Range(0.95f, 1.06f);
 
         int DMG = (int)((strength * strength) / (data.Endurance * 1.5) * rand);
+
+        if (isGuard == true) 
+        {
+            isGuard = false;
+            animator.SetBool("IsGuard",false);
+
+            DMG /= 2;
+        }
 
         if (!isDie)
         {
