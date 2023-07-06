@@ -25,9 +25,14 @@ public class PoolManager : MonoBehaviour
     //UI Ǯ
     Canvas canvasRoot;
 
-    public void erasePooDicContet(string key) 
+    public void erasePoolDicContet(string key) 
     {
         poolDic.Remove(key);
+    }
+
+    public void eraseContainerContet(string key)
+    {
+        poolContainer.Remove(key);
     }
 
     private void Awake()
@@ -103,7 +108,7 @@ public class PoolManager : MonoBehaviour
             {
                 var container = DontDestroyPoolRoot.GetChild(i);
 
-                if (container.childCount == 0)
+                if (container.childCount > 0)
                 {
                     if (container.GetChild(0).gameObject == obj)
                     {

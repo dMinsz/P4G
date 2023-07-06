@@ -34,7 +34,7 @@ public class BattleScene : BaseScene
         GameManager.Data.Dungeon.didBattle = true;
 
 
-        GameManager.Pool.erasePooDicContet("DamageUI");
+        GameManager.Pool.erasePoolDicContet("DamageUI");
 
         //foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
         //{

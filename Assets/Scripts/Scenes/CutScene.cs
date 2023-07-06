@@ -45,7 +45,7 @@ public class CutScene : BaseScene
         //다이알로그 릴리즈
         //GameManager.Pool.ReleaseUI(GameManager.Data.Dialog.dialog_obj);
 
-        GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+        GameManager.Pool.erasePoolDicContet(GameManager.Data.Dialog.dialog_obj.name);
 
 
         foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
@@ -53,9 +53,5 @@ public class CutScene : BaseScene
             GameManager.Pool.Release(player);
         }
 
-        foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        {//심볼컨테이너 삭제
-            GameManager.Pool.DestroyContainer(symbol);
-        }
     }
 }

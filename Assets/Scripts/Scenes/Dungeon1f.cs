@@ -8,6 +8,7 @@ public class Dungeon1f : BaseScene
 
     public DialogueSystem dialog;
     public PlayerGenerator playerGenerator;
+    public SymbolGenerator symbolGenerator;
     protected override void Awake()
     {
         Debug.Log("Dungeon 1F Scene Init");
@@ -17,6 +18,14 @@ public class Dungeon1f : BaseScene
         GameManager.Pool.Reset();
         GameManager.UI.Reset();
 
+        if (!GameManager.Data.Dungeon.didBattle)
+        {
+            GameManager.Data.Dungeon.IsSymbolInit = true;
+        }
+        else 
+        {
+            GameManager.Data.Dungeon.IsSymbolInit = false;
+        }
     }
 
     protected override IEnumerator LoadingRoutine()
@@ -28,14 +37,6 @@ public class Dungeon1f : BaseScene
 
         playerGenerator.Init();
 
-        if (!GameManager.Data.Dungeon.didBattle)
-        {
-            GameManager.Data.Dungeon.IsSymbolInit = true;
-        }
-        else 
-        {
-            GameManager.Data.Dungeon.IsSymbolInit = false;
-        }
 
 
         //yield return new WaitForSecondsRealtime(0.2f);
@@ -59,7 +60,7 @@ public class Dungeon1f : BaseScene
         //다이알로그 릴리즈
         //GameManager.Pool.ReleaseUI(GameManager.Data.Dialog.dialog_obj);
 
-        GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+        GameManager.Pool.erasePoolDicContet(GameManager.Data.Dialog.dialog_obj.name);
 
 
         foreach (var player in GameManager.Data.Dungeon.InBattlePlayers) 
@@ -67,14 +68,10 @@ public class Dungeon1f : BaseScene
             GameManager.Pool.Release(player);
         }
 
-        //foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        //{
-        //    GameManager.Pool.Release(symbol);
-        //}
-
         foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        {//심볼컨테이너 삭제
-            GameManager.Pool.DestroyContainer(symbol);
+        {
+            GameManager.Pool.Release(symbol);
         }
+
     }
 }

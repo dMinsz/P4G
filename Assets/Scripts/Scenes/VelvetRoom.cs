@@ -28,7 +28,7 @@ public class VelvetRoom : BaseScene
     {
         GameManager.Data.Dialog.IsVelvetRoom = false;
 
-        GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+        GameManager.Pool.erasePoolDicContet(GameManager.Data.Dialog.dialog_obj.name);
 
         GameManager.Data.Dialog.ResetData();
     }

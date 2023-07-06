@@ -1,16 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SymbolGenerator : MonoBehaviour
 {
     public Transform[] GenratePos;
     public GameObject Symbol;
+
     //public List<ShadowData> shadowDatas;
+
     private void Start()
     {
         if (GameManager.Data.Dungeon.IsSymbolInit) // 처음 시작할때 
         {
+            foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols.ToList())
+            {
+                //이전 씬에있던 심볼들 삭제
+                GameManager.Data.Dungeon.aliveInDungeonSymbols.Remove(symbol);
+
+                GameManager.Pool.erasePoolDicContet(symbol.gameObject.name);
+
+                GameManager.Pool.DestroyContainer(symbol);
+
+                GameManager.Pool.eraseContainerContet(symbol.gameObject.name);
+
+            }
+
+
             for (int i = 0; i < GenratePos.Length; i++)
             {
                 var newSymbol = GameManager.Pool.Get(true, Symbol, GenratePos[i].position, Quaternion.identity , i.ToString());

@@ -83,7 +83,7 @@ public class LobbyScene : BaseScene
 
         GameManager.Data.Dialog.ResetData();
 
-        GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+        GameManager.Pool.erasePoolDicContet(GameManager.Data.Dialog.dialog_obj.name);
 
 
         foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
@@ -96,10 +96,7 @@ public class LobbyScene : BaseScene
             GameManager.Pool.Release(symbol);
         }
 
-        //foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        //{//심볼컨테이너 삭제
-        //    GameManager.Pool.DestroyContainer(symbol);
-        //}
+
 
     }
 }

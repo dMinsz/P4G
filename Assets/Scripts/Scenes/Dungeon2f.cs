@@ -17,7 +17,16 @@ public class Dungeon2f : BaseScene
         GameManager.Pool.Reset();
         GameManager.UI.Reset();
 
- 
+
+        if (!GameManager.Data.Dungeon.didBattle)
+        {
+            GameManager.Data.Dungeon.IsSymbolInit = true;
+        }
+        else
+        {
+            GameManager.Data.Dungeon.IsSymbolInit = false;
+        }
+
     }
 
 
@@ -32,15 +41,7 @@ public class Dungeon2f : BaseScene
 
         playerGenerator.Init();
 
-        if (!GameManager.Data.Dungeon.didBattle)
-        {
-            GameManager.Data.Dungeon.IsSymbolInit = true;
-        }
-        else
-        {
-            GameManager.Data.Dungeon.IsSymbolInit = false;
-        }
-
+    
 
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
@@ -52,8 +53,9 @@ public class Dungeon2f : BaseScene
 
         GameManager.Data.Dialog.ResetData();
         //다이알로그 릴리즈
+        //GameManager.Pool.ReleaseUI(GameManager.Data.Dialog.dialog_obj);
 
-        GameManager.Pool.erasePooDicContet(GameManager.Data.Dialog.dialog_obj.name);
+        GameManager.Pool.erasePoolDicContet(GameManager.Data.Dialog.dialog_obj.name);
 
 
         foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
@@ -61,14 +63,9 @@ public class Dungeon2f : BaseScene
             GameManager.Pool.Release(player);
         }
 
-        //foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        //{
-        //    GameManager.Pool.Release(symbol);
-        //}
-
         foreach (var symbol in GameManager.Data.Dungeon.aliveInDungeonSymbols)
-        {//심볼컨테이너 삭제
-            GameManager.Pool.DestroyContainer(symbol);
+        {
+            GameManager.Pool.Release(symbol);
         }
 
     }
