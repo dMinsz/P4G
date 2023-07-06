@@ -48,10 +48,10 @@ public class CutScene : BaseScene
         GameManager.Pool.erasePoolDicContet(GameManager.Data.Dialog.dialog_obj.name);
 
 
-        foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
-        {
-            GameManager.Pool.Release(player);
-        }
+        //foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
+        //{
+        //    GameManager.Pool.Release(player);
+        //}
 
     }
 }

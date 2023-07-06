@@ -507,4 +507,35 @@ public class PoolManager : MonoBehaviour
     }
 
 
+    public bool IsContainUI<T>(T original) where T : Object
+    {
+        if (original is GameObject)
+        {
+            GameObject prefab = original as GameObject;
+            string key = prefab.name;
+
+            if (uipoolDic.ContainsKey(key))
+                return true;
+            else
+                return false;
+
+        }
+        else if (original is Component)
+        {
+            Component component = original as Component;
+            string key = component.gameObject.name;
+
+            if (uipoolDic.ContainsKey(key))
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+
 }

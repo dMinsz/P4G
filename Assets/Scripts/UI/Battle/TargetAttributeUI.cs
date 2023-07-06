@@ -19,6 +19,17 @@ public class TargetAttributeUI : InGameUI
 
     public RectTransform rootTransform;
 
+    public void ResetData()
+    {
+        foreach (var item in Resist) 
+        {
+            item.text.text = "-";
+            item.text.color = Color.white;
+            item.uiPos.gameObject.SetActive(true);
+        }
+    }
+
+
     public void Setup(Resistances resist) 
     {
         int count = 1;

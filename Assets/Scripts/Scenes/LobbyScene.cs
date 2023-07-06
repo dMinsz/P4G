@@ -23,7 +23,7 @@ public class LobbyScene : BaseScene
 
 
         // fake loading
-        GameManager.Data.Dungeon.SetUp("LobbyScene");
+        //GameManager.Data.Dungeon.SetUp("LobbyScene");
 
         //test
         if (!TestScenIsAwake)

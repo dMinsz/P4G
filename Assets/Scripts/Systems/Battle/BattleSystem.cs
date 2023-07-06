@@ -103,8 +103,16 @@ public class BattleSystem : MonoBehaviour
         LookSetUp();
     }
 
+    public void OnEscape() 
+    {
+        uiHandler.CleanUpListUI();
+        EndBattle();
+    }
+
     public void OnGuard() 
     {
+        uiHandler.CleanUpListUI();
+
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.MenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
@@ -116,9 +124,12 @@ public class BattleSystem : MonoBehaviour
 
     public void OnAnalysis()
     {
+        uiHandler.CleanUpListUI();
+
         uiHandler.AnalysisingUI.gameObject.SetActive(true);
 
         var obj = GameManager.UI.ShowInGameUI(AttributeUIPrefab);
+        obj.ResetData();
         obj.Setup(nowShadow.data.resist);
         obj.SetTarget(nowShadow.transform);
     }

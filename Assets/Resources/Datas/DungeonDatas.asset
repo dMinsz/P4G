@@ -19,9 +19,12 @@ MonoBehaviour:
     symbolHaveShadow: 1
   - DungeonName: Dungeon1f
     shadows:
+    - {fileID: 11400000, guid: 17cad20052cc2214a9b0e31474effd13, type: 2}
     - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}
     symbolHaveShadow: 2
   - DungeonName: Dungeon2f
     shadows:
+    - {fileID: 11400000, guid: 17cad20052cc2214a9b0e31474effd13, type: 2}
+    - {fileID: 11400000, guid: 0d9a82fd1a6dc224e946b819cc04852d, type: 2}
     - {fileID: 11400000, guid: a1d3e784c77bfa7468b82d7ccbf524ce, type: 2}
     symbolHaveShadow: 3

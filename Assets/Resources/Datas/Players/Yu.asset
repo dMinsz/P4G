@@ -31,7 +31,7 @@ MonoBehaviour:
       Fire: 0
       Ice: 0
       Electronic: 0
-      Wind: 1
+      Wind: 0
       Light: 0
       Dark: 0
     skills:

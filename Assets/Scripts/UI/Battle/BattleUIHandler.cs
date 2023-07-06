@@ -40,9 +40,6 @@ public class BattleUIHandler : MonoBehaviour
             var obj = GameManager.Resource.Load<GameObject>("UI/BattlePartyElement");
             var newUI = GameManager.Pool.GetUI(obj, partyUI);
 
-           
-
-
             newUI.transform.Find("Character").GetComponent<Image>().sprite = player.data.battleImage;
             newUI.transform.Find("Status").Find("SPSlider").GetComponent<SliderBar>().player = player;
             newUI.transform.Find("Status").Find("HPSlider").GetComponent<SliderBar>().player = player;
@@ -104,6 +101,25 @@ public class BattleUIHandler : MonoBehaviour
     }
 
 
+    public void CleanUpListUI() 
+    {
+        if (NowObejcts.Count > 0)
+        {
+            foreach (var obj in NowObejcts)
+            {
+                if (GameManager.Pool.IsContainUI(obj))
+                {
+                    GameManager.Pool.ReleaseUI(obj);
+                }
+            }
+            NowObejcts.Clear();
+        }
+
+        MenuUI.gameObject.SetActive(false);
+    }
+
+
+
     public bool IsOpenPlayerMenu = false;
     public bool IsOpenPersonaMenu = false;
     public void OpenPlayerSkill()
@@ -126,9 +142,9 @@ public class BattleUIHandler : MonoBehaviour
             {
                 foreach (var obj in NowObejcts)
                 {
-                    if (GameManager.Pool.IsContain(obj))
+                    if (GameManager.Pool.IsContainUI(obj))
                     {
-                        GameManager.Pool.Release(obj);
+                        GameManager.Pool.ReleaseUI(obj);
                     }
                 }
                 NowObejcts.Clear();
@@ -148,9 +164,9 @@ public class BattleUIHandler : MonoBehaviour
 
             foreach (var obj in NowObejcts)
             {
-                if (GameManager.Pool.IsContain(obj))
+                if (GameManager.Pool.IsContainUI(obj))
                 {
-                    GameManager.Pool.Release(obj);
+                    GameManager.Pool.ReleaseUI(obj);
                 }
             }
             NowObejcts.Clear();
@@ -178,6 +194,7 @@ public class BattleUIHandler : MonoBehaviour
         if (MenuUI.gameObject.activeSelf == false)
         {
             IsOpenPersonaMenu = true;
+
             if (NowObejcts.Count <= 0)
             {
                 var nowPersona = battleSystem.nowPlayer.Personas[battleSystem.nowPlayer.nowPersonaIndex];
@@ -195,9 +212,9 @@ public class BattleUIHandler : MonoBehaviour
             {
                 foreach (var obj in NowObejcts)
                 {
-                    if (GameManager.Pool.IsContain(obj))
+                    if (GameManager.Pool.IsContainUI(obj))
                     {
-                        GameManager.Pool.Release(obj);
+                        GameManager.Pool.ReleaseUI(obj);
                     }
                 }
                 NowObejcts.Clear();
@@ -214,14 +231,14 @@ public class BattleUIHandler : MonoBehaviour
                 MenuUI.gameObject.SetActive(true);
             }
         }
-        else if (MenuUI.gameObject.activeSelf == true && IsOpenPlayerMenu == true)
+        else if (MenuUI.gameObject.activeSelf == true && IsOpenPlayerMenu == true) // 공격 리스트가 오픈되어있을때
         {
             IsOpenPlayerMenu = false;
             foreach (var obj in NowObejcts)
             {
-                if (GameManager.Pool.IsContain(obj))
+                if (GameManager.Pool.IsContainUI(obj))
                 {
-                    GameManager.Pool.Release(obj);
+                    GameManager.Pool.ReleaseUI(obj);
                 }
             }
             NowObejcts.Clear();
@@ -237,7 +254,7 @@ public class BattleUIHandler : MonoBehaviour
 
             MenuUI.gameObject.SetActive(true);
         }
-        else 
+        else // 이미 페르소나 스킬 리스트가 켜져있을때
         {
             IsOpenPersonaMenu = false;
             CloseMenu();
@@ -261,10 +278,6 @@ public class BattleUIHandler : MonoBehaviour
             commandUI[i].SetActive(false);
         }
     }
-
-
-
-
 
     public void CloseMenu()
     {

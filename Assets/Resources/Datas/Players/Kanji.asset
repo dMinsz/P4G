@@ -36,6 +36,5 @@ MonoBehaviour:
       Dark: 0
     skills:
     - {fileID: 11400000, guid: bccb9b5bb0d050b408550ca1dab98719, type: 2}
-    - {fileID: 11400000, guid: fa801b75efb474a4ca1504a5c2a82d48, type: 2}
   PersonaNames:
   - Mikazuchi

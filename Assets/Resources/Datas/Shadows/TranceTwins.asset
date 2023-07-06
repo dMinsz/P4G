@@ -10,29 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37985e40a0112e04fb8acd53f6435137, type: 3}
-  m_Name: LyingHablerie
+  m_Name: TranceTwins
   m_EditorClassIdentifier: 
   shadow:
-    unitName: LyingHablerie
+    unitName: TranceTwins
     Level: 1
-    Hp: 73
-    Mp: 51
-    Sp: 40
-    Strength: 5
-    Magic: 5
-    Endurance: 3
-    Agility: 3
-    Luck: 3
-    Prefab: {fileID: 5952763855675320682, guid: f0beb72f5708b8643b4aa08859d03765, type: 3}
+    Hp: 100
+    Mp: 30
+    Sp: 20
+    Strength: 4
+    Magic: 6
+    Endurance: 5
+    Agility: 6
+    Luck: 7
+    Prefab: {fileID: 7573489963031846008, guid: e4f16b3ad4aed334a8c5b017c2a075be, type: 3}
     BattlePrefab: {fileID: 0}
     battleImage: {fileID: 0}
     resist:
       Physic: 0
-      Fire: 2
-      Ice: 1
-      Electronic: 1
+      Fire: 1
+      Ice: 0
+      Electronic: 2
       Wind: 0
       Light: 0
       Dark: 0
-    skills:
-    - {fileID: 11400000, guid: bc128a773ed8b834b86fb61142049730, type: 2}
+    skills: []
