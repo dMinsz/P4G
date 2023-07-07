@@ -34,6 +34,7 @@ public class VideoPlayScene : BaseScene
 
     protected override IEnumerator LoadingRoutine()
     {
+        progress = 1.0f;
         yield return null;
     }
     public override void Clear()

@@ -540,7 +540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f8137fda619b044a5fc6aa25bf97c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GenratePos: []
+  GenratePos:
+  - {fileID: 2145672100}
   Symbol: {fileID: 8385800809207106233, guid: f64bbb19c97279a4c8b4cb5ea2a684d1, type: 3}
 --- !u!4 &285453074
 Transform:

@@ -5,11 +5,10 @@ using UnityEngine;
 public class TitleScene : BaseScene
 {
 
-
-
     protected override IEnumerator LoadingRoutine()
     {
-        yield return null;
+        yield return new WaitForSecondsRealtime(0.1f);
+        progress = 1.0f;
     }
     public override void Clear()
     {

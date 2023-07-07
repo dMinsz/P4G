@@ -10,10 +10,10 @@ public class LobbyScene : BaseScene
     protected override void Awake()
     {
         Debug.Log("Roby Scene Init");
-
-        //GameManager.Data.Dungeon.SetUp("Lobby");
-
+        
         //test
+        GameManager.Data.Dungeon.SetUp("LobbyScene");
+
         GameManager.Data.Dungeon.IsSymbolInit = true;
 
         GameManager.Pool.Reset();
@@ -21,11 +21,6 @@ public class LobbyScene : BaseScene
         GameManager.Data.Dialog.SetUp();
         GameManager.Data.Dialog.system = dialog;
 
-
-        // fake loading
-        //GameManager.Data.Dungeon.SetUp("LobbyScene");
-
-        //test
         if (!TestScenIsAwake)
         {
             playerGenerator.Init();
@@ -49,28 +44,22 @@ public class LobbyScene : BaseScene
         GameManager.UI.Reset();
         GameManager.Data.Dialog.SetUp();
         GameManager.Data.Dialog.system = dialog;
+        yield return new WaitForSecondsRealtime(0.2f);
+        progress = 0.2f;
 
-
-        // fake loading
+        
         GameManager.Data.Dungeon.SetUp("LobbyScene");
+        yield return new WaitForSecondsRealtime(0.2f);
+        progress = 0.4f;
 
         if (!TestScenIsAwake)
         {
             playerGenerator.Init();
             TestScenIsAwake = true;
         }
-
-
-       
-
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.2f;
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.4f;
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.6f;
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.8f;
+        yield return new WaitForSecondsRealtime(0.2f);
+        progress = 0.6f;
+        
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
     }

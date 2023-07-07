@@ -32,16 +32,16 @@ public class Dungeon2f : BaseScene
 
     protected override IEnumerator LoadingRoutine()
     {
-        yield return new WaitForSecondsRealtime(0.2f);
-
         GameManager.Data.Dialog.SetUp();
         GameManager.Data.Dialog.system = dialog;
 
         GameManager.Data.Dungeon.IsInit = false;
+        yield return new WaitForSecondsRealtime(0.2f);
+        progress = 0.2f;
 
         playerGenerator.Init();
-
-    
+        yield return new WaitForSecondsRealtime(0.2f);
+        progress = 0.6f;
 
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;

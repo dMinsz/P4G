@@ -19,25 +19,14 @@ public class CutScene : BaseScene
         GameManager.Data.Dialog.system = dialog;
 
 
-        cdialog.Interact();
+        //cdialog.Interact();
     }
 
     protected override IEnumerator LoadingRoutine()
     {
-
-        // fake loading
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.2f;
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.4f;
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.6f;
-        //yield return new WaitForSecondsRealtime(0.2f);
-        //progress = 0.8f;
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
-
-        //dialog.Interact();
+        cdialog.Interact();
     }
     public override void Clear()
     {
@@ -46,12 +35,6 @@ public class CutScene : BaseScene
         //GameManager.Pool.ReleaseUI(GameManager.Data.Dialog.dialog_obj);
 
         GameManager.Pool.erasePoolDicContet(GameManager.Data.Dialog.dialog_obj.name);
-
-
-        //foreach (var player in GameManager.Data.Dungeon.InBattlePlayers)
-        //{
-        //    GameManager.Pool.Release(player);
-        //}
 
     }
 }

@@ -19,14 +19,14 @@ public class SceneManagerEX : MonoBehaviour
 
     public string nextScene;
 
-    //private LoadingUI loadingUI;
+    private LoadingUI loadingUI;
 
-    //private void Awake()
-    //{
-    //    LoadingUI loadingUI = GameManager.Resource.Load<LoadingUI>("PreFabs/UI/LoadingUI");
-    //    this.loadingUI = Instantiate(loadingUI);
-    //    this.loadingUI.transform.SetParent(transform);
-    //}
+    private void Awake()
+    {
+        LoadingUI loadingUI = GameManager.Resource.Load<LoadingUI>("UI/LoadingUI");
+        this.loadingUI = Instantiate(loadingUI);
+        this.loadingUI.transform.SetParent(transform);
+    }
 
 
     string GetSceneName(BaseScene scene)
@@ -62,6 +62,9 @@ public class SceneManagerEX : MonoBehaviour
 
     IEnumerator LoadingRoutine(string sceneName)
     {
+
+        loadingUI.gameObject.SetActive(true);
+
         if (!CurrentScene.isClear)
         {
             CurrentScene.isClear = true;
@@ -71,14 +74,14 @@ public class SceneManagerEX : MonoBehaviour
         //oper.allowSceneActivation = false; // Scene Load 가 끝나도 바로 씬으로 넘어가지않게
         Time.timeScale = 0f; // Loading 중에는 시간 멈춤
 
-        //loadingUI.SetProgress(0f);
+        loadingUI.SetProgress(0f);
         //loadingUI.FadeOut();
 
-        yield return new WaitForSecondsRealtime(0.5f); // Wait fade out
+        //yield return new WaitForSecondsRealtime(0.5f); // Wait fade out
 
         while (!oper.isDone)
         {
-            //loadingUI.SetProgress(Mathf.Lerp(0f, 0.5f, oper.progress)); // Scene Loading for 50%
+            loadingUI.SetProgress(Mathf.Lerp(0f, 0.5f, oper.progress)); // Scene Loading for 50%
             yield return null;
         }
 
@@ -87,17 +90,19 @@ public class SceneManagerEX : MonoBehaviour
 
         while (CurrentScene.progress < 1f)
         {
-            //loadingUI.SetProgress(Mathf.Lerp(0.5f, 1f, curScene.progress));
+            loadingUI.SetProgress(Mathf.Lerp(0.5f, 1f, curScene.progress));
             yield return null;
         }
 
-        //oper.allowSceneActivation = true;
-        //loadingUI.SetProgress(1f);
-        //loadingUI.FadeIn();
+        oper.allowSceneActivation = true;
+        loadingUI.SetProgress(1f);
+        loadingUI.FadeOut();
 
 
-        yield return new WaitForSecondsRealtime(0.5f); // wait Fade In
+        yield return new WaitForSecondsRealtime(0.3f); // wait Fade out
         Time.timeScale = 1f;
+
+        loadingUI.gameObject.SetActive(false);
     }
 
 }
