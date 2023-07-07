@@ -38,8 +38,15 @@ public class AllyMover : MonoBehaviour
             {
                 var distance = ChacePos.transform.position - this.transform.position;
 
+                if (distance.sqrMagnitude > 100)
+                {
+                    this.transform.GetComponent<CharacterController>().enabled = false;
 
-                if (distance.sqrMagnitude > 2)
+                    this.transform.position = ChacePos.transform.position;//너무 멀어진 거리는 순간이동해준다.
+
+                    this.transform.GetComponent<CharacterController>().enabled = true;
+                }
+                else if (distance.sqrMagnitude > 2)
                 {
                     animator.SetBool("Move", true);
                     transform.LookAt(ChacePos.transform.position);
