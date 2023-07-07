@@ -24,12 +24,11 @@ public class PersonaSkillCommand : Command
         this.player = player;
         this.cam = cam;
 
-
         this.nowskill = nowSkill;
     }
     protected override async Task AsyncExecuter()
     {
-
+        int camindex = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
         var pobj = GameManager.Pool.Get(false, persona, summonPoint.position, Quaternion.identity);
         pobj.transform.LookAt(target.transform);
 
@@ -41,9 +40,9 @@ public class PersonaSkillCommand : Command
         if (nowskill.SkillType == ResType.Physic)
         {
             pobj.Attack();
+            
 
-            //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
-            //await Task.Delay(500);
+
             var pos = this.target.transform.position;
             pos.y += 2;
 
@@ -51,10 +50,14 @@ public class PersonaSkillCommand : Command
             
             pobj.attackEffect.Play();
 
+
             await Task.Delay(1000);
            
 
+            cam.setEcam(camindex);
             target.TakeSkillDamage(nowskill);
+            await Task.Delay(500);
+
 
 
             if (target.isDie)
@@ -66,7 +69,7 @@ public class PersonaSkillCommand : Command
                 target.animator.SetTrigger("Hit");
             }
 
-
+            cam.ResetECams();
         }
         else 
         {
@@ -79,19 +82,21 @@ public class PersonaSkillCommand : Command
                         GameManager.Data.Battle.nowShadow = shadow;
                         pobj.UseSkill();
 
-                        //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
                         //await Task.Delay(500);
+
+                        cam.setEcam(camindex);
                         var pos = this.target.transform.position;
                         pos.y += 2;
 
                         pobj.skillEffect.transform.position = pos;
                         pobj.skillEffect.Play();
 
-                        //testing
+                        
                         await Task.Delay(500);
 
-                        shadow.TakeSkillDamage(nowskill);
 
+                        cam.setEcam(camindex);
+                        shadow.TakeSkillDamage(nowskill);
 
 
                         if (shadow.isDie)
@@ -102,6 +107,9 @@ public class PersonaSkillCommand : Command
                         {
                             shadow.animator.SetTrigger("Hit");
                         }
+                        await Task.Delay(500);
+                        cam.ResetECams();
+                        
                     }
                 }
             }
@@ -110,7 +118,8 @@ public class PersonaSkillCommand : Command
                 pobj.UseSkill();
 
                 //await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 100);
-                //await Task.Delay(500);
+               
+
                 var pos = this.target.transform.position;
                 pos.y += 2;
 
@@ -118,10 +127,10 @@ public class PersonaSkillCommand : Command
                 pobj.skillEffect.Play();
 
                 //testing
-                await Task.Delay(1000);
-
+                //await Task.Delay(1000);
                 //target.animator.SetTrigger("Hit");
 
+                cam.setEcam(camindex);
                 target.TakeSkillDamage(nowskill);
 
                 if (target.isDie)
@@ -133,10 +142,13 @@ public class PersonaSkillCommand : Command
                     target.animator.SetTrigger("Hit");
                 }
 
-
+                await Task.Delay(500);
+                cam.ResetECams();
 
             }
         }
+
+        SetBackCam(this.cam);
 
         await Task.Delay((int)pobj.animator.GetCurrentAnimatorStateInfo(0).length * 1000);
         pobj.skillEffect.Stop();

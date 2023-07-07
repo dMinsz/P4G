@@ -8,6 +8,7 @@ using UnityEngine;
 public class BattleCamSystem : MonoBehaviour
 {
     public List<CinemachineVirtualCamera> Cams;
+    public List<CinemachineVirtualCamera> ECams;
 
     public void ResetCams()
     {
@@ -15,6 +16,23 @@ public class BattleCamSystem : MonoBehaviour
         {
             cam.Priority = 1;
         }
+
+    }
+
+    public void ResetECams() 
+    {
+        foreach (var cam in ECams)
+        {
+            cam.Priority = 1;
+        }
+    }
+
+    public void setEcam(int index) 
+    {
+        ResetCams();
+        ResetECams();
+
+        ECams[index].Priority = 2;
     }
 
     public void setPlayer1(bool isFront) 

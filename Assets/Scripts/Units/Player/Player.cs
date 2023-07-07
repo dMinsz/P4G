@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -78,7 +79,7 @@ public class Player : Unit
             }
         }
     }
-    public void Attack(Vector3 attackPoint, Vector3 lookPoint, Transform ui)
+    public void Attack(Vector3 attackPoint, Vector3 lookPoint, Transform ui, BattleCamSystem Cam)
     {
 
         Vector3 OriginPos = transform.position;
@@ -87,7 +88,7 @@ public class Player : Unit
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(attackPoint, transform, animator));
 
         ////Attack
-        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowShadow, animator, GameManager.Data.Battle.nowShadow.animator, GameManager.Data.Battle.nowSkill));
+        GameManager.Data.Battle.commandQueue.Enqueue(new AttackCommand(this, GameManager.Data.Battle.nowShadow, animator, GameManager.Data.Battle.nowShadow.animator, GameManager.Data.Battle.nowSkill, Cam));
         ////ReturnBack
         GameManager.Data.Battle.commandQueue.Enqueue(new LookCommand(OriginPos, this.transform));
         GameManager.Data.Battle.commandQueue.Enqueue(new MoveCommand(OriginPos, transform, animator));
@@ -98,7 +99,7 @@ public class Player : Unit
 
     }
 
-    public void UseSkill(Vector3 attackPoint, Shadow target, Transform ui, BattleCamSystem cam, Skill nowSkill)
+    public void UseSkill(Vector3 attackPoint, Shadow target, Transform ui, BattleCamSystem cam, Skill nowSkill, BattleCamSystem Cam)
     {
 
         var persona = GameManager.Data.Battle.nowPlayer.Personas[0];

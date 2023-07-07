@@ -12,7 +12,10 @@ public class AttackCommand : Command
     Animator actorAnim;
     Animator targetAnim;
     Skill nowSkill;
-    public AttackCommand(Unit actor, Unit target,Animator actorAnimator, Animator targetAnimator , Skill nowSkill) 
+
+    BattleCamSystem cam;
+
+    public AttackCommand(Unit actor, Unit target,Animator actorAnimator, Animator targetAnimator , Skill nowSkill , BattleCamSystem cam) 
     {
         this.uactor = actor;
         this.target = target;
@@ -20,6 +23,10 @@ public class AttackCommand : Command
         this.targetAnim = targetAnimator;
 
         this.nowSkill = nowSkill;
+        if (cam != null ) 
+        {
+            this.cam = cam;
+        }
     }
     protected override async Task AsyncExecuter()
     {
@@ -28,8 +35,14 @@ public class AttackCommand : Command
         await Task.Delay((int)actorAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
         await Task.Delay(100);
 
+        int camindex = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
+
         if (uactor != null)
         {
+            if (cam != null)
+            {
+                cam.setEcam(camindex);
+            }
 
             await Task.Delay(100);
             //targetAnim.SetTrigger("Hit");
@@ -69,8 +82,8 @@ public class AttackCommand : Command
         {
             Debug.LogError("Attack Command Error");
         }
-
-       
+        if (cam != null)
+            cam.SetPlayerCam(camindex);
 
         await Task.Delay(100);
     }

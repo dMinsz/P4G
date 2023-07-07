@@ -171,7 +171,7 @@ public class BattleSystem : MonoBehaviour
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
 
-        nowPlayer.Attack(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform);
+        nowPlayer.Attack(nowShadow.attackPoint.position, nowShadow.transform.position, uiHandler.BattleUI.transform, cam);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
     }
@@ -206,7 +206,7 @@ public class BattleSystem : MonoBehaviour
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.SelectMenuUI.transform, false));
         GameManager.Data.Battle.commandQueue.Enqueue(new UICommand(uiHandler.partyUI.transform, false));
 
-        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, cam, nowSkill);
+        nowPlayer.UseSkill(nowShadow.attackPoint.position, nowShadow, uiHandler.BattleUI.transform, cam, nowSkill, cam);
 
         GameManager.Data.Battle.commandQueue.Enqueue(new FuncCommand(NextPlayer));
     }
