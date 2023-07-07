@@ -147,7 +147,14 @@ public class BattleObjectGenerator : MonoBehaviour
 
             foreach (var persona in player.Personas)
             {
-                var newPersona = GameManager.Pool.Get(true, persona, player.PersonaPoint.position, Quaternion.identity);
+
+                if (GameManager.Pool.IsContain(persona))
+                {
+                    GameManager.Pool.erasePoolDicContet(persona.name);
+                    GameManager.Pool.eraseContainerContet(persona.name);
+                }
+
+                var newPersona = GameManager.Pool.Get(false, persona, player.PersonaPoint.position, Quaternion.identity);
                 GameManager.Pool.Release(newPersona);
             }
 

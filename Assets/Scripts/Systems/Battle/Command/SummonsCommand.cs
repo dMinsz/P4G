@@ -24,6 +24,9 @@ public class SummonsCommand : Command
         player.card[1].gameObject.SetActive(true);
 
         playerAnim.SetTrigger("Persona");
+
+        player.soundSource.PlayOneShot(player.summonSound);
+
         await Task.Delay((int)playerAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
 
         player.summonEffect.Stop();

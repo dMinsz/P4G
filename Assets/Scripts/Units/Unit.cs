@@ -11,6 +11,11 @@ public abstract class Unit : MonoBehaviour
 
     public bool isDie = false;
 
+    public AudioSource soundSource;
+    public AudioClip moveSound;
+    public AudioClip hitSound;
+    public AudioClip attackSound;
+    public AudioClip DieSound;
     public virtual void Attack(Vector3 AttackPoint, Vector3 LookPoint) { }
 
     public abstract void TakeDamage(int strength, Skill nowskill);

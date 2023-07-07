@@ -26,6 +26,7 @@ public class Dungeon1f : BaseScene
         {
             GameManager.Data.Dungeon.IsSymbolInit = false;
         }
+
     }
 
     protected override IEnumerator LoadingRoutine()
@@ -43,11 +44,15 @@ public class Dungeon1f : BaseScene
 
         yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
+
+        GameManager.Data.BattleBackGround.Play();
     }
 
 
     public override void Clear()
     {
+        GameManager.Data.BattleBackGround.Stop();
+
         GameManager.Data.Dungeon.didBattle = false;
 
         GameManager.Data.Dialog.ResetData();

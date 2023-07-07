@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d727a4530828c4f95be72887107a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isClear: 0
   vplayer: {fileID: 1267207171}
   video: {fileID: 1267207173}
 --- !u!1 &934869773

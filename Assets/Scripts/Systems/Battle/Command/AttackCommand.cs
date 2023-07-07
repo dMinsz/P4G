@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AttackCommand : Command
 {
-    Unit uactor;
+    Unit actor;
     BattlePersona pactor;
     Unit target;
     Animator actorAnim;
@@ -17,7 +17,7 @@ public class AttackCommand : Command
 
     public AttackCommand(Unit actor, Unit target,Animator actorAnimator, Animator targetAnimator , Skill nowSkill , BattleCamSystem cam) 
     {
-        this.uactor = actor;
+        this.actor = actor;
         this.target = target;
         this.actorAnim = actorAnimator;
         this.targetAnim = targetAnimator;
@@ -30,23 +30,24 @@ public class AttackCommand : Command
     }
     protected override async Task AsyncExecuter()
     {
-   
+        actor.soundSource.PlayOneShot(actor.attackSound);
+
         actorAnim.SetTrigger("Attack");
         await Task.Delay((int)actorAnim.GetCurrentAnimatorStateInfo(0).length * 1000);
         await Task.Delay(100);
 
         int camindex = GameManager.Data.Battle.InBattlePlayers.IndexOf(GameManager.Data.Battle.nowPlayer);
 
-        if (uactor != null)
+        if (actor != null)
         {
             if (cam != null)
             {
                 cam.setEcam(camindex);
             }
 
-            await Task.Delay(100);
+            //await Task.Delay(100);
             //targetAnim.SetTrigger("Hit");
-            target.TakeDamage(uactor.data.Strength,nowSkill);
+            target.TakeDamage(actor.data.Strength,nowSkill);
 
             if (target.isDie)
             {
@@ -62,9 +63,9 @@ public class AttackCommand : Command
         }
         else if (pactor != null)
         {
-            await Task.Delay(100);
+            //await Task.Delay(100);
             //targetAnim.SetTrigger("Hit");
-            target.TakeDamage(uactor.data.Strength, nowSkill);
+            target.TakeDamage(actor.data.Strength, nowSkill);
 
             if (target.isDie)
             {

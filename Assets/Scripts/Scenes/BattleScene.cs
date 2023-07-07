@@ -9,27 +9,36 @@ public class BattleScene : BaseScene
 
     protected override void Awake()
     {
-        base.Awake();
 
-        btg = GameObject.Find("@BattleSystem").GetComponent<BattleObjectGenerator>();
-
-        GameManager.Pool.Reset();
-
-        GameManager.Data.Dungeon.IsInit = false;
+        
     }
 
     protected override IEnumerator LoadingRoutine()
     {
+        yield return new WaitForSecondsRealtime(0.2f);
+        btg = GameObject.Find("@BattleSystem").GetComponent<BattleObjectGenerator>();
+
+        GameManager.Pool.Reset();
+        progress = 0.3f;
+
+        yield return new WaitForSecondsRealtime(0.2f);
+        GameManager.Data.Dungeon.IsInit = false;
+        progress = 0.6f;
+
+        yield return new WaitForSecondsRealtime(0.2f);
         GameManager.UI.Reset();
         btg.SetUp();
         GameManager.Data.Battle.Initialize();
+        progress = 0.8f;
 
-
+        yield return new WaitForSecondsRealtime(0.2f);
         progress = 1.0f;
-        yield return null;
+        GameManager.Data.BattleBackGround.Play();
     }
     public override void Clear()
     {
+        GameManager.Data.BattleBackGround.Stop();
+
         GameManager.Data.Dungeon.IsSymbolInit = false;
         GameManager.Data.Dungeon.didBattle = true;
 

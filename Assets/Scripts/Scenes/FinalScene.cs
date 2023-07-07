@@ -35,6 +35,8 @@ public class FinalScene : BaseScene
     }
     public override void Clear()
     {
+        GameManager.Data.BattleBackGround.ResetAudio();
+
         GameManager.Data.Dialog.IsVelvetRoom = false;
 
 
@@ -43,6 +45,7 @@ public class FinalScene : BaseScene
         GameManager.Data.Dialog.ResetData();
 
         GameManager.Data.Dungeon.InBattlePlayers = null;
+        GameManager.Data.Dungeon.aliveInDungeonSymbols = null;
         GameManager.Pool.Init();
 
         GameManager.Data.Dungeon.IsInit = true;

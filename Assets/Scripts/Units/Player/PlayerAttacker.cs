@@ -15,7 +15,9 @@ public class PlayerAttacker : MonoBehaviour
 
     private Animator animator;
     private float cosResult;
-   
+
+    public AudioClip attackSound;
+    public AudioSource soundSource;
  
     private void Awake()
     {
@@ -41,6 +43,8 @@ public class PlayerAttacker : MonoBehaviour
 
     public void AttackTiming()
     {
+        soundSource.PlayOneShot(attackSound);
+
         // 1. 범위 안에 있는지
         Collider[] colliders = Physics.OverlapSphere(transform.position, range);
         foreach (Collider collider in colliders)
@@ -48,7 +52,9 @@ public class PlayerAttacker : MonoBehaviour
             // 2. 앞에 있는지, 대상 방향까지의 cos를 계산하여 내적이 +이면 어택
             Vector3 dirTarget = (collider.transform.position - transform.position).normalized;
             if (Vector3.Dot(transform.forward, dirTarget) < cosResult) 
-                continue;                                                              
+                continue;
+
+
 
             IHitable hittable = collider.GetComponent<IHitable>();
             hittable?.TakeHit(this.gameObject);

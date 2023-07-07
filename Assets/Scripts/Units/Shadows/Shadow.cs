@@ -70,6 +70,9 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
 
     public override void TakeDamage(int strength, Skill nowskill)
     {
+
+        soundSource.PlayOneShot(hitSound);
+
         float rand = UnityEngine.Random.Range(0.95f, 1.06f);
 
         int DMG = (int)((strength * strength) / (data.Endurance * 1.5) * rand);
@@ -92,12 +95,16 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
                 HP = 0;
                 isDie = true;
                 animator.SetBool("IsDie", true);
+                soundSource.PlayOneShot(DieSound);
             }
         }
     }
 
     public override void TakeSkillDamage(Skill nowskill)
     {
+
+        soundSource.PlayOneShot(hitSound);
+
         float rand = UnityEngine.Random.Range(0.95f, 1.06f);
         int defenseFactor = 1;
 
@@ -144,7 +151,7 @@ public class Shadow : Unit, IPointerEnterHandler, IPointerExitHandler, IPointerC
             {
                 HP = 0;
                 isDie = true;
-                //animator.SetBool("IsDie", true);
+                soundSource.PlayOneShot(DieSound);
             }
         }
     }

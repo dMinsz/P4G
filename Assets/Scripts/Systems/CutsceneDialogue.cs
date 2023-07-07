@@ -52,6 +52,7 @@ public class CutsceneDialogue : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         kumaobj.animator.SetTrigger("Attack");
         yield return new WaitForSeconds(1.0f);
+        kumaobj.attackAudio.Play();
         player.GetComponent<CharacterController>().Move(Vector3.forward*-1*5f);
 
         yield return new WaitForSeconds(0.1f);

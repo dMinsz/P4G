@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a56899cb7fa5f488993adfe4e35b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDebug: 1
+  IsDebug: 0
   state: 0
   agent: {fileID: 0}
   PatrollCount: 3

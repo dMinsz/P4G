@@ -36,6 +36,9 @@ public class Player : Unit
     public ParticleSystem summonEffect;
 
     public bool isGuard = false;
+
+    public AudioClip summonSound;
+
     private void OnEnable()
     {
         animator = transform.Find("Model").GetComponent<Animator>();
@@ -113,6 +116,8 @@ public class Player : Unit
 
     public override void TakeDamage(int strength, Skill nowskill)
     {
+        soundSource.PlayOneShot(hitSound);
+
         float rand = UnityEngine.Random.Range(0.95f, 1.06f);
 
         int DMG = (int)((strength * strength) / (data.Endurance * 1.5) * rand);
@@ -133,7 +138,7 @@ public class Player : Unit
             {
                 HP = 0;
                 isDie = true;
-
+                soundSource.PlayOneShot(DieSound);
                 //animator.SetBool("IsDie", true);
                 //animator.SetTrigger("IsDie");
             }
@@ -142,6 +147,9 @@ public class Player : Unit
 
     public override void TakeSkillDamage(Skill nowskill) 
     {
+
+        soundSource.PlayOneShot(hitSound);
+
         float rand = UnityEngine.Random.Range(0.95f, 1.06f);
         int defenseFactor = 1;
 
@@ -177,8 +185,9 @@ public class Player : Unit
             {
                 HP = 0;
                 isDie = true;
+                soundSource.PlayOneShot(DieSound);
                 //animator.SetBool("IsDie", true);
-                
+
             }
         }
     }

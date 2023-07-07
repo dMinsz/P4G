@@ -20,6 +20,7 @@ public class DataManager : MonoBehaviour
     //Dialogue
     public Dialogue Dialog;
 
+    public DungeonAndBattleBGM BattleBackGround;
     public void SetUp()
     {
         var vidobj = new GameObject("VideoSystem");
@@ -45,6 +46,17 @@ public class DataManager : MonoBehaviour
 
         //Dialog.SetUp();
 
+        //var sObj = new GameObject("SoundSystem");
+        //sObj.transform.parent = transform;
+
+        var sound = GameManager.Resource.Load<DungeonAndBattleBGM>("Sound/BattleBGM");
+        var psound = GameManager.Pool.Get(true, sound);
+        psound.transform.SetParent(transform);
+        BattleBackGround = psound;
+
+
     }
+
+
 
 }
