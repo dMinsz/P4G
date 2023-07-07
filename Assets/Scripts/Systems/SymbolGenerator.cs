@@ -37,7 +37,11 @@ public class SymbolGenerator : MonoBehaviour
                 GameManager.Data.Dungeon.aliveInDungeonSymbols.Add(newSymbol);
 
                 int nowDungeonEachShadow = GameManager.Data.Dungeon.nowDungeon.symbolHaveShadow;
+
                 //Shadow Instanciate
+
+                //int rand = Random.Range(1, nowDungeonEachShadow+1); 
+
                 newSymbol.GetComponent<Symbols>().hasEnemys = GameManager.Data.Dungeon.GetRandomShadows(nowDungeonEachShadow);
             }
         }

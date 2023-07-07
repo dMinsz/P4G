@@ -96,14 +96,17 @@ public class DungeonDataSystem : MonoBehaviour
     }
 
     //현재 던전에서 가져올수있는 섀도우 랜덤으로가져오기
-    public List<ShadowData> GetRandomShadows(int shadowCount)
+    public List<ShadowData> GetRandomShadows(int eachShadows)
     {
         List<ShadowData> result = new List<ShadowData>();
 
 
-        for (int i = 0; i < shadowCount; i++)
+        int EachShadows = Random.Range(1, eachShadows + 1);// 각 심볼마다 가지고있을 수있는 몬스터 수 랜덤설정
+
+
+        for (int i = 0; i < EachShadows; i++)
         {
-            int rand = Random.Range(0, shadowDatas.Count);
+            int rand = Random.Range(0, shadowDatas.Count); // 던전내에서 나올수있는 섀도우 종류에서 랜덤으로 뽑기
             result.Add(shadowDatas[rand]);
         }
 
