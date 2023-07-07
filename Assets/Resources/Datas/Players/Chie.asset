@@ -18,7 +18,7 @@ MonoBehaviour:
     Hp: 50
     Mp: 50
     Sp: 50
-    Strength: 7
+    Strength: 12
     Magic: 5
     Endurance: 5
     Agility: 5

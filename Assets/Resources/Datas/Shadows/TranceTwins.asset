@@ -15,10 +15,10 @@ MonoBehaviour:
   shadow:
     unitName: TranceTwins
     Level: 1
-    Hp: 100
+    Hp: 80
     Mp: 30
     Sp: 20
-    Strength: 4
+    Strength: 7
     Magic: 6
     Endurance: 5
     Agility: 6

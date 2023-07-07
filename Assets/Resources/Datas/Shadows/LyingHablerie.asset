@@ -15,7 +15,7 @@ MonoBehaviour:
   shadow:
     unitName: LyingHablerie
     Level: 1
-    Hp: 73
+    Hp: 40
     Mp: 51
     Sp: 40
     Strength: 5
@@ -34,5 +34,4 @@ MonoBehaviour:
       Wind: 0
       Light: 0
       Dark: 0
-    skills:
-    - {fileID: 11400000, guid: bc128a773ed8b834b86fb61142049730, type: 2}
+    skills: []

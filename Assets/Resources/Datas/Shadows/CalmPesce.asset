@@ -30,7 +30,7 @@ MonoBehaviour:
       Physic: 0
       Fire: 0
       Ice: 0
-      Electronic: 0
+      Electronic: 1
       Wind: 1
       Light: 0
       Dark: 0
