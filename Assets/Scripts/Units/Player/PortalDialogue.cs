@@ -36,6 +36,7 @@ public class PortalDialogue : MonoBehaviour
             var dialog = GameManager.Data.Dialog;
 
             dialog.dialog_obj.selectUI.gameObject.SetActive(true);
+            //dialog.dialog_obj.dialogueRoot.gameObject.SetActive(true);
 
             var answer = dialog.dialog_obj.selectUI.GetComponent<DialogueAnswerUI>();
 
@@ -164,12 +165,24 @@ public class PortalDialogue : MonoBehaviour
     public void AnswerNo()
     {
         Debug.Log("No Answer");
-        player.GetComponent<PlayerInput>().enabled = true;
-        GameManager.Data.Dialog.dialog_obj.selectUI.gameObject.SetActive(false);
 
         //다이알로그 꺼주기
-        var index = GameManager.Data.Dialog.dialog_cycles[1].info.Count;
-        GameManager.Data.Dialog.dialog_cycles[1].info[(index - 1)].check_read = true;
+        var index = GameManager.Data.Dialog.dialog_cycles[6].info.Count;
+        GameManager.Data.Dialog.dialog_cycles[6].info[(index - 1)].check_read = true;
+
+        var index2 = GameManager.Data.Dialog.dialog_cycles[1].info.Count;
+        GameManager.Data.Dialog.dialog_cycles[1].info[(index2 - 1)].check_read = true;
+
+
+        //이벤트 리스너 제거
+        var answer = GameManager.Data.Dialog.dialog_obj.selectUI.GetComponent<DialogueAnswerUI>();
+        Button yes = answer.yes;
+        Button no = answer.no;
+
+        yes.onClick.RemoveAllListeners();
+        no.onClick.RemoveAllListeners();
+
+        player.GetComponent<PlayerInput>().enabled = true;
 
     }
 

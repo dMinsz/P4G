@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class FinalScene : BaseScene
@@ -39,14 +38,11 @@ public class FinalScene : BaseScene
 
         GameManager.Data.Dialog.IsVelvetRoom = false;
 
-
-        GameManager.Pool.Reset();
         GameManager.UI.Reset();
         GameManager.Data.Dialog.ResetData();
 
-        GameManager.Data.Dungeon.InBattlePlayers = null;
-        GameManager.Data.Dungeon.aliveInDungeonSymbols = null;
         GameManager.Pool.Init();
+        GameManager.Data.Dungeon.Initialize();
 
         GameManager.Data.Dungeon.IsInit = true;
     }

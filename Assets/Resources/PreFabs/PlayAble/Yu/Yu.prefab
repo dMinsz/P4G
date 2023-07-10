@@ -3469,6 +3469,7 @@ MonoBehaviour:
   moveSound: {fileID: 0}
   hitSound: {fileID: 0}
   attackSound: {fileID: 0}
+  DieSound: {fileID: 0}
   MaxHp: 0
   curHp: 0
   MaxSp: 0
@@ -3586,7 +3587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 1
   point: {fileID: 5599131597469634990}
-  range: 2
+  range: 1
   animator: {fileID: 5599131597162648182}
 --- !u!136 &5599131597469634985
 CapsuleCollider:
